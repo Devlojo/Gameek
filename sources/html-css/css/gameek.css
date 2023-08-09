@@ -1,9 +1,10 @@
 .main-bg{
-    background-color: #d4d4dc;
-    background-image: url("https://images5.alphacoders.com/130/1303642.jpeg");
-    background-size: cover;
+    /*background-color: #d4d4dc;*/
+    background-color: #303030;
+    /*background-image: url("https://images5.alphacoders.com/130/1303642.jpeg");
+    background-size: auto;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: center;*/
 }
 
 .selected-game-bg 
