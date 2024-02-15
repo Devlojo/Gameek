@@ -23,7 +23,9 @@
     <title>Gameek</title>
 </head>
 
-<body class="main-bg">
+<body>
+
+    
 
     <!-- Nav -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient">
@@ -39,24 +41,24 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="VideoGamesNavbarDropdown" role="button"
-                        data-bs-toggle="dropdown"><i class="bi bi-controller"></i> Jeux vidéo</a>
+                        data-bs-toggle="dropdown"><i class="bi bi-controller"></i> Jeux </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">Tout les jeux</a></li>
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">FPS</a></li>
-                            <li><a class="dropdown-item" href="#">Jeux de rôle</a></li>
+                            <li><a class="dropdown-item" href="#">Test</a></li>
+                            <li><a class="dropdown-item" href="#">Soluce</a></li>
+                            <li><a class="dropdown-item" href="#">Sorties</a></li>
                         </ul>
                     </li>
+                    
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="PlatformsNavbarDropdown" role="button"
-                        data-bs-toggle="dropdown"><i class="bi bi-joystick"></i> Plateformes</a>
+                        data-bs-toggle="dropdown"><i class="bi bi-joystick"></i> Genre</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Toutes les plateformes</a></li>
-                            <li><a class="dropdown-item" href="#">Playstation 5</a></li>
-                            <li><a class="dropdown-item" href="#">Xbox serie X|S</a></li>
-                            <li><a class="dropdown-item" href="#">Nintendo switch</a></li>
-                            <li><a class="dropdown-item" href="#">Pc</a></li>
+                            <li><a class="dropdown-item" href="#">Tout les genres</a></li>
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Combat</a></li>
+                            <li><a class="dropdown-item" href="#">RPG</a></li>
                         </ul>
                     </li>
                     
@@ -66,9 +68,6 @@
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
-                    <li class="nav-item">
-                        <a class="nav-link " href="#"><i class="bi bi-cart me-1"></i>Panier</a>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="UserNavbarDropdown" role="button"
                             data-bs-toggle="dropdown">
@@ -97,79 +96,74 @@
 
     <!-- main -->
 
-    <div class="container bg-dark mt-4 pt-2 d-flex flex-wrap">
+    <div class="container bg-dark mt-4 pt-2">
 
         <div class="row">
             
                 <h2 class="text-white fw-bold mb-4">Les dernières sorties</h2>
-                <div class="col-4">
+                <div class="col-6 col-lg-4">
                     <a href="show.html">
-                        <img class="col-12" src="https://images4.alphacoders.com/110/1102239.png" alt="Final Fantasy XVI" srcset="">
+                        <img class="img-fluid" src="https://images3.alphacoders.com/132/1321152.jpeg" alt="Final Fantasy XVI" srcset="">
                     </a>
-                    <p class="text-white">Final Fantasy XVI</p>
+                    <p class="text-white">Final Fantasy XVI <span class="badge badge-pill bg-primary">Action-RPG</span></p>
                 </div>
-                <div class="col-4">
+                <div class="col-6 col-lg-4">
                     <a href="show.html">
-                        <img class="col-12" src="https://images.alphacoders.com/130/1305762.jpeg" alt="Diablo 4" srcset="">        
+                        <img class="img-fluid" src="https://images.alphacoders.com/130/1305762.jpeg" alt="Diablo 4" srcset="">        
                     </a>
-                    <p class="text-white">Diablo 4</p>
+                    <p class="text-white">Diablo 4 <span class="badge badge-pill bg-secondary">Hack'N'Slash</span></p>
                 </div>
-                <div class="col-4">
+                <div class="col-6 col-lg-4">
                     <a href="show.html">
-                        <img class="col-12" src="https://images3.alphacoders.com/131/1313511.jpg" alt="Street Fighter 6" srcset="">     
+                        <img class="img-fluid" src="https://images3.alphacoders.com/131/1313511.jpg" alt="Street Fighter 6" srcset="">     
                     </a>
-                    <p class="text-white">Street Fighter 6</p>
+                    <p class="text-white">Street Fighter 6 <span class="badge badge-pill bg-success">Combat</span></p>
                 </div>
-                <div class="col-4">
+                <div class="col-6 col-lg-4">
                     <a href="show.html">
-                        <img class="col-12" src="https://images5.alphacoders.com/129/1297091.jpg" alt="Baldur's Gate III" srcset="">     
+                        <img class="img-fluid" src="https://images5.alphacoders.com/129/1297091.jpg" alt="Baldur's Gate III" srcset="">     
                     </a>
-                    <p class="text-white">Baldur's Gate III</p>
+                    <p class="text-white">Baldur's Gate III <span class="badge badge-pill bg-warning">RPG</span><span class="badge mx-2 badge-pill bg-light text-dark">Stratégie</span></p>
                 </div>
-                <div class="col-4">
+                <div class="col-6 col-lg-4">
                     <a href="show.html">
-                        <img class="col-12" src="https://images5.alphacoders.com/132/1320827.png" alt="Oxenfree II: Lost Signals" srcset="">     
+                        <img class="img-fluid" src="https://images5.alphacoders.com/132/1320827.png" alt="Oxenfree II: Lost Signals" srcset="">     
                     </a>
-                    <p class="text-white">Oxenfree II : Lost Signals</p>
+                    <p class="text-white">Oxenfree II : Lost Signals <span class="badge badge-pill bg-info">Aventure</span></p>
                 </div>
-                <div class="col-4">
+                <div class="col-6 col-lg-4">
                     <a href="show.html">
-                        <img class="col-12" src="https://images5.alphacoders.com/121/1219094.jpg" alt="Exoprimal" srcset="">     
+                        <img class="img-fluid" src="https://images5.alphacoders.com/121/1219094.jpg" alt="Exoprimal" srcset="">     
                     </a>
-                    <p class="text-white">Exoprimal</p>
+                    <p class="text-white">Exoprimal <span class="badge badge-pill bg-danger">TPS</span></p>
                 </div>
-                <div class="col-4">
+                <div class="col-6 col-lg-4">
                     <a href="show.html">
-                        <img class="col-12" src="https://images2.alphacoders.com/132/1325518.jpeg" alt="Remnant II" srcset="">     
+                        <img class="img-fluid" src="https://images2.alphacoders.com/132/1325518.jpeg" alt="Remnant II" srcset="">     
                     </a>
-                    <p class="text-white">Remnant II</p>
+                    <p class="text-white">Remnant II <span class="badge badge-pill bg-danger">Action</span></p>
                 </div>
-                <div class="col-4">
+                <div class="col-6 col-lg-4">
                     <a href="show.html">
-                        <img class="col-12" src="https://images7.alphacoders.com/129/1293558.jpg" alt="Crash Team Rumble" srcset="">     
+                        <img class="img-fluid" src="https://images7.alphacoders.com/129/1293558.jpg" alt="Crash Team Rumble" srcset="">     
                     </a>
-                    <p class="text-white">Crash Team Rumble</p>
+                    <p class="text-white">Crash Team Rumble <span class="badge badge-pill bg-danger">Plate-forme</span></p>
                 </div>
-                <div class="col-4">
+                <div class="col-6 col-lg-4">
                     <a href="show.html">
-                        <img class="col-12" src="https://images5.alphacoders.com/131/1319998.png" alt="Amnesia : The Bunker" srcset="">     
+                        <img class="img-fluid" src="https://images5.alphacoders.com/131/1319998.png" alt="Amnesia : The Bunker" srcset="">     
                     </a>
-                    <p class="text-white">Amnesia : The Bunker</p>
-                </div>
-                
-                
-                    
-
-            
-         
+                    <p class="text-white">Amnesia : The Bunker <span class="badge badge-pill bg-danger">Survival-horror</span></p>
+                </div>              
         </div>
-
     </div>
 
     <!-- footer -->
     <footer class="container-fluid py-4  text-center">
-        <span class="text-muted">Copyright © 2023 Gameek - All rights reserved
-        </span>
+        <a href="#">Contact</a>
+        <a href="#">Mentions Légales</a>
+        <div class="text-muted">Copyright © 2023 Gameek - All rights reserved
+        </div>
     </footer>
 
     <!-- Optional JavaScript; choose one of 
