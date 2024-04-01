@@ -1,11 +1,24 @@
 body{ 
-    background-color: #303030;  
+    background-color: #16120C;  
 }
 
-.logo-gameek 
+.logo-link {
+
+}
+
+.logo
 {
-    height:30%;
-    width: 30%;
+    height:100px;
+    width: 200px;
+}
+
+#VideoGamesNavbarDropdown {
+    color:white;
+}
+.container {
+    background-color: whitesmoke;
+    border-radius: 5px;
+    
 }
 .selected-game-bg 
 {
@@ -13,16 +26,15 @@ body{
     background-repeat: no-repeat;
     background-position: center;
 }
-.title {
-    font-size: 1.8em;
-    font-family: 'DotGothic16', sans-serif;
-    color:white;
-    text-decoration: none;
-    margin-right: 20px;
-}
 
+
+a {
+    text-decoration: none;
+    color: white;
+}
 a:hover {
-color: whitesmoke;
+/*background-color: #FFCA16;
+border-radius: 5px;*/
 }
 
 .game__poster {
