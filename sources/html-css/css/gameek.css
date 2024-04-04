@@ -2,22 +2,40 @@ body{
     background-color: #16120C;  
 }
 
+nav {
+    background-color: #16120C;
+}
 .logo-link {
 
 }
 
 .logo
 {
-    height:100px;
-    width: 200px;
+    height:50px;
+    width: 100px;
 }
 
-#VideoGamesNavbarDropdown {
-    color:white;
+#VideoGamesNavbarDropdown, #PlatformsNavbarDropdown, #UserNavbarDropdown, .favList 
+{
+    color:whitesmoke;
 }
-.container {
+
+#VideoGamesNavbarDropdown:hover, #PlatformsNavbarDropdown:hover, #UserNavbarDropdown:hover, .favList:hover 
+{
+    background-color: #FFCA16;
+    color: #16120C;
+    border-radius: 5px;
+}
+.newGames {
+    border-radius: 5px;
+    margin-top: 100px;
+    width: 100%;
+}
+
+.bestGames, .newReviews {
     background-color: whitesmoke;
     border-radius: 5px;
+    margin-top: 20px;
     
 }
 .selected-game-bg 
@@ -30,11 +48,10 @@ body{
 
 a {
     text-decoration: none;
-    color: white;
+    color: whitesmoke;
 }
-a:hover {
-/*background-color: #FFCA16;
-border-radius: 5px;*/
+.game-link img:hover {
+opacity: 0.9;
 }
 
 .game__poster {
@@ -44,5 +61,27 @@ border-radius: 5px;*/
 }
 
 
+.dropdown:hover .dropdown-menu {
+    display: block;
+  }
 
+.emoji {
+    color: orangered;
+}
 
+.carousel-indicators img {
+    width: 70px;
+    display: block;
+}
+
+.carousel-indicators button{
+    width: max-content!important;
+}
+
+.carousel-indicators button:hover{
+    transform: scale(1.2);
+}
+
+.navbar-toggler {
+    background-color: #FFCA16;
+}

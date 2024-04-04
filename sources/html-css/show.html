@@ -24,14 +24,12 @@
 </head>
 
 <body>
-<main class="selected-game-bg" style="background-image: url(https://images7.alphacoders.com/113/1132849.jpg);">
+
 
     <!-- Nav -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient">
-        <div class="container-fluid">
-            <a href="./" class="title">
-                <span>Gameek</span>
-            </a>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent">
                 <span class="navbar-toggler-icon"></span>
@@ -48,6 +46,7 @@
                             <li><a class="dropdown-item" href="#">Sorties</a></li>
                         </ul>
                     </li>
+                    
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="PlatformsNavbarDropdown" role="button"
@@ -61,12 +60,15 @@
                     </li>
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="./favorites.html"><i class="bi bi-bookmark"></i> Ma liste</a>
+                        <a class="nav-link favList" href="./favorites.html"><i class="bi bi-bookmark"></i> Ma liste</a>
                     </li>
                 </ul>
+
+                <a href="index.html" class="logo-link">
+                    <img src="../Images/gameek-removebg.png" class="logo" alt="" srcset="">
+                </a>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
-                
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="UserNavbarDropdown" role="button"
                             data-bs-toggle="dropdown">
@@ -132,6 +134,6 @@
     <span class="text-muted">Copyright © 2023 Gameek - All rights reserved
     </span>
 </footer>
-</main>
+
 </body>
 </html>
