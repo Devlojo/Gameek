@@ -27,16 +27,19 @@
 
 
     <!-- Nav -->
-    <nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
-            
+
+            <a href="index.html" class="logo-link ">
+                <img src="../Images/gameek-removebg.png" class="logo" alt="" srcset="">
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown test">
                         <a class="nav-link dropdown-toggle" href="#" id="VideoGamesNavbarDropdown" role="button"
                         data-bs-toggle="dropdown"><i class="bi bi-controller"></i> Jeux </a>
                         <ul class="dropdown-menu">
@@ -44,6 +47,7 @@
                             <li><a class="dropdown-item" href="#">Test</a></li>
                             <li><a class="dropdown-item" href="#">Soluce</a></li>
                             <li><a class="dropdown-item" href="#">Sorties</a></li>
+                            <li><a class="dropdown-item" href="#">Jeux les mieux notés</a></li>
                         </ul>
                     </li>
                     
@@ -64,9 +68,6 @@
                     </li>
                 </ul>
 
-                <a href="index.html" class="logo-link">
-                    <img src="../Images/gameek-removebg.png" class="logo" alt="" srcset="">
-                </a>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
                     <li class="nav-item dropdown">
@@ -85,7 +86,7 @@
                     </li>
                 </ul>
 
-                <button type="button" class="btn btn-warning me-2">Connexion</button>
+                <button type="button" class="btn btn-warning mx-2">Connexion</button>
 
                 <form class="d-flex " action="list.html">
                     <input class="form-control form-control-sm me-2" name="search" type="search" placeholder="Rechercher...">

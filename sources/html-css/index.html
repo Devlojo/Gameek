@@ -27,8 +27,12 @@
     
 
     <!-- Nav -->
-    <nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
+
+            <a href="index.html" class="logo-link ">
+                <img src="../Images/gameek-removebg.png" class="logo" alt="" srcset="">
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent">
                 <span class="navbar-toggler-icon"></span>
@@ -64,9 +68,6 @@
                     </li>
                 </ul>
 
-                <a href="index.html" class="logo-link ">
-                    <img src="../Images/gameek-removebg.png" class="logo" alt="" srcset="">
-                </a>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
                     <li class="nav-item dropdown">
@@ -100,30 +101,41 @@
         <h2 class="text-white fw-bold">Les dernières sorties </h2>
         <div id="carouselExampleIndicators" class="carousel slide col-lg-12 mx-auto pt-2" data-bs-ride="carousel" data-bs-wrap="true">
             <div class="carousel-inner col-lg-12">
-                <div class="carousel-item active" data-bs-interval ="10000">
+                <div class="carousel-item active" data-bs-interval ="5000">
                     <a href="show.html" class="game-link">
                         <img class="col-12 col-lg-12" src="https://images3.alphacoders.com/132/1321152.jpeg" alt="First slide">
                         <div class="carousel-caption d-none d-md-block">
                             <h5 class="fw-bold">Final Fantasy XVI</h5>
-                            <p>Sortie le 22/06/23</p>
+                            <span class="badge rounded-pill platform-newGames">PS5</span>
+                            <p class="pt-2">Sortie le 22/06/23</p>
                         </div>
                     </a>
                 </div>
-                <div class="carousel-item" data-bs-interval ="10000">
+                <div class="carousel-item" data-bs-interval ="5000">
                     <a href="show.html" class="game-link">    
                         <img class="col-12 col-lg-12" src="https://images.alphacoders.com/130/1305762.jpeg" alt="Second slide">
                         <div class="carousel-caption d-none d-md-block">
                             <h5 class="fw-bold">Diablo 4</h5>
-                            <p>Sortie le 05/06/23</p>
+                            <span class="badge rounded-pill platform-newGames">PS5</span>
+                            <span class="badge rounded-pill multi-platform-newGames">PS4</span>                                 
+                            <span class="badge rounded-pill multi-platform-newGames">Xbox Series</span>                                 
+                            <span class="badge rounded-pill multi-platform-newGames">Xbox One</span>                                 
+                            <span class="badge rounded-pill multi-platform-newGames">PC</span> 
+                            <p class="pt-2">Sortie le 05/06/23</p>
                         </div>
                     </a>
                 </div>
-                <div class="carousel-item" data-bs-interval ="10000">
+                <div class="carousel-item" data-bs-interval ="5000">
                     <a href="show.html" class="game-link"> 
                         <img class="col-12 col-lg-12" src="https://images3.alphacoders.com/131/1313511.jpg" alt="Third slide">
                         <div class="carousel-caption d-none d-md-block">
                             <h5 class="fw-bold">Street Fighter 6</h5>
-                            <p>Sortie le 02/06/23</p>
+                            <span class="badge rounded-pill platform-newGames">PS5</span>
+                            <span class="badge rounded-pill multi-platform-newGames">PS4</span>                                 
+                            <span class="badge rounded-pill multi-platform-newGames">Xbox Series</span>                                 
+                            <span class="badge rounded-pill multi-platform-newGames">Xbox One</span>                                 
+                            <span class="badge rounded-pill multi-platform-newGames">PC</span> 
+                            <p class="pt-2">Sortie le 02/06/23</p>
                         </div>
                     </a>
                 </div>
@@ -151,108 +163,301 @@
 
     <div class="container bestGames pt-2">
 
-        <div class="row">
-            
-                <h2 class="text-dark fw-bold mb-4">Les mieux notés <span class="emoji">	&#x1F525;</span> </h2>
-                <div class="col-6 col-lg-4">
-                    <a href="show.html" class="game-link">
-                        <img class="img-fluid" src="https://images3.alphacoders.com/132/1321152.jpeg" alt="Final Fantasy XVI" srcset="">
-                    </a>
-                    <p class="text-dark">Final Fantasy XVI <span class="badge badge-pill bg-primary">Action-RPG</span></p>
+        <div class="row"> 
+            <div class="d-flex justify-content-between">         
+                <h2 class="text-dark fw-bold mb-4">Les mieux notés <span class="emoji">	&#x1F525;</span></h2>
+                <div class="d-flex pt-1">
+                    <div class="dropdown filter-dropdown">
+                        <button class="btn btn-warning dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Genre
+                        </button>
+                        <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">FPS</a></li>
+                        <li><a class="dropdown-item" href="#">Sport</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown filter-dropdown">
+                        <button class="btn btn-warning dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Plateforme
+                        </button>
+                        <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">PS5</a></li>
+                        <li><a class="dropdown-item" href="#">Switch</a></li>
+                        <li><a class="dropdown-item" href="#">Xbox</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-6 col-lg-4">
+            </div>
+                <div class="col-6 col-lg-4 image-container">
+                    <a href="show.html" class="game-link">
+                        <img class="img-fluid" src="https://images3.alphacoders.com/132/1321152.jpeg" alt="Final Fantasy XVI" srcset="">                                                                                                    
+                    </a>
+                    <p class="text-dark mb-2">
+                        <span class="fw-bold h5 reviewGames">18</span>
+                        /20 Final Fantasy XVI 
+                        <span class="badge badge-pill bg-primary">Action-RPG</span>   
+                    </p>
+                    <div class="mb-2">
+                        <span class="badge rounded-pill platform">PS5</span>
+                    </div>                          
+                </div>
+                <div class="col-6 col-lg-4 image-container">
                     <a href="show.html" class="game-link">
                         <img class="img-fluid" src="https://images.alphacoders.com/130/1305762.jpeg" alt="Diablo 4" srcset="">        
-                    </a>
-                    <p class="text-dark">Diablo 4 <span class="badge badge-pill bg-secondary">Hack'N'Slash</span></p>
+                    </a>                                                    
+                    <p class="text-dark mb-2">
+                        <span class="fw-bold h5 reviewGames">17</span>/20 Diablo 4
+                        <span class="badge badge-pill bg-secondary">Hack'N'Slash</span>
+                    </p>
+                    <span class="badge rounded-pill multi-platform">PS5</span>                                 
+                    <span class="badge rounded-pill multi-platform">PS4</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox Series</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox One</span>                                 
+                    <span class="badge rounded-pill multi-platform">PC</span>
                 </div>
-                <div class="col-6 col-lg-4">
+                <div class="col-6 col-lg-4 image-container">
                     <a href="show.html" class="game-link">
                         <img class="img-fluid" src="https://images3.alphacoders.com/131/1313511.jpg" alt="Street Fighter 6" srcset="">     
                     </a>
-                    <p class="text-dark">Street Fighter 6 <span class="badge badge-pill bg-success">Combat</span></p>
+                    <p class="text-dark mb-2"><span class="fw-bold h5 reviewGames">19</span>/20 Street Fighter 6 
+                        <span class="badge badge-pill bg-success">Combat</span>
+                    </p>
+                    <span class="badge rounded-pill multi-platform">PS5</span>                                 
+                    <span class="badge rounded-pill multi-platform">PS4</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox Series</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox One</span>                                 
+                    <span class="badge rounded-pill multi-platform">PC</span>
                 </div>
-                <div class="col-6 col-lg-4">
+                <div class="col-6 col-lg-4 image-container">
                     <a href="show.html" class="game-link">
                         <img class="img-fluid" src="https://images5.alphacoders.com/129/1297091.jpg" alt="Baldur's Gate III" srcset="">     
-                    </a>
-                    <p class="text-dark">Baldur's Gate III <span class="badge badge-pill bg-warning">RPG</span><span class="badge mx-2 badge-pill bg-dark text-white">Stratégie</span></p>
+                    </a>             
+                    <p class="text-dark mb-2"><span class="fw-bold h5 reviewGames">18</span>/20 Baldur's Gate III <span class="badge badge-pill bg-warning">RPG</span><span class="badge mx-2 badge-pill bg-dark text-white">Stratégie</span></p>
+                    <span class="badge rounded-pill multi-platform">PS5</span>                                 
+                    <span class="badge rounded-pill multi-platform">PS4</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox Series</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox One</span>                                 
+                    <span class="badge rounded-pill multi-platform">PC</span>
                 </div>
-                <div class="col-6 col-lg-4">
+                <div class="col-6 col-lg-4 image-container">
                     <a href="show.html" class="game-link">
                         <img class="img-fluid" src="https://images5.alphacoders.com/132/1320827.png" alt="Oxenfree II: Lost Signals" srcset="">     
-                    </a>
-                    <p class="text-dark">Oxenfree II : Lost Signals <span class="badge badge-pill bg-info">Aventure</span></p>
+                    </a>            
+                    <p class="text-dark mb-2"><span class="fw-bold h5 reviewGames">18</span>/20 Oxenfree II : Lost Signals <span class="badge badge-pill bg-info">Aventure</span></p>
+                    <div class="mb-2">
+                        <span class="badge rounded-pill multi-platform">PS5</span>                                 
+                        <span class="badge rounded-pill multi-platform">PS4</span>                                 
+                        <span class="badge rounded-pill multi-platform">Xbox Series</span>                                 
+                        <span class="badge rounded-pill multi-platform">Xbox One</span>                                 
+                        <span class="badge rounded-pill multi-platform">PC</span>
+                    </div>
                 </div>
-                <div class="col-6 col-lg-4">
+                <div class="col-6 col-lg-4 image-container">
                     <a href="show.html" class="game-link">
                         <img class="img-fluid" src="https://images5.alphacoders.com/121/1219094.jpg" alt="Exoprimal" srcset="">     
-                    </a>
-                    <p class="text-dark">Exoprimal <span class="badge badge-pill bg-danger">TPS</span></p>
+                    </a>                    
+                    <p class="text-dark mb-2"><span class="fw-bold h5 reviewGames">18</span>/20 Exoprimal <span class="badge badge-pill bg-danger">TPS</span></p>
+                    <span class="badge rounded-pill multi-platform">PS5</span>                                 
+                    <span class="badge rounded-pill multi-platform">PS4</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox Series</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox One</span>                                 
+                    <span class="badge rounded-pill multi-platform">PC</span>
                 </div>
-                <div class="col-6 col-lg-4">
+                <div class="col-6 col-lg-4 image-container">
                     <a href="show.html" class="game-link">
                         <img class="img-fluid" src="https://images2.alphacoders.com/132/1325518.jpeg" alt="Remnant II" srcset="">     
-                    </a>
-                    <p class="text-dark">Remnant II <span class="badge badge-pill bg-danger">Action</span></p>
+                    </a>                   
+                    <p class="text-dark mb-2"><span class="fw-bold h5 reviewGames">18</span>/20 Remnant II <span class="badge badge-pill bg-danger">Action</span></p>
+                    <div class="mb-2">                   
+                        <span class="badge rounded-pill multi-platform">PS5</span>                                 
+                        <span class="badge rounded-pill multi-platform">PS4</span>                                 
+                        <span class="badge rounded-pill multi-platform">Xbox Series</span>                                 
+                        <span class="badge rounded-pill multi-platform">Xbox One</span>                                 
+                        <span class="badge rounded-pill multi-platform">PC</span>
+                    </div>
                 </div>
-                <div class="col-6 col-lg-4">
+                <div class="col-6 col-lg-4 image-container">
                     <a href="show.html" class="game-link">
                         <img class="img-fluid" src="https://images7.alphacoders.com/129/1293558.jpg" alt="Crash Team Rumble" srcset="">     
-                    </a>
-                    <p class="text-dark">Crash Team Rumble <span class="badge badge-pill bg-danger">Plate-forme</span></p>
+                    </a>                                        
+                    <p class="text-dark mb-2"><span class="fw-bold h5 reviewGames">18</span>/20 Crash Team Rumble <span class="badge badge-pill bg-danger">Plate-forme</span></p>
+                    <span class="badge rounded-pill multi-platform">PS5</span>                                 
+                    <span class="badge rounded-pill multi-platform">PS4</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox Series</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox One</span>                                 
+                    <span class="badge rounded-pill multi-platform">PC</span>
                 </div>
-                <div class="col-6 col-lg-4">
+                <div class="col-6 col-lg-4 image-container">
                     <a href="show.html" class="game-link">
                         <img class="img-fluid" src="https://images5.alphacoders.com/131/1319998.png" alt="Amnesia : The Bunker" srcset="">     
-                    </a>
-                    <p class="text-dark">Amnesia : The Bunker <span class="badge badge-pill bg-danger">Survival-horror</span></p>
+                    </a>                    
+                    <p class="text-dark mb-2"><span class="fw-bold h5 reviewGames">18</span>/20 Amnesia : The Bunker <span class="badge badge-pill bg-danger">Survival-horror</span></p>
+                    <span class="badge rounded-pill multi-platform">PS5</span>                                 
+                    <span class="badge rounded-pill multi-platform">PS4</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox Series</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox One</span>                                 
+                    <span class="badge rounded-pill multi-platform">PC</span>
+                </div>
+                <div class="col-6 col-lg-4 image-container">
+                    <a href="show.html" class="game-link">
+                        <img class="img-fluid" src="https://images2.alphacoders.com/132/1325518.jpeg" alt="Remnant II" srcset="">     
+                    </a>                    
+                    <p class="text-dark mb-2"><span class="fw-bold h5 reviewGames">18</span>/20 Remnant II <span class="badge badge-pill bg-danger">Action</span></p>
+                    <div class="mb-2">
+                        <span class="badge rounded-pill multi-platform">PS5</span>                                 
+                        <span class="badge rounded-pill multi-platform">PS4</span>                                 
+                        <span class="badge rounded-pill multi-platform">Xbox Series</span>                                 
+                        <span class="badge rounded-pill multi-platform">Xbox One</span>                                 
+                        <span class="badge rounded-pill multi-platform">PC</span>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-4 image-container">
+                    <a href="show.html" class="game-link">
+                        <img class="img-fluid" src="https://images7.alphacoders.com/129/1293558.jpg" alt="Crash Team Rumble" srcset="">     
+                    </a>                     
+                    <p class="text-dark mb-2"><span class="fw-bold h5 reviewGames">18</span>/20 Crash Team Rumble <span class="badge badge-pill bg-danger">Plate-forme</span></p>
+                    <span class="badge rounded-pill multi-platform">PS5</span>                                 
+                    <span class="badge rounded-pill multi-platform">PS4</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox Series</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox One</span>                                 
+                    <span class="badge rounded-pill multi-platform">PC</span>
+                </div>
+                <div class="col-6 col-lg-4 image-container">
+                    <a href="show.html" class="game-link">
+                        <img class="img-fluid" src="https://images5.alphacoders.com/131/1319998.png" alt="Amnesia : The Bunker" srcset="">     
+                    </a>                                      
+                    <p class="text-dark mb-2"><span class="fw-bold h5 reviewGames">18</span>/20 Amnesia : The Bunker <span class="badge badge-pill bg-danger">Survival-horror</span></p>
+                    <span class="badge rounded-pill multi-platform">PS5</span>                                 
+                    <span class="badge rounded-pill multi-platform">PS4</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox Series</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox One</span>                                 
+                    <span class="badge rounded-pill multi-platform">PC</span> 
                 </div>              
         </div>
     </div>
 
-    <div class="container newReviews">
+    <div class="container newReviews py-2">
         <div class="row">
-            <h2 class="text-dark fw-bold py-2">Les derniers tests </h2>
+            <div class="d-flex justify-content-between">  
+                <h2 class="text-dark fw-bold mb-4">Les derniers tests </h2>
+                <div class="d-flex flex-wrap pt-1">
+                    <div class="dropdown filter-dropdown">
+                        <button class="btn btn-warning dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Genre
+                        </button>
+                        <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">FPS</a></li>
+                        <li><a class="dropdown-item" href="#">Sport</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown filter-dropdown">
+                        <button class="btn btn-warning dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Plateforme
+                        </button>
+                        <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">PS5</a></li>
+                        <li><a class="dropdown-item" href="#">Switch</a></li>
+                        <li><a class="dropdown-item" href="#">Xbox</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown filter-dropdown">
+                        <button class="btn btn-warning dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Auteur
+                        </button>
+                        <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Paul</a></li>
+                        <li><a class="dropdown-item" href="#">Philiiiiipe</a></li>
+                        <li><a class="dropdown-item" href="#">Jack</a></li>
+                        <li><a class="dropdown-item" href="#">Louis</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown filter-dropdown">
+                        <button class="btn btn-warning dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Note
+                        </button>
+                        <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">0</a></li>
+                        <li><a class="dropdown-item" href="#">1</a></li>
+                        <li><a class="dropdown-item" href="#">2</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div class="card col-12 col-lg-3 pt-2">
                 <img src="https://images7.alphacoders.com/129/1293558.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Crash</h5>
+                <div class="card-body">                 
+                    <h5 class="card-title"> <span class="fw-bold reviewGames">12</span>/20 Crash</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-warning">Lire test</a>
-                    <span class="fst-italic">Publié par Jack</span>
+                    <a href="#" class="btn btn-warning btn-sm">Lire test</a>
+                    <span class="fst-italic text-muted">Par Jack</span>
+                    <span class="badge badge-pill bg-danger">Plate-forme</span>
+                    <span class="badge rounded-pill multi-platform">PS5</span>                                 
+                    <span class="badge rounded-pill multi-platform">PS4</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox Series</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox One</span>                                 
+                    <span class="badge rounded-pill multi-platform">PC</span>
                 </div>
             </div>
             <div class="card col-12 col-lg-3 pt-2">
                 <img src="https://images3.alphacoders.com/132/1321152.jpeg" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Crash</h5>
+                    <h5 class="card-title"><span class="fw-bold reviewGames">15</span>/20 Final Fantasy XVI</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-warning">Lire test</a>
+                    <a href="#" class="btn btn-warning btn-sm">Lire test</a>
+                    <span class="fst-italic text-muted">Par Paul</span>
+                    <span class="badge badge-pill bg-primary">Action-RPG</span>
+                    <span class="badge rounded-pill multi-platform">PS5</span>                                 
+                    <span class="badge rounded-pill multi-platform">PS4</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox Series</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox One</span>                                 
+                    <span class="badge rounded-pill multi-platform">PC</span>
                 </div>
             </div>
             <div class="card col-12 col-lg-3 pt-2">
                 <img src="https://images3.alphacoders.com/131/1313511.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Crash</h5>
+                    <h5 class="card-title"><span class="fw-bold reviewGames">19</span>/20 Street Fighter 6</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-warning">Lire test</a>
+                    <a href="#" class="btn btn-warning btn-sm">Lire test</a>
+                    <span class="fst-italic text-muted">Par Paul</span>
+                    <span class="badge badge-pill bg-success">Combat</span>
+                    <span class="badge rounded-pill multi-platform">PS5</span>                                 
+                    <span class="badge rounded-pill multi-platform">PS4</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox Series</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox One</span>                                 
+                    <span class="badge rounded-pill multi-platform">PC</span>
                 </div>
             </div>
             <div class="card col-12 col-lg-3 pt-2">
                 <img src="https://images3.alphacoders.com/131/1313511.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Crash</h5>
+                    <h5 class="card-title"><span class="fw-bold reviewGames">17</span>/20 Street Fighter 6</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-warning">Lire test</a>
+                    <a href="#" class="btn btn-warning btn-sm">Lire test</a>
+                    <span class="fst-italic text-muted">Par Louis</span>
+                    <span class="badge badge-pill bg-success">Combat</span>
+                    <span class="badge rounded-pill multi-platform">PS5</span>                                 
+                    <span class="badge rounded-pill multi-platform">PS4</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox Series</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox One</span>                                 
+                    <span class="badge rounded-pill multi-platform">PC</span>
                 </div>
             </div>
             <div class="card col-12 col-lg-3 pt-2">
                 <img src="https://images3.alphacoders.com/131/1313511.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Crash</h5>
+                    <h5 class="card-title"><span class="fw-bold reviewGames">7</span>/20 Street Fighter 6</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-warning">Lire test</a>
+                    <a href="#" class="btn btn-warning btn-sm">Lire test</a>
+                    <span class="fst-italic text-muted">Par Philiiiiipe</span>
+                    <span class="badge badge-pill bg-success">Combat</span>
+                    <span class="badge rounded-pill multi-platform">PS5</span>                                 
+                    <span class="badge rounded-pill multi-platform">PS4</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox Series</span>                                 
+                    <span class="badge rounded-pill multi-platform">Xbox One</span>                                 
+                    <span class="badge rounded-pill multi-platform">PC</span>
                 </div>
             </div>                  
         </div>
@@ -263,7 +468,7 @@
     <footer class="container-fluid px-4  text-center">
         <a href="#">Contact</a>
         <a href="#">Mentions Légales</a>
-        <div class="text-muted">Copyright © 2023 Gameek - All rights reserved
+        <div class="text-white">Copyright © 2023 Gameek - All rights reserved
         </div>
     </footer>
 
