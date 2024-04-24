@@ -1,12 +1,11 @@
+/*HOMEPAGE*/
+
 body{ 
     background-color: #16120C;  
 }
 
 nav {
     background-color: #16120C;
-}
-.logo-link {
-
 }
 
 .logo
@@ -69,8 +68,14 @@ a {
     text-decoration: none;
     color: whitesmoke;
 }
-.game-link img:hover {
-opacity: 0.9;
+.game-link img:hover 
+{
+    opacity: 0.9;
+}
+
+.game-screen-detail:hover
+{
+    opacity: 0.7;
 }
 
 .game__poster {
@@ -97,10 +102,6 @@ nav .dropdown:hover .dropdown-menu {
     margin-left: 10px;
 }
 
-/*.image-container {
-    position: relative;
-    
-}*/
 
 .platform, .multi-platform {    
     color: #16120C;
@@ -112,9 +113,37 @@ nav .dropdown:hover .dropdown-menu {
     border: 1px solid #04BDC3;
 }
 
-/*.multi-platform {
-    position: absolute;
-    right: 71%;
-    top: 2%;
-    
+/* PAGE DETAIL D'UN JEU */
+
+.detail-game {
+    background-color: whitesmoke;
+    border-radius: 5px;
+    width: 100%
+}
+
+/*.img img {
+    width: 32%;
 }*/
+
+.container-menu-game {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #16120C;
+}
+
+.button-menu-game {
+    background-color: #04BDC3;
+    border: 1px outset #04BDC3;
+    color: #16120C;
+    border-radius: 2px 5px;
+}
+.button-menu-game:hover {
+    background-color: transparent;
+}
+
+.average-grade-game {
+    /*border: 1px groove #04BDC3;
+    border-radius: 5px;*/
+    display: inline-block;
+    box-shadow: 1px 2px 2px 2px #04BDC3;
+    padding: 5px;
+}

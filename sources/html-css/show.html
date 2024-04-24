@@ -20,7 +20,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
     
-    <title>Gameek</title>
+    <title>Gameek - Test de jeu vidéo par la communauté</title>
 </head>
 
 <body>
@@ -97,38 +97,84 @@
     </nav>
 <!-- main -->
 
-<div class="my-5 py-5 text-center">
-        
-    <div class="col-lg-4 mx-auto"></div>
-</div>
-
-
-
-<div class="container-xl bg-dark-gradient p-5 ">
-               
-                <div class="col-8 p-4 d-flex flex-column bg-dark bg-gradient text-white">
-                    <a href="./favorites.html" class="game__favorite fs-1 my-2 mx-3 link-warning"><i class="bi bi-bookmark-plus"></i></a>
-                    <h3 class="mb-1">Final Fantasy XVI</h3>
-                    <div class="mb-1 text-white">Date de sortie le 21/06/23 </div>
-                    <div class="d-flex" style="color: orange;">
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-half"></i>
-                        <span class="ps-1">4.5</span>
+<div class="container detail-game p-2 ">
+    <div class="row">
+        <ul class="list-unstyled d-flex justify-content-evenly container-menu-game">
+            <button type="button" class="btn button-menu-game"><li>Général</li></button>
+            <button type="button" class="btn button-menu-game"><li>Test</li></button>
+            <button type="button" class="btn button-menu-game"><li>Images</li></button>
+            <button type="button" class="btn button-menu-game"><li>Vidéos</li></button>
+        </ul>
+        <h2 class="fw-bold text-center">Final Fantasy XVI</h2>       
+        <div class=" p-3 d-sm-flex text-dark">    
+            <div class="col-3">
+                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co5w3k.png" alt="" srcset="">
+            </div>
+            <div class="d-flex flex-wrap">           
+                <p class="">L'histoire du jeu suit Clive au cours de trois périodes de sa vie : son adolescence à l'âge de 15 ans entrevue au cours d'un flashback, sa routine de soldat-esclave à 28 ans, puis sa vie d'adulte libre à 33 ans. Durant la première période, Clive est le gardien de Joshua, le Primordial du Phénix dont il partagera le pouvoir. Un jour, son pays natal, Rosalia, est attaqué et que des événements tragiques provoquent l'émergence d'un mystérieux Primordial de feu inconnu jusqu'alors.
+                </p>
+                <div class="">
+                    <div class="average-grade-game text-center">
+                        <p>Moyenne du jeu (4 tests)</p>
+                        <p><span class="fw-bold h4 reviewGames">17</span>/20 </p>
                     </div>
-                    <p class="pt-4"><small>L'histoire du jeu suit Clive au cours de trois périodes de sa vie : son adolescence à l'âge de 15 ans entrevue au cours d'un flashback, sa routine de soldat-esclave à 28 ans, puis sa vie d'adulte libre à 33 ans. Durant la première période, Clive est le gardien de Joshua, le Primordial du Phénix dont il partagera le pouvoir. Un jour, son pays natal, Rosalia, est attaqué et que des événements tragiques provoquent l'émergence d'un mystérieux Primordial de feu inconnu jusqu'alors.
-                    </small>
-                    </p>      
-                    <a href="index.html" class="fs-1 mt-3 text-warning align-self-start">
-                        <i class="bi bi-arrow-left-square"></i>
-                    </a>
+                    <div class="table-responsive mt-4">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th scope="col">Genre</th>
+                                <th scope="col">Editeur</th>
+                                <th scope="col">Développeur</th>
+                                <th scope="col">Date de sortie</th>
+                                <th scope="col">Plate-forme</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><span class="badge badge-pill bg-primary">Action-RPG</span></td>
+                                <td>Square-Enix</td>
+                                <td>Square-Enix</td>
+                                <td>22/06/23</td>
+                                <td><span class="badge rounded-pill platform">PS5</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            
-        
-
+            </div>                 
+        </div>       
+    </div>
 </div>
+
+<div class="container text-center bg-dark bg-gradient py-3">
+    <div class="row">
+        <div class="col-12 col-lg-3 img">
+            <a href="#" class="game-screen-detail">
+                <img src="https://images.igdb.com/igdb/image/upload/t_original/sc8kvu.webp" class="img-fluid" alt="">
+            </a>
+        </div>
+        <div class="col-12 col-lg-3 img">
+            <a href="#" class="game-screen-detail">
+                <img src="https://images.igdb.com/igdb/image/upload/t_original/sc8kw0.webp" class="img-fluid" alt="">
+            </a>
+        </div>
+        <div class="col-12 col-lg-3 img">
+            <a href="#" class="game-screen-detail">
+                <img src="https://images.igdb.com/igdb/image/upload/t_original/sc8kw4.webp" class="img-fluid" alt="">
+            </a>
+        </div>
+        <div class="col-12 col-lg-3 img">
+            <a href="#" class="game-screen-detail">
+                <img src="https://images.igdb.com/igdb/image/upload/t_original/sc8kvy.webp" class="img-fluid" alt="">
+            </a>
+        </div>
+        
+    </div>
+    <a href="#">
+        <button type="button" class="btn btn-warning mt-2">Voir toutes les images (4)</button>
+    </a>
+</div>
+
   <!-- footer -->
    
    <footer class="container-fluid py-4  text-center">
