@@ -7,8 +7,8 @@ Site Communautaire de jeux vidéos /!\ en construction
 - Possibilité de naviguer dans les différentes pages (page détail d'un jeu etc.)
 - Pouvoir utiliser la barre de recherche
 - Afficher les derniers jeux sortis en page d'accueil
-- Afficher les jeux ayant la meilleure note reçue par les internautes en page d'accueil
-- Pouvoir donner une note à un jeu en tant qu'utilisateur connecté
+- Afficher les 12 jeux les mieux notés par la communauté en page d'accueil
+- Afficher les 12 derniers tests en page d'accueil
 
 ## Technos qui seront utilisées 
 
@@ -19,4 +19,5 @@ Site Communautaire de jeux vidéos /!\ en construction
 - JAVASCRIPT
 - MySQL
 - SYMFONY
-  
+
+

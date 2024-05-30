@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <!-- Bootstrap icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <!-- Our custom CSS -->
+    <link rel="stylesheet" href="../css/gameek.css">
+    <!-- favicon -->
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <!-- Title typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+    
+    <title>Gameek - Test de jeu vidéo par la communauté</title>
+</head>
+
+<body>
+
+
+    <!-- Nav -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+
+            <a href="../home/index.html" class="logo-link ">
+                <img src="../../Images/gameek-removebg.png" class="logo" alt="" srcset="">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="VideoGamesNavbarDropdown" role="button"
+                        data-bs-toggle="dropdown"><i class="bi bi-controller"></i> Jeux </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Tout les jeux</a></li>
+                            <li><a class="dropdown-item" href="#">Test</a></li>
+                            <li><a class="dropdown-item" href="#">Soluce</a></li>
+                            <li><a class="dropdown-item" href="#">Sorties</a></li>
+                            <li><a class="dropdown-item" href="#">Jeux les mieux notés</a></li>
+                        </ul>
+                    </li>
+                    
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="PlatformsNavbarDropdown" role="button"
+                        data-bs-toggle="dropdown"><i class="bi bi-joystick"></i> Genre</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Tout les genres</a></li>
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Combat</a></li>
+                            <li><a class="dropdown-item" href="#">RPG</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link favList" href="./favorites.html"><i class="bi bi-bookmark"></i> Ma liste</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="UserNavbarDropdown" role="button"
+                            data-bs-toggle="dropdown">
+                            <i class="bi bi-person-square"></i>
+                            <span>Mon compte</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Profil</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Déconnexion</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <button type="button" class="btn btn-warning mx-2">Connexion</button>
+
+                <form class="d-flex " action="list.html">
+                    <input class="form-control form-control-sm me-2" name="search" type="search" placeholder="Rechercher...">
+                    <button class="btn btn-outline-warning" type="submit"><i class="bi bi-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </nav>
+<!-- main -->
+
+<div class="container detail-game p-2 ">
+    <div class="row">
+        <ul class="list-unstyled d-flex justify-content-evenly container-menu-game">
+            <a href="../videoGames/show.html">
+                <button type="button" class="btn button-menu-game">
+                    <li>Général</li>
+                </button>
+            </a>
+            <a href="../tests/show.html">
+                <button type="button" class="btn button-menu-game">
+                    <li>Tests</li>
+                </button>
+            </a><a href="../images/show.html">
+                <button type="button" class="btn button-menu-game">
+                    <li>Images</li>
+                </button>
+            </a><a href="#">
+                <button type="button" class="btn button-menu-game">
+                    <li>Vidéos</li>
+                </button>
+            </a>
+        </ul>
+        <h2 class="fw-bold text-center">Final Fantasy XVI</h2>       
+        <div class=" p-3 d-sm-flex d-md-flex d-lg-flex text-dark">    
+            <div class="col-12 col-sm-3 col-md-5 col-lg-3">
+                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big/co5w3k.png" class="img-fluid" alt="" srcset="">
+            </div>
+            <div class="d-flex flex-wrap">           
+                <p class="">L'histoire du jeu suit Clive au cours de trois périodes de sa vie : son adolescence à l'âge de 15 ans entrevue au cours d'un flashback, sa routine de soldat-esclave à 28 ans, puis sa vie d'adulte libre à 33 ans. Durant la première période, Clive est le gardien de Joshua, le Primordial du Phénix dont il partagera le pouvoir. Un jour, son pays natal, Rosalia, est attaqué et que des événements tragiques provoquent l'émergence d'un mystérieux Primordial de feu inconnu jusqu'alors.
+                </p>
+                <div class="container-review-info">
+                    <div class="average-grade-game text-center">
+                        <p>Moyenne du jeu (4 tests)</p>
+                        <p><span class="fw-bold h4 reviewGames">17</span>/20 </p>
+                    </div>
+                    <div class="table-responsive px-4">
+                        <table class="table table-bordered">                         
+                            <tbody>
+                            <tr>
+                                <th scope="row">Genre</th>
+                                <td><span class="badge badge-pill bg-primary">Action-RPG</span></td>                               
+                            </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Editeur</th>
+                                    <td>Square-Enix</td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Développeur</th>
+                                    <td>Square-Enix</td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Date de sortie</th>
+                                    <td>22/06/23</td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Plate-forme</th>
+                                    <td><span class="badge rounded-pill platform">PS5</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>                 
+        </div>       
+    </div>
+</div>
+
+<div class="container text-center bg-dark bg-gradient py-3">
+    <div class="row">
+        <div class="col-12 col-lg-3 img">
+            <a href="#" class="game-screen-detail">
+                <img src="https://images.igdb.com/igdb/image/upload/t_original/sc8kvu.webp" class="img-fluid" alt="">
+            </a>
+        </div>
+        <div class="col-12 col-lg-3 img">
+            <a href="#" class="game-screen-detail">
+                <img src="https://images.igdb.com/igdb/image/upload/t_original/sc8kw0.webp" class="img-fluid" alt="">
+            </a>
+        </div>
+        <div class="col-12 col-lg-3 img">
+            <a href="#" class="game-screen-detail">
+                <img src="https://images.igdb.com/igdb/image/upload/t_original/sc8kw4.webp" class="img-fluid" alt="">
+            </a>
+        </div>
+        <div class="col-12 col-lg-3 img">
+            <a href="#" class="game-screen-detail">
+                <img src="https://images.igdb.com/igdb/image/upload/t_original/sc8kvy.webp" class="img-fluid" alt="">
+            </a>
+        </div>
+        
+    </div>
+    <a href="#">
+        <button type="button" class="btn btn-warning mt-2">Voir toutes les images (4)</button>
+    </a>
+</div>
+
+  <!-- footer -->
+   
+   <footer class="container-fluid py-4  text-center">
+    <span class="text-muted">Copyright © 2023 Gameek - All rights reserved
+    </span>
+</footer>
+
+</body>
+</html>
