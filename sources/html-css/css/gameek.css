@@ -66,7 +66,7 @@ nav {
 
 a {
     text-decoration: none;
-    color: whitesmoke;
+    /*color: whitesmoke;*/
 }
 .game-link img:hover 
 {
@@ -113,6 +113,11 @@ nav .dropdown:hover .dropdown-menu {
     border: 1px solid #04BDC3;
 }
 
+.date-review {
+    display: flex;
+    justify-content: end;
+}
+
 /* PAGE DETAIL D'UN JEU */
 
 .detail-game {
@@ -146,4 +151,26 @@ nav .dropdown:hover .dropdown-menu {
     display: inline-block;
     box-shadow: 1px 2px 2px 2px #04BDC3;
     padding: 5px;
+    height: 100px;
+}
+
+.container-review-info {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    
+}
+
+/* PAGE TESTS D'UN JEU */
+
+.test-games 
+{
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+}
+
+.img-profile {
+    border-radius: 10px;
+    width: 35px;
 }
