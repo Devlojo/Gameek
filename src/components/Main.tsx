@@ -72,10 +72,10 @@ const Main = (): JSX.Element => {
             </button>
           </div>
         </div>
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap justify-between">
           <a
             href=""
-            className="flex w-1/4 rounded-md border-2 border-gray-400 p-2 hover:opacity-85"
+            className="flex w-60 rounded-md border-2 border-gray-300 p-2 hover:opacity-85"
           >
             <article className="flex flex-col gap-2">
               <img
@@ -97,7 +97,7 @@ const Main = (): JSX.Element => {
           </a>
           <a
             href=""
-            className="flex w-1/4 rounded-md border-2 border-gray-400 p-2 hover:opacity-85"
+            className="flex w-60 rounded-md border-2 border-gray-300 p-2 hover:opacity-85"
           >
             <article className="flex flex-col gap-2">
               <img
@@ -119,7 +119,7 @@ const Main = (): JSX.Element => {
           </a>
           <a
             href=""
-            className="flex w-1/4 rounded-md border-2 border-gray-400 p-2 hover:opacity-85"
+            className="flex w-60 rounded-md border-2 border-gray-300 p-2 hover:opacity-85"
           >
             <article className="flex flex-col gap-2">
               <img
@@ -141,7 +141,7 @@ const Main = (): JSX.Element => {
           </a>
           <a
             href=""
-            className="flex w-1/4 rounded-md border-2 border-gray-400 p-2 hover:opacity-85"
+            className="flex w-60 rounded-md border-2 border-gray-300 p-2 hover:opacity-85"
           >
             <article className="flex flex-col gap-2">
               <img
