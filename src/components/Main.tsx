@@ -4,13 +4,12 @@ import axios from "axios";
 import { gameSchema } from "../types";
 import { z } from "zod";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
 
 type Game = z.infer<typeof gameSchema>;
 
 const Main = (): JSX.Element => {
   const [bestGames, setBestGames] = useState<Game | null>(null);
-  const [lastReleasesGames, setLastReleasesGames] = useState<any>();
+  const [lastReleasesGames, setLastReleasesGames] = useState<Game | null>(null);
   const [lastReviewsGames, setLastReviewsGames] = useState<Game | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -19,6 +18,7 @@ const Main = (): JSX.Element => {
       try {
         const response = await axios.get(
           `https://site--gameek-backend--bf7zj7wtgltq.code.run/latest-releases`,
+          //`http://localhost:8000/games/latest-releases`,
         );
 
         const parsedResults = gameSchema.parse(response.data);
@@ -30,7 +30,6 @@ const Main = (): JSX.Element => {
           previous: parsedResults.previous,
           results: gameList,
         });
-        console.log(lastReleasesGames.results.length);
 
         setIsLoading(false);
       } catch (error) {
@@ -97,29 +96,28 @@ const Main = (): JSX.Element => {
           <h2>Les dernières sorties </h2>
           <ImFire className="text-orange-500" />
         </div>
-        <Carousel showThumbs={false}>
-          {lastReleasesGames &&
-          lastReleasesGames.results &&
-          lastReleasesGames.results.length > 0 ? (
-            lastReleasesGames.results.map((game, index) => (
-              <div key={index}>
-                <a href="" className="hover:opacity-75">
-                  <p className="text-white">
-                    {game.name}
-                    <span className="text-white"> {game.released}</span>
-                  </p>
-                  <img
-                    src={game.background_image} // Utilisation de la variable correcte pour chaque jeu
-                    alt={game.name} // Utilisation du nom du jeu pour l'attribut alt
-                    className="h-full object-cover"
-                  />
-                </a>
-              </div>
-            ))
-          ) : (
-            <div>Chargement des derniers jeux...</div> // Message de chargement si les données ne sont pas disponibles
-          )}
-        </Carousel>
+
+        {lastReleasesGames &&
+        lastReleasesGames.results &&
+        lastReleasesGames.results.length > 0 ? (
+          lastReleasesGames.results.map((game, index) => (
+            <div key={index}>
+              <a href="" className="hover:opacity-75">
+                <p className="text-white">
+                  {game.name}
+                  <span className="text-white"> {game.released}</span>
+                </p>
+                <img
+                  src={game.background_image || undefined} // Utilisation de la variable correcte pour chaque jeu
+                  alt={game.name} // Utilisation du nom du jeu pour l'attribut alt
+                  className="h-full object-cover"
+                />
+              </a>
+            </div>
+          ))
+        ) : (
+          <div>Chargement des derniers jeux...</div> // Message de chargement si les données ne sont pas disponibles
+        )}
       </section>
       <section className="h-98 rounded-md bg-white px-4 py-3">
         <div className="flex items-center justify-between gap-2 pb-3">
@@ -145,7 +143,7 @@ const Main = (): JSX.Element => {
                 >
                   <article className="w-full">
                     <img
-                      src={game.background_image}
+                      src={game.background_image || undefined}
                       alt={game.name}
                       className="h-44 w-full object-cover"
                     />
