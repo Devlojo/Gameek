@@ -193,7 +193,7 @@ const Main = (): JSX.Element => {
                 >
                   <article className="flex flex-col gap-2">
                     <img
-                      src={game.background_image}
+                      src={game.background_image || undefined}
                       alt={game.name}
                       className="h-32 object-cover"
                     />
