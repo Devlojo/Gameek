@@ -7,6 +7,7 @@ export const gameSchema = z.object({
   results: z.array(
     z.object({
       name: z.string(),
+      slug: z.string(),
       released: z.string(),
       background_image: z.string().nullable(),
       metacritic: z.number().nullable(),
@@ -15,6 +16,15 @@ export const gameSchema = z.object({
         z.object({
           title: z.string().nullable(),
         }),
+      ),
+      platforms: z.nullable(
+        z.array(
+          z.object({
+            platform: z.object({
+              name: z.string(),
+            }),
+          }),
+        ),
       ),
     }),
   ),
