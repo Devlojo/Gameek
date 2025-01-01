@@ -109,41 +109,39 @@ const Main = (): JSX.Element => {
         >
           {lastReleasesGames &&
           lastReleasesGames.results &&
-          lastReleasesGames.results.length > 0 ? (
-            lastReleasesGames.results.map((game, index) => (
-              <a
-                href={"/" + game.slug}
-                className="block h-full hover:opacity-75"
-                key={index}
-              >
-                <div className="text-white">
-                  <p className="font-bold">{game.name}</p>
-                  <p className=""> {game.released}</p>
-                  <div className="mb-2 flex flex-wrap justify-center gap-1">
-                    {game.platforms && game.platforms.length > 0 ? (
-                      game.platforms.map((platform, index) => (
-                        <p
-                          key={index}
-                          className="rounded-full border border-global bg-global p-1 text-xs text-white"
-                        >
-                          {platform.platform.name}
-                        </p>
-                      ))
-                    ) : (
-                      <p>Chargement des plateformes...</p>
-                    )}
+          lastReleasesGames.results.length > 0
+            ? lastReleasesGames.results.map((game, index) => (
+                <a
+                  href={"/" + game.slug}
+                  className="block h-full hover:opacity-75"
+                  key={index}
+                >
+                  <div className="text-white">
+                    <p className="font-bold">{game.name}</p>
+                    <p className=""> {game.released}</p>
+                    <div className="mb-2 flex flex-wrap justify-center gap-1">
+                      {game.platforms && game.platforms.length > 0 ? (
+                        game.platforms.map((platform, index) => (
+                          <p
+                            key={index}
+                            className="rounded-full border border-global bg-global p-1 text-xs text-white"
+                          >
+                            {platform.platform.name}
+                          </p>
+                        ))
+                      ) : (
+                        <p>Chargement des plateformes...</p>
+                      )}
+                    </div>
                   </div>
-                </div>
-                <img
-                  src={game.background_image || undefined} // Utilisation de la variable correcte pour chaque jeu
-                  alt={game.name} // Utilisation du nom du jeu pour l'attribut alt
-                  className="h-full object-cover"
-                />
-              </a>
-            ))
-          ) : (
-            <div>Chargement des derniers jeux...</div> // Message de chargement si les données ne sont pas disponibles
-          )}
+                  <img
+                    src={game.background_image || undefined} // Utilisation de la variable correcte pour chaque jeu
+                    alt={game.name} // Utilisation du nom du jeu pour l'attribut alt
+                    className="h-full object-cover"
+                  />
+                </a>
+              ))
+            : [<div key="loading">Chargement des derniers jeux...</div>]}
         </Carousel>
       </section>
       <section className="h-98 rounded-md bg-white px-4 py-3">
