@@ -3,12 +3,64 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { gameSchema } from "../types";
 import { z } from "zod";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 import avatar from "../images/sample-avatar.png";
 import { MdArrowDropDown } from "react-icons/md";
+import { PiArrowFatLineLeftFill } from "react-icons/pi";
+import { PiArrowFatLineRightFill } from "react-icons/pi";
 
 type Game = z.infer<typeof gameSchema>;
+
+const responsive = {
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3,
+    slidesToSlide: 3,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2,
+    slidesToSlide: 2,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+    slidesToSlide: 1,
+  },
+};
+
+/* Creation d'un type qui va nous permettre de typer les props du composant CustomLeftArrow
+le type React.MouseEventHandler<HTMLButtonElement> signifie :
+C'est une fonction qui prend un événement de clic (de type souris).
+Cet événement se produit sur un élément HTML de type button ( <HTMLButtonElement> )*/
+
+type CustomArrowProps = {
+  onClick?: React.MouseEventHandler<HTMLButtonElement>; // Typage de la prop onClick
+};
+
+//React.FC signifie que c'est un composant fonctionnel
+const CustomLeftArrow: React.FC<CustomArrowProps> = ({ onClick }) => {
+  return (
+    <button
+      onClick={onClick}
+      className="absolute left-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-gray-800 p-3 text-white opacity-80 hover:opacity-100"
+    >
+      <PiArrowFatLineLeftFill />
+    </button>
+  );
+};
+
+const CustomRightArrow: React.FC<CustomArrowProps> = ({ onClick }) => {
+  return (
+    <button
+      onClick={onClick}
+      className="absolute right-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-gray-800 p-3 text-white opacity-80 hover:opacity-100"
+    >
+      <PiArrowFatLineRightFill />
+    </button>
+  );
+};
 
 const Main = (): JSX.Element => {
   const [bestGames, setBestGames] = useState<Game | null>(null);
@@ -95,31 +147,41 @@ const Main = (): JSX.Element => {
     <p>Loading</p>
   ) : (
     <>
-      <section className="h-98 rounded-md bg-lastestGames px-4 py-3">
+      <section className="h-auto rounded-md bg-lastestGames px-4 py-3">
         <div className="flex items-center gap-2 pb-3 text-2xl font-bold text-white max-md:justify-center">
           <h2>Les dernières sorties </h2>
           <ImFire className="text-orange-500" />
         </div>
         <Carousel
-          autoPlay={true}
-          interval={5000}
-          infiniteLoop
-          showThumbs={false}
-          showStatus={false}
+          responsive={responsive}
+          //autoPlay={true}
+          //autoPlaySpeed={5000}
+          infinite={true}
+          showDots={true}
+          removeArrowOnDeviceType={["tablet", "mobile"]}
+          itemClass="px-2"
+          dotListClass="flex flex-wrap"
+          customLeftArrow={<CustomLeftArrow />}
+          customRightArrow={<CustomRightArrow />}
         >
           {lastReleasesGames &&
           lastReleasesGames.results &&
           lastReleasesGames.results.length > 0
             ? lastReleasesGames.results.map((game, index) => (
                 <a
-                  href={"/" + game.slug}
-                  className="block h-full hover:opacity-75"
+                  href={"#" + game.slug}
+                  className="hover:opacity-75"
                   key={index}
                 >
-                  <div className="text-white">
-                    <p className="font-bold">{game.name}</p>
+                  <img
+                    src={game.background_image || undefined} // Utilisation de la variable correcte pour chaque jeu
+                    alt={game.name} // Utilisation du nom du jeu pour l'attribut alt
+                    className="h-72 rounded-xl object-cover"
+                  />
+                  <div className="mb-12 text-center text-white">
+                    <h3 className="font-bold">{game.name}</h3>
                     <p className=""> {game.released}</p>
-                    <div className="mb-2 flex flex-wrap justify-center gap-1">
+                    <div className="flex flex-wrap justify-center gap-1">
                       {game.platforms && game.platforms.length > 0 ? (
                         game.platforms.map((platform, index) => (
                           <p
@@ -134,17 +196,12 @@ const Main = (): JSX.Element => {
                       )}
                     </div>
                   </div>
-                  <img
-                    src={game.background_image || undefined} // Utilisation de la variable correcte pour chaque jeu
-                    alt={game.name} // Utilisation du nom du jeu pour l'attribut alt
-                    className="h-full object-cover"
-                  />
                 </a>
               ))
             : [<div key="loading">Chargement des derniers jeux...</div>]}
         </Carousel>
       </section>
-      <section className="h-98 rounded-md bg-white px-4 py-3">
+      <section className="h-auto rounded-md bg-white px-4 py-3">
         <div className="flex items-center justify-between gap-2 pb-3 max-md:block max-md:text-center">
           <h2 className="text-2xl font-bold">Les mieux notés</h2>
           <div className="md:flex md:gap-4">
@@ -204,7 +261,7 @@ const Main = (): JSX.Element => {
           )}
         </div>
       </section>
-      <section className="h-98 rounded-md bg-white px-4 py-3">
+      <section className="h-auto rounded-md bg-white px-4 py-3">
         <div className="flex items-center justify-between gap-2 pb-3 max-md:block max-md:text-center">
           <h2 className="text-2xl font-bold">Les derniers tests</h2>
           <div className="md:flex md:gap-4">
