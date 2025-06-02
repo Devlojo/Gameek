@@ -26,6 +26,11 @@ export const gameSchema = z.object({
           }),
         ),
       ),
+      genres: z.array(
+        z.object({
+          name: z.string(),
+        }),
+      ),
     }),
   ),
 });
