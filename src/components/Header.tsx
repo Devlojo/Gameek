@@ -9,7 +9,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 const Header = (): JSX.Element => {
   return (
     <>
-      <header className="sticky top-0 z-10 flex w-full items-center gap-2 bg-global py-2 text-white max-md:justify-between">
+      <header className="sticky top-0 z-10 flex w-full items-center gap-2 bg-global py-2 text-customWhite max-md:justify-between">
         <GiHamburgerMenu className="size-8 md:hidden" />
         <a href="">
           <img src={gameekLogo} alt="" className="h-12 w-32 md:w-60" />
@@ -37,7 +37,7 @@ const Header = (): JSX.Element => {
             Plateforme
           </a>
         </div>
-        <div className="mb-1 flex justify-end gap-4 text-white md:w-full">
+        <div className="mb-1 flex justify-end gap-4 text-customWhite md:w-full">
           <FaSearch className="size-6 hover:cursor-pointer hover:text-yellow-400" />
           <FaUserCircle className="size-6 hover:cursor-pointer hover:text-yellow-400" />
         </div>

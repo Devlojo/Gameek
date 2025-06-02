@@ -7,9 +7,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        global: "#16120C",
+        global: "#171625",
         lastestGames: "#404447",
         mainYellow: "#FFCA2C",
+        customWhite: "#e5e7eb",
       },
     },
   },

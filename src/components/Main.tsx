@@ -9,6 +9,8 @@ import avatar from "../images/sample-avatar.png";
 import { MdArrowDropDown } from "react-icons/md";
 import { PiArrowFatLineLeftFill } from "react-icons/pi";
 import { PiArrowFatLineRightFill } from "react-icons/pi";
+import { PlatformBadge } from "../components/PlatformBadge";
+import { GameBadge } from "./GameBadge";
 
 type Game = z.infer<typeof gameSchema>;
 
@@ -44,7 +46,7 @@ const CustomLeftArrow: React.FC<CustomArrowProps> = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="absolute left-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-gray-800 p-3 text-white opacity-80 hover:opacity-100"
+      className="absolute left-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-gray-800 p-3 text-customWhite opacity-80 hover:opacity-100"
     >
       <PiArrowFatLineLeftFill />
     </button>
@@ -55,7 +57,7 @@ const CustomRightArrow: React.FC<CustomArrowProps> = ({ onClick }) => {
   return (
     <button
       onClick={onClick}
-      className="absolute right-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-gray-800 p-3 text-white opacity-80 hover:opacity-100"
+      className="absolute right-0 top-1/2 z-10 -translate-y-1/2 transform rounded-full bg-gray-800 p-3 text-customWhite opacity-80 hover:opacity-100"
     >
       <PiArrowFatLineRightFill />
     </button>
@@ -147,8 +149,8 @@ const Main = (): JSX.Element => {
     <p>Loading</p>
   ) : (
     <>
-      <section className="h-auto rounded-md bg-lastestGames px-4 py-3">
-        <div className="flex items-center gap-2 pb-3 text-2xl font-bold text-white max-md:justify-center">
+      <section className="h-auto rounded-md bg-customWhite px-4 py-3">
+        <div className="flex items-center gap-2 pb-3 text-2xl font-bold max-md:justify-center">
           <h2>Les dernières sorties </h2>
           <ImFire className="text-orange-500" />
         </div>
@@ -170,90 +172,102 @@ const Main = (): JSX.Element => {
             ? lastReleasesGames.results.map((game, index) => (
                 <a
                   href={"#" + game.slug}
-                  className="hover:opacity-75"
+                  className="hover:opacity-85"
                   key={index}
                 >
-                  <img
-                    src={game.background_image || undefined} // Utilisation de la variable correcte pour chaque jeu
-                    alt={game.name} // Utilisation du nom du jeu pour l'attribut alt
-                    className="h-72 rounded-xl object-cover"
-                  />
-                  <div className="mb-12 text-center text-white">
-                    <h3 className="font-bold">{game.name}</h3>
-                    <p className=""> {game.released}</p>
-                    <div className="flex flex-wrap justify-center gap-1">
-                      {game.platforms && game.platforms.length > 0 ? (
-                        game.platforms.map((platform, index) => (
-                          <p
-                            key={index}
-                            className="rounded-full border border-global bg-global p-1 text-xs text-white"
-                          >
-                            {platform.platform.name}
-                          </p>
-                        ))
-                      ) : (
-                        <p>Chargement des plateformes...</p>
-                      )}
+                  <article className="flex flex-col items-center justify-center">
+                    <div className="relative mb-2">
+                      <img
+                        src={game.background_image || undefined} // Utilisation de la variable correcte pour chaque jeu
+                        alt={game.name} // Utilisation du nom du jeu pour l'attribut alt
+                        className="h-72 w-full rounded-sm object-cover shadow-md shadow-black"
+                      />
+
+                      <p className="absolute right-0 top-0 bg-mainYellow p-0.5 text-xs shadow-sm shadow-black">
+                        {game.genres[0].name}
+                      </p>
+
+                      <div className="absolute bottom-0 flex w-full flex-col items-center justify-center bg-global bg-opacity-70 text-customWhite">
+                        <h3 className="text-xl">{game.name}</h3>
+                        <p className="text-sm">{game.released}</p>
+                      </div>
                     </div>
-                  </div>
+                    <div className="mb-10 text-center">
+                      <div className="flex flex-wrap justify-center gap-1">
+                        {game.platforms && game.platforms.length > 0 ? (
+                          game.platforms.map((platform, index) => (
+                            <PlatformBadge
+                              platform={platform.platform.name}
+                              index={index}
+                            />
+                          ))
+                        ) : (
+                          <p>Chargement des plateformes...</p>
+                        )}
+                      </div>
+                    </div>
+                  </article>
                 </a>
               ))
             : [<div key="loading">Chargement des derniers jeux...</div>]}
         </Carousel>
       </section>
-      <section className="h-auto rounded-md bg-white px-4 py-3">
+      <section className="h-auto rounded-md bg-customWhite px-4 py-3">
         <div className="flex items-center justify-between gap-2 pb-3 max-md:block max-md:text-center">
           <h2 className="text-2xl font-bold">Les mieux notés</h2>
           <div className="md:flex md:gap-4">
-            <button className="items-center rounded-sm bg-mainYellow px-2 max-md:mx-2 max-md:mb-2 md:flex md:py-1">
+            <button className="items-center rounded-sm bg-mainYellow px-2 shadow-sm shadow-black max-md:mx-2 max-md:mb-2 md:flex md:py-1">
               Note <MdArrowDropDown />
             </button>
-            <button className="items-center rounded-sm bg-mainYellow px-2 max-md:mx-2 max-md:mb-2 md:flex md:py-1">
+            <button className="items-center rounded-sm bg-mainYellow px-2 shadow-sm shadow-black max-md:mx-2 max-md:mb-2 md:flex md:py-1">
               Genre <MdArrowDropDown />
             </button>
-            <button className="items-center rounded-sm bg-mainYellow px-2 max-md:mx-2 max-md:mb-2 md:flex md:py-1">
+            <button className="items-center rounded-sm bg-mainYellow px-2 shadow-sm shadow-black max-md:mx-2 max-md:mb-2 md:flex md:py-1">
               Plateforme <MdArrowDropDown />
             </button>
           </div>
         </div>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-4 sm:justify-between">
           {bestGames && bestGames.results && bestGames.results.length > 0 ? (
             bestGames.results.map((game, index) => {
               return (
-                <a
-                  href=""
-                  className="flex w-full flex-col hover:opacity-75 lg:w-80"
+                <article
+                  className="flex w-full flex-col hover:opacity-85 sm:w-[48%] lg:w-80"
                   key={index}
                 >
-                  <article className="w-full">
-                    <img
-                      src={game.background_image || undefined}
-                      alt={game.name}
-                      className="h-72 w-full object-cover lg:h-40"
-                    />
+                  <a href="#">
+                    <div className="relative w-full">
+                      <img
+                        src={game.background_image || undefined}
+                        alt={game.name}
+                        className="h-72 w-full object-cover shadow-sm shadow-black lg:h-40"
+                      />
 
-                    <p className="flex items-center justify-between">
-                      {game.name}{" "}
-                      <span className="rounded-full border-2 border-cyan-500 p-1 font-bold">
-                        {game.metacritic}
-                      </span>
-                    </p>
+                      <p className="absolute bottom-0 w-full bg-global bg-opacity-70 text-xs text-customWhite shadow-sm shadow-black">
+                        <span className="text-xl text-mainYellow">18</span>
+                        ∕20 <span className="">(5 avis)</span>
+                      </p>
+
+                      <p className="absolute right-0 top-0 bg-mainYellow p-0.5 text-xs shadow-sm shadow-black">
+                        {game.genres[0].name}
+                      </p>
+                    </div>
+
+                    <h3 className="text-xl">{game.name}</h3>
                     <div className="flex flex-wrap items-center gap-2">
                       {game.platforms && game.platforms.length > 0 ? (
                         game.platforms.map((platform, index) => (
-                          <p
-                            key={index}
-                            className="rounded-full border border-cyan-500 p-1 text-xs text-black"
-                          >
-                            {platform.platform.name}
-                          </p>
+                          <PlatformBadge
+                            platform={platform.platform.name}
+                            index={index}
+                          />
                         ))
                       ) : (
                         <p>Chargement des plateformes...</p>
                       )}
                     </div>
-                  </article>
-                </a>
+                  </a>
+                </article>
               );
             })
           ) : (
@@ -261,78 +275,74 @@ const Main = (): JSX.Element => {
           )}
         </div>
       </section>
-      <section className="h-auto rounded-md bg-white px-4 py-3">
+      <section className="h-auto rounded-md bg-customWhite px-4 py-3">
         <div className="flex items-center justify-between gap-2 pb-3 max-md:block max-md:text-center">
           <h2 className="text-2xl font-bold">Les derniers tests</h2>
           <div className="md:flex md:gap-4">
-            <button className="items-center rounded-sm bg-mainYellow px-2 max-md:mx-2 max-md:mb-2 md:flex md:py-1">
+            <button className="items-center rounded-sm bg-mainYellow px-2 shadow-sm shadow-black max-md:mx-2 max-md:mb-2 md:flex md:py-1">
               Note <MdArrowDropDown />
             </button>
-            <button className="items-center rounded-sm bg-mainYellow px-2 max-md:mx-2 max-md:mb-2 md:flex md:py-1">
+            <button className="items-center rounded-sm bg-mainYellow px-2 shadow-sm shadow-black max-md:mx-2 max-md:mb-2 md:flex md:py-1">
               Genre <MdArrowDropDown />
             </button>
-            <button className="items-center rounded-sm bg-mainYellow px-2 max-md:mx-2 max-md:mb-2 md:flex md:py-1">
+            <button className="items-center rounded-sm bg-mainYellow px-2 shadow-sm shadow-black max-md:mx-2 max-md:mb-2 md:flex md:py-1">
               Plateforme <MdArrowDropDown />
             </button>
-            <button className="items-center rounded-sm bg-mainYellow px-2 max-md:mx-2 max-md:mb-2 md:flex md:py-1">
+            <button className="items-center rounded-sm bg-mainYellow px-2 shadow-sm shadow-black max-md:mx-2 max-md:mb-2 md:flex md:py-1">
               Auteur <MdArrowDropDown />
             </button>
           </div>
         </div>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-4 sm:justify-between">
           {/* Verification si lastReviewsGames, lastReviewsGames.results (existe et donc != null ou undefined) et lastReviewsGames.results > 0 (pour controler si le tableau possède au moin un élément)*/}
           {lastReviewsGames &&
           lastReviewsGames.results &&
           lastReviewsGames.results.length > 0 ? (
             lastReviewsGames.results.map((game, index) => {
               return (
-                <a
-                  href=""
-                  className="flex w-80 rounded-md border-2 border-gray-300 p-2 hover:opacity-75 max-lg:w-full"
+                <article
+                  className="p-2 shadow-md shadow-black hover:opacity-85 sm:w-[48%] lg:w-80"
                   key={index}
                 >
-                  <article className="flex flex-col gap-2 max-lg:w-full">
-                    <img
-                      src={game.background_image || undefined}
-                      alt={game.name}
-                      className="h-40 object-cover max-lg:h-96 max-lg:w-full"
-                    />
-                    <div className="text-lg">
-                      <h3>
-                        <span className="text-2xl font-bold text-cyan-500">
-                          15
-                        </span>
-                        /20 {game.name}
-                      </h3>
-                    </div>
-                    <p className="text-base">
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
-                    </p>
-                    <div className="flex items-center gap-2">
+                  <a href="" className="">
+                    <div className="relative">
                       <img
-                        src={avatar}
-                        className="border-1 h-8 w-8 rounded-full bg-black"
-                        alt="Avatar du testeur"
+                        src={game.background_image || undefined}
+                        alt={game.name}
+                        className="h-40 w-full object-cover shadow-md shadow-black max-lg:h-96 max-lg:w-full"
                       />
-                      <p className="text-sm">Jack, le 15/11/23</p>
+
+                      <GameBadge genre={game.genres[0].name} />
                     </div>
-                    <div className="flex flex-wrap items-center gap-2">
-                      {game.platforms && game.platforms.length > 0 ? (
-                        game.platforms.map((platform, index) => (
-                          <p
-                            key={index}
-                            className="rounded-full border border-cyan-500 p-1 text-xs text-black"
-                          >
-                            {platform.platform.name}
-                          </p>
-                        ))
-                      ) : (
-                        <p>Chargement des plateformes...</p>
-                      )}
+                    <div className="mt-1 flex flex-col gap-2">
+                      <h3 className="text-xl">{game.name}</h3>
+                      <p className="text-base">
+                        Some quick example text to build on the card title and
+                        make up the bulk of the card's content.
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <img
+                          src={avatar}
+                          className="border-1 h-8 w-8 rounded-full shadow-sm shadow-black"
+                          alt="Avatar du testeur"
+                        />
+                        <p className="text-sm">Jack, le 15/11/23</p>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        {game.platforms && game.platforms.length > 0 ? (
+                          game.platforms.map((platform, index) => (
+                            <PlatformBadge
+                              platform={platform.platform.name}
+                              index={index}
+                            />
+                          ))
+                        ) : (
+                          <p>Chargement des plateformes...</p>
+                        )}
+                      </div>
                     </div>
-                  </article>
-                </a>
+                  </a>
+                </article>
               );
             })
           ) : (
