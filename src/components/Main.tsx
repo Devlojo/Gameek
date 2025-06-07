@@ -6,11 +6,12 @@ import { z } from "zod";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import avatar from "../images/sample-avatar.png";
-import { MdArrowDropDown } from "react-icons/md";
 import { PiArrowFatLineLeftFill } from "react-icons/pi";
 import { PiArrowFatLineRightFill } from "react-icons/pi";
 import { PlatformBadge } from "../components/PlatformBadge";
-import { GameBadge } from "./GameBadge";
+import { GenreBadge } from "./GenreBadge";
+import { FilterButton } from "./FilterButton";
+import { Loader } from "../components/Loader";
 
 type Game = z.infer<typeof gameSchema>;
 
@@ -146,7 +147,7 @@ const Main = (): JSX.Element => {
   }, []);
 
   return isLoading ? (
-    <p>Loading</p>
+    <Loader />
   ) : (
     <>
       <section className="h-auto rounded-md bg-customWhite px-4 py-3">
@@ -170,22 +171,24 @@ const Main = (): JSX.Element => {
           lastReleasesGames.results &&
           lastReleasesGames.results.length > 0
             ? lastReleasesGames.results.map((game, index) => (
-                <a
-                  href={"#" + game.slug}
-                  className="hover:opacity-85"
+                <article
+                  className="flex flex-col items-center justify-center hover:opacity-85"
                   key={index}
                 >
-                  <article className="flex flex-col items-center justify-center">
-                    <div className="relative mb-2">
+                  <a href={"#" + game.slug}>
+                    <div className="relative mb-2 w-full">
                       <img
                         src={game.background_image || undefined} // Utilisation de la variable correcte pour chaque jeu
                         alt={game.name} // Utilisation du nom du jeu pour l'attribut alt
                         className="h-72 w-full rounded-sm object-cover shadow-md shadow-black"
                       />
-
-                      <p className="absolute right-0 top-0 bg-mainYellow p-0.5 text-xs shadow-sm shadow-black">
-                        {game.genres[0].name}
-                      </p>
+                      <div className="absolute right-0 top-0 flex gap-1">
+                        {game.genres.map((genre, index) => (
+                          <div key={index}>
+                            <GenreBadge genre={genre.name} />
+                          </div>
+                        ))}
+                      </div>
 
                       <div className="absolute bottom-0 flex w-full flex-col items-center justify-center bg-global bg-opacity-70 text-customWhite">
                         <h3 className="text-xl">{game.name}</h3>
@@ -202,29 +205,22 @@ const Main = (): JSX.Element => {
                             />
                           ))
                         ) : (
-                          <p>Chargement des plateformes...</p>
+                          <Loader />
                         )}
                       </div>
                     </div>
-                  </article>
-                </a>
+                  </a>
+                </article>
               ))
-            : [<div key="loading">Chargement des derniers jeux...</div>]}
+            : [<Loader />]}
         </Carousel>
       </section>
       <section className="h-auto rounded-md bg-customWhite px-4 py-3">
         <div className="flex items-center justify-between gap-2 pb-3 max-md:block max-md:text-center">
           <h2 className="text-2xl font-bold">Les mieux notés</h2>
-          <div className="md:flex md:gap-4">
-            <button className="items-center rounded-sm bg-mainYellow px-2 shadow-sm shadow-black max-md:mx-2 max-md:mb-2 md:flex md:py-1">
-              Note <MdArrowDropDown />
-            </button>
-            <button className="items-center rounded-sm bg-mainYellow px-2 shadow-sm shadow-black max-md:mx-2 max-md:mb-2 md:flex md:py-1">
-              Genre <MdArrowDropDown />
-            </button>
-            <button className="items-center rounded-sm bg-mainYellow px-2 shadow-sm shadow-black max-md:mx-2 max-md:mb-2 md:flex md:py-1">
-              Plateforme <MdArrowDropDown />
-            </button>
+          <div className="my-1 flex justify-center gap-2">
+            <FilterButton buttonName={"Genre"} />
+            <FilterButton buttonName={"Plateforme"} />
           </div>
         </div>
         <div className="flex flex-wrap gap-4 sm:justify-between">
@@ -235,7 +231,7 @@ const Main = (): JSX.Element => {
                   className="flex w-full flex-col hover:opacity-85 sm:w-[48%] lg:w-80"
                   key={index}
                 >
-                  <a href="#">
+                  <a href={"#" + game.slug}>
                     <div className="relative w-full">
                       <img
                         src={game.background_image || undefined}
@@ -248,9 +244,13 @@ const Main = (): JSX.Element => {
                         ∕20 <span className="">(5 avis)</span>
                       </p>
 
-                      <p className="absolute right-0 top-0 bg-mainYellow p-0.5 text-xs shadow-sm shadow-black">
-                        {game.genres[0].name}
-                      </p>
+                      <div className="absolute right-0 top-0 flex gap-1">
+                        {game.genres.map((genre, index) => (
+                          <div key={index}>
+                            <GenreBadge genre={genre.name} />
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
                     <h3 className="text-xl">{game.name}</h3>
@@ -278,19 +278,11 @@ const Main = (): JSX.Element => {
       <section className="h-auto rounded-md bg-customWhite px-4 py-3">
         <div className="flex items-center justify-between gap-2 pb-3 max-md:block max-md:text-center">
           <h2 className="text-2xl font-bold">Les derniers tests</h2>
-          <div className="md:flex md:gap-4">
-            <button className="items-center rounded-sm bg-mainYellow px-2 shadow-sm shadow-black max-md:mx-2 max-md:mb-2 md:flex md:py-1">
-              Note <MdArrowDropDown />
-            </button>
-            <button className="items-center rounded-sm bg-mainYellow px-2 shadow-sm shadow-black max-md:mx-2 max-md:mb-2 md:flex md:py-1">
-              Genre <MdArrowDropDown />
-            </button>
-            <button className="items-center rounded-sm bg-mainYellow px-2 shadow-sm shadow-black max-md:mx-2 max-md:mb-2 md:flex md:py-1">
-              Plateforme <MdArrowDropDown />
-            </button>
-            <button className="items-center rounded-sm bg-mainYellow px-2 shadow-sm shadow-black max-md:mx-2 max-md:mb-2 md:flex md:py-1">
-              Auteur <MdArrowDropDown />
-            </button>
+          <div className="my-1 flex justify-center gap-2">
+            <FilterButton buttonName={"Note"} />
+            <FilterButton buttonName={"Auteur"} />
+            <FilterButton buttonName={"Genre"} />
+            <FilterButton buttonName={"Plateforme"} />
           </div>
         </div>
         <div className="flex flex-wrap gap-4 sm:justify-between">
@@ -304,17 +296,26 @@ const Main = (): JSX.Element => {
                   className="p-2 shadow-md shadow-black hover:opacity-85 sm:w-[48%] lg:w-80"
                   key={index}
                 >
-                  <a href="" className="">
-                    <div className="relative">
+                  <a href={"#" + game.slug}>
+                    <div className="relative w-full">
                       <img
                         src={game.background_image || undefined}
                         alt={game.name}
                         className="h-40 w-full object-cover shadow-md shadow-black max-lg:h-96 max-lg:w-full"
                       />
-
-                      <GameBadge genre={game.genres[0].name} />
+                      <p className="absolute bottom-0 bg-global bg-opacity-70 px-0.5 text-xs text-gray-200 shadow-sm shadow-black">
+                        <span className="text-xl text-mainYellow">18</span>
+                        ∕20
+                      </p>
+                      <div className="absolute right-0 top-0 flex gap-1">
+                        {game.genres.map((genre, index) => (
+                          <div key={index}>
+                            <GenreBadge genre={genre.name} />
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                    <div className="mt-1 flex flex-col gap-2">
+                    <div className="mt-2 flex h-64 flex-col gap-2">
                       <h3 className="text-xl">{game.name}</h3>
                       <p className="text-base">
                         Some quick example text to build on the card title and

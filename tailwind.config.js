@@ -11,6 +11,7 @@ export default {
         lastestGames: "#404447",
         mainYellow: "#FFCA2C",
         customWhite: "#e5e7eb",
+        Action: "#111927",
       },
     },
   },
