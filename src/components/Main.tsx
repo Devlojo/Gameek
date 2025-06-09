@@ -167,9 +167,7 @@ const Main = (): JSX.Element => {
           customLeftArrow={<CustomLeftArrow />}
           customRightArrow={<CustomRightArrow />}
         >
-          {lastReleasesGames &&
-          lastReleasesGames.results &&
-          lastReleasesGames.results.length > 0
+          {lastReleasesGames && lastReleasesGames.results.length > 0
             ? lastReleasesGames.results.map((game, index) => (
                 <article
                   className="flex flex-col items-center justify-center hover:opacity-85"
@@ -182,11 +180,9 @@ const Main = (): JSX.Element => {
                         alt={game.name} // Utilisation du nom du jeu pour l'attribut alt
                         className="h-72 w-full rounded-sm object-cover shadow-md shadow-black"
                       />
-                      <div className="absolute right-0 top-0 flex gap-1">
+                      <div className="absolute right-0 top-0 flex flex-wrap gap-1">
                         {game.genres.map((genre, index) => (
-                          <div key={index}>
-                            <GenreBadge genre={genre.name} />
-                          </div>
+                          <GenreBadge genre={genre.name} index={index} />
                         ))}
                       </div>
 
@@ -244,11 +240,9 @@ const Main = (): JSX.Element => {
                         ∕20 <span className="">(5 avis)</span>
                       </p>
 
-                      <div className="absolute right-0 top-0 flex gap-1">
+                      <div className="absolute right-0 top-0 flex flex-wrap gap-1">
                         {game.genres.map((genre, index) => (
-                          <div key={index}>
-                            <GenreBadge genre={genre.name} />
-                          </div>
+                          <GenreBadge genre={genre.name} index={index} />
                         ))}
                       </div>
                     </div>
@@ -307,11 +301,9 @@ const Main = (): JSX.Element => {
                         <span className="text-xl text-mainYellow">18</span>
                         ∕20
                       </p>
-                      <div className="absolute right-0 top-0 flex gap-1">
+                      <div className="absolute right-0 top-0 flex flex-wrap gap-1">
                         {game.genres.map((genre, index) => (
-                          <div key={index}>
-                            <GenreBadge genre={genre.name} />
-                          </div>
+                          <GenreBadge genre={genre.name} index={index} />
                         ))}
                       </div>
                     </div>
