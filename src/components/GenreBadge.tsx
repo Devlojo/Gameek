@@ -1,15 +1,11 @@
 type TGenre = {
   genre: string;
-  index: number;
 };
 
-export const GenreBadge = ({ genre, index }: TGenre) => {
+export const GenreBadge = ({ genre }: TGenre) => {
   return (
     <>
-      <p
-        className={`bg-mainYellow p-0.5 text-xs shadow-sm shadow-black`}
-        key={index}
-      >
+      <p className={`bg-mainYellow p-0.5 text-xs shadow-sm shadow-black`}>
         {genre}
       </p>
     </>
