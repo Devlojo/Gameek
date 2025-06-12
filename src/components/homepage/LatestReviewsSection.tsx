@@ -1,10 +1,10 @@
-import { FilterButton } from "./FilterButton";
-import { GenreBadge } from "./GenreBadge";
-import { PlatformBadge } from "./PlatformBadge";
-import { useLatestReviewsQuery } from "../queries/useGamesQuery";
-import avatar from "../images/sample-avatar.png";
-import { Loader } from "./Loader";
-import gameekLogo from "../images/gameek-removebg.png";
+import { FilterButton } from "@/components/ui/FilterButton";
+import { GenreBadge } from "@/components/ui/GenreBadge";
+import { PlatformBadge } from "@/components/ui/PlatformBadge";
+import { useLatestReviewsQuery } from "@/queries/useGamesQuery";
+import avatar from "@/images/sample-avatar.png";
+import { Loader } from "@/components/ui/Loader";
+import gameekLogo from "@/images/gameek-removebg.png";
 
 export const LatestReviewsSection = () => {
   const { latestReviews, isSuccess } = useLatestReviewsQuery();

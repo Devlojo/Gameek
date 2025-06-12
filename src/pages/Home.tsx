@@ -1,6 +1,6 @@
-import { LatestReleasesSection } from "../components/LatestReleasesSection";
-import { BestGamesSection } from "../components/BestGamesSection";
-import { LatestReviewsSection } from "../components/LatestReviewsSection";
+import { LatestReleasesSection } from "@/components/homepage/LatestReleasesSection";
+import { BestGamesSection } from "@/components/homepage/BestGamesSection";
+import { LatestReviewsSection } from "@/components/homepage/LatestReviewsSection";
 
 const Home = (): JSX.Element => {
   return (
