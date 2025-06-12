@@ -1,12 +1,16 @@
-import { FilterButton } from "./FilterButton";
-import { GenreBadge } from "./GenreBadge";
-import { PlatformBadge } from "./PlatformBadge";
-import { useBestGamesQuery } from "../queries/useGamesQuery";
-import { Loader } from "./Loader";
-import gameekLogo from "../images/gameek-removebg.png";
+import { FilterButton } from "@/components/ui/FilterButton";
+import { GenreBadge } from "@/components/ui/GenreBadge";
+import { PlatformBadge } from "@/components/ui/PlatformBadge";
+import { useBestGamesQuery } from "@/queries/useGamesQuery";
+import { Loader } from "@/components/ui/Loader";
+import gameekLogo from "@/images/gameek-removebg.png";
+//import { useGenresQuery } from "@/queries/useGenresQuery";
+//import { usePlatformsQuery } from "@/queries/usePlatformsQuery";
 
 export const BestGamesSection = () => {
   const { bestGames, isSuccess } = useBestGamesQuery();
+  //const { genres } = useGenresQuery();
+  //const { platforms } = usePlatformsQuery();
   return (
     <section className="h-auto rounded-md bg-customWhite px-4 py-3">
       <div className="flex items-center justify-between gap-2 pb-3 max-md:block max-md:text-center">

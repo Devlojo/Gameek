@@ -1,7 +1,7 @@
 /* Components */
-import Header from "./components/Header";
-import Home from "./pages/Home";
-import Footer from "./components/Footer";
+import Header from "@/components/layout/Header";
+import Home from "@/pages/Home";
+import Footer from "@/components/layout/Footer";
 
 const App = (): JSX.Element => {
   return (

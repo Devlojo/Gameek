@@ -1,9 +1,9 @@
-import { useLatestGamesQuery } from "../queries/useGamesQuery";
-import { GenreBadge } from "./GenreBadge";
-import { PlatformBadge } from "./PlatformBadge";
-import { Loader } from "./Loader";
+import { useLatestGamesQuery } from "@/queries/useGamesQuery";
+import { GenreBadge } from "@/components/ui/GenreBadge";
+import { PlatformBadge } from "@/components/ui/PlatformBadge";
+import { Loader } from "@/components/ui/Loader";
 import { ImFire } from "react-icons/im";
-import gameekLogo from "../images/gameek-removebg.png";
+import gameekLogo from "@/images/gameek-removebg.png";
 
 export const LatestReleasesSection = () => {
   const { latestGames, isSuccess } = useLatestGamesQuery();
@@ -16,7 +16,7 @@ export const LatestReleasesSection = () => {
           <ImFire className="text-orange-500" />
         </div>
 
-        <div className="flex gap-4 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-500 sm:justify-between">
+        <div className="flex gap-4 overflow-x-auto scrollbar-thin scrollbar-thumb-gray-500">
           {isSuccess && latestGames && latestGames.results.length > 0
             ? latestGames.results.map((game, index) => (
                 <article

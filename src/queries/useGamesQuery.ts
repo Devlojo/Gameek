@@ -3,7 +3,7 @@ import {
   getLatestReleasesGames,
   getBestGames,
   getLatestReviews,
-} from "../api/gamesApi";
+} from "@/api/gamesApi";
 
 export const useLatestGamesQuery = () => {
   const {
@@ -13,6 +13,7 @@ export const useLatestGamesQuery = () => {
   } = useQuery({
     queryKey: ["latestGames"],
     queryFn: () => getLatestReleasesGames(),
+    retry: false,
   });
   return {
     latestGames,
@@ -29,6 +30,7 @@ export const useBestGamesQuery = () => {
   } = useQuery({
     queryKey: ["bestGames"],
     queryFn: () => getBestGames(),
+    retry: false,
   });
   return {
     bestGames,
@@ -45,6 +47,7 @@ export const useLatestReviewsQuery = () => {
   } = useQuery({
     queryKey: ["latestReviews"],
     queryFn: () => getLatestReviews(),
+    retry: false,
   });
   return {
     latestReviews,

@@ -6,6 +6,7 @@ export const gameSchema = z.object({
   previous: z.string().nullable(),
   results: z.array(
     z.object({
+      id: z.number(),
       name: z.string(),
       slug: z.string(),
       released: z.string(),
@@ -31,6 +32,18 @@ export const gameSchema = z.object({
           name: z.string(),
         }),
       ),
+    }),
+  ),
+});
+
+export const genreOrPlatformSchema = z.object({
+  count: z.number(),
+  next: z.string().nullable(),
+  previous: z.string().nullable(),
+  results: z.array(
+    z.object({
+      id: z.number(),
+      name: z.string(),
     }),
   ),
 });
