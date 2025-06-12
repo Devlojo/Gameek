@@ -13,7 +13,7 @@ import { useState } from "react";
 const Header = (): JSX.Element => {
   const { genres } = useGenresQuery();
   const { platforms } = usePlatformsQuery();
-  const gamesMenu = [{ name: "Tout les jeux" }, { name: "Tout les tests" }];
+  const gamesMenu = [{ name: "Tous les jeux" }, { name: "Tous les tests" }];
 
   const [activeModalMenus, setActiveModalMenus] = useState<string[]>([]);
 
