@@ -1,22 +1,37 @@
-import { FilterButton } from "@/components/ui/FilterButton";
 import { GenreBadge } from "@/components/ui/GenreBadge";
 import { PlatformBadge } from "@/components/ui/PlatformBadge";
 import { useLatestReviewsQuery } from "@/queries/useGamesQuery";
 import avatar from "@/images/sample-avatar.png";
 import { Loader } from "@/components/ui/Loader";
 import gameekLogo from "@/images/gameek-removebg.png";
+import { useGenresQuery } from "@/queries/useGenresQuery";
+import { usePlatformsQuery } from "@/queries/usePlatformsQuery";
+import { MenuItem } from "../ui/MenuItem";
 
 export const LatestReviewsSection = () => {
   const { latestReviews, isSuccess } = useLatestReviewsQuery();
+  const { genres } = useGenresQuery();
+  const { platforms } = usePlatformsQuery();
+  const rateMenu = [{ name: 0 }, { name: 1 }];
+  const authorMenu = [{ name: "Jack" }];
+
   return (
     <section className="h-auto rounded-md bg-customWhite px-4 py-3">
       <div className="flex items-center justify-between gap-2 pb-3 max-md:block max-md:text-center">
         <h2 className="text-2xl font-bold">Les derniers tests</h2>
         <div className="my-1 flex justify-center gap-2">
-          <FilterButton buttonName={"Note"} />
-          <FilterButton buttonName={"Auteur"} />
-          <FilterButton buttonName={"Genre"} />
-          <FilterButton buttonName={"Plateforme"} />
+          <MenuItem label="Auteur" items={authorMenu} itemKey="name" />
+          <MenuItem label="Note" items={rateMenu} itemKey="name" />
+          <MenuItem
+            label="Genre"
+            items={genres?.results || []}
+            itemKey="name"
+          />
+          <MenuItem
+            label="Plateforme"
+            items={platforms?.results || []}
+            itemKey="name"
+          />
         </div>
       </div>
       <div className="flex flex-wrap gap-4 sm:justify-between">
@@ -57,8 +72,8 @@ export const LatestReviewsSection = () => {
                     </div>
                   </div>
                   <div className="mt-2 flex h-64 flex-col gap-2">
-                    <h3 className="text-xl">{game.name}</h3>
-                    <p className="text-base">
+                    <h3 className="text-lg">{game.name}</h3>
+                    <p>
                       Some quick example text to build on the card title and
                       make up the bulk of the card's content.
                     </p>
