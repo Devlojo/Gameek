@@ -49,7 +49,7 @@ export const LatestReleasesSection = () => {
                       </div>
 
                       <div className="absolute bottom-0 flex w-full flex-col items-center justify-center bg-global bg-opacity-70 text-customWhite">
-                        <h3 className="text-xl">{game.name}</h3>
+                        <h3 className="text-lg">{game.name}</h3>
                         <p className="text-sm">{game.released}</p>
                       </div>
                     </div>

@@ -6,6 +6,7 @@ export const getLatestReleasesGames = async () => {
     const { data: latestGames } = await axios.get(
       `https://site--gameek-backend--bf7zj7wtgltq.code.run/games/latest-releases`,
       { timeout: 5000 },
+      /*"http://localhost:8000/games/latest-releases",*/
     );
 
     const latestGamesParsed = gameSchema.parse(latestGames);
@@ -22,6 +23,7 @@ export const getBestGames = async () => {
     const { data: bestGames } = await axios.get(
       `https://site--gameek-backend--bf7zj7wtgltq.code.run/games/best`,
       { timeout: 5000 },
+      // "http://localhost:8000/games/best",
     );
     const bestGamesParsed = gameSchema.parse(bestGames);
     return bestGamesParsed;
@@ -36,6 +38,7 @@ export const getLatestReviews = async () => {
     const { data: latestReviews } = await axios.get(
       `https://site--gameek-backend--bf7zj7wtgltq.code.run/games/latest-reviews`,
       { timeout: 5000 },
+      //"http://localhost:8000/games/latest-reviews",
     );
     const latestReviewsParsed = gameSchema.parse(latestReviews);
     return latestReviewsParsed;

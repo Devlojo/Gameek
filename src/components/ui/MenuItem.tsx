@@ -1,52 +1,84 @@
 import { DropDownMenu } from "@/components/ui/DropDownMenu";
-import { ElementType } from "react";
+import { ElementType, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import { clsx } from "clsx";
+import { TFilterCategory, TActiveFilters } from "@/types/filters";
+import { IoClose } from "react-icons/io5";
 
 type TMenuItemsProps = {
   icon?: ElementType; // Pour typer une prop qui sera appeler comme composant
-  label: string;
+  label: TFilterCategory;
   items: any[];
   itemKey: string;
-  activeModalMenu: string[];
-  toggleMenu: (label: string) => void; // fonction pour toggler un label
 };
 export const MenuItem = ({
   icon: Icon, // pour pouvoir utiliser Icon en tant que composant
   label,
   items,
   itemKey,
-  activeModalMenu,
-  toggleMenu,
 }: TMenuItemsProps) => {
+  const [activeFilters, setActiveFilters] = useState<TActiveFilters>({
+    Genre: null,
+    Plateforme: null,
+    Auteur: null,
+    Note: null,
+    Jeux: null,
+  });
+
+  const hasActiveFilter = Object.values(activeFilters).some(
+    (value) => value !== null,
+  );
+
+  const handleClearFilter = (category: TFilterCategory) => {
+    setActiveFilters((prev) => ({ ...prev, [category]: null }));
+  };
+
   return (
     <>
-      <div className="relative">
+      <div className="group relative">
         <button
-          className="flex items-center gap-1 rounded-sm p-2 hover:bg-mainYellow hover:text-black"
-          onClick={() => toggleMenu(label)}
-          id={label}
+          className={clsx(
+            "flex items-center gap-1 rounded-sm p-2",
+            Icon
+              ? "hover:bg-mainYellow hover:text-black"
+              : "bg-mainYellow p-1 shadow-sm shadow-black hover:cursor-pointer md:py-1",
+          )}
         >
           {Icon && <Icon />}
-          {label}
-          <MdArrowDropDown />
-          <div
-            className={clsx(
-              "absolute top-10 mt-2 w-64 rounded-sm bg-customWhite p-1 text-black shadow-sm shadow-black",
-              label !== "Jeux" &&
-                "h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500",
-              activeModalMenu.includes(label) ? "block" : "hidden",
-            )}
-          >
-            <ul className="flex flex-col gap-1">
-              {items &&
-                items.length > 0 &&
-                items.map((item, index) => (
-                  <DropDownMenu option={item[itemKey]} key={index} />
-                ))}
-            </ul>
-          </div>
+          {hasActiveFilter ? (
+            <>
+              {" "}
+              {activeFilters[label]}{" "}
+              <IoClose onClick={() => handleClearFilter(label)} />{" "}
+            </>
+          ) : (
+            <>
+              {" "}
+              {label} <MdArrowDropDown />{" "}
+            </>
+          )}
         </button>
+        <div
+          className={clsx(
+            "absolute left-0 top-full z-10 hidden w-64 rounded-sm bg-customWhite p-1 text-black shadow-sm shadow-black group-hover:block",
+            ["Genre", "Plateforme"].includes(label) &&
+              "h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-500",
+          )}
+        >
+          <ul className="flex flex-col gap-1">
+            {items &&
+              items.length > 0 &&
+              items.map((item, index) => (
+                <DropDownMenu
+                  option={item[itemKey]}
+                  key={index}
+                  icon={Icon}
+                  label={label}
+                  setActiveFilters={setActiveFilters}
+                />
+              ))}
+          </ul>
+        </div>
       </div>
     </>
   );
