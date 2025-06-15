@@ -4,6 +4,7 @@ import { useLatestReviewsQuery } from "@/queries/useGamesQuery";
 import avatar from "@/images/sample-avatar.png";
 import { Loader } from "@/components/ui/Loader";
 import gameekLogo from "@/images/gameek-removebg.png";
+import { IoIosTimer } from "react-icons/io";
 
 export const LatestReviewsSection = () => {
   const { latestReviews, isSuccess } = useLatestReviewsQuery();
@@ -12,8 +13,9 @@ export const LatestReviewsSection = () => {
     <section className="h-auto rounded-md bg-customWhite px-4 py-3">
       <div className="flex items-center justify-between gap-2 pb-3 max-md:block max-md:text-center">
         <h2 className="text-2xl font-bold">Les derniers tests</h2>
-        <div className="my-1 flex justify-center gap-2">
-          <p>Top 10</p>
+        <div className="my-1 flex items-center justify-center gap-1">
+          <p>10 tests les plus récents</p>
+          <IoIosTimer className="size-5 text-global" />
         </div>
       </div>
       <div className="flex flex-wrap gap-4 sm:justify-center">
@@ -21,7 +23,7 @@ export const LatestReviewsSection = () => {
           latestReviews.results.map((game, index) => {
             return (
               <article
-                className="h-[520px] w-full p-2 shadow-md shadow-black hover:opacity-85 sm:w-[48.5%]"
+                className="w-full p-2 shadow-md shadow-black hover:opacity-85 sm:w-[48.5%]"
                 key={index}
               >
                 <a href={"#" + game.slug}>

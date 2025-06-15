@@ -27,7 +27,7 @@ const Header = ({
             className="h-12 w-32 md:w-48"
           />
         </a>
-        <nav className="mb-1 hidden md:flex md:items-center md:gap-2">
+        <nav className="mb-1.5 hidden md:flex md:items-center md:gap-2">
           <a
             href=""
             className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"

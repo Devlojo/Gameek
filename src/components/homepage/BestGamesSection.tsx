@@ -3,6 +3,7 @@ import { PlatformBadge } from "@/components/ui/PlatformBadge";
 import { useBestGamesQuery } from "@/queries/useGamesQuery";
 import { Loader } from "@/components/ui/Loader";
 import gameekLogo from "@/images/gameek-removebg.png";
+import { BsFire } from "react-icons/bs";
 
 export const BestGamesSection = () => {
   const { bestGames, isSuccess } = useBestGamesQuery();
@@ -11,8 +12,9 @@ export const BestGamesSection = () => {
     <section className="h-auto rounded-md bg-customWhite px-4 py-3">
       <div className="flex items-center justify-between gap-2 pb-3 max-md:block max-md:text-center">
         <h2 className="text-2xl font-bold">Les mieux notés</h2>
-        <div className="my-1 flex justify-center gap-2">
+        <div className="my-1 flex justify-center gap-1">
           <p>Top 10</p>
+          <BsFire className="size-5 text-orange-600" />
         </div>
       </div>
       <div className="flex flex-wrap gap-4 sm:justify-center">
@@ -37,7 +39,7 @@ export const BestGamesSection = () => {
                         <img
                           src={gameekLogo}
                           alt="logo du site"
-                          className="h-20"
+                          className="h-12 w-32"
                         />
                       </div>
                     )}

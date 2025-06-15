@@ -12,6 +12,12 @@ const App = (): JSX.Element => {
     setActiveBurgerMenu((prev) => !prev);
   };
 
+  // Si le menu burger est activé, alors le scroll est désactivé
+  if (activeBurgerMenu) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
   return (
     <>
       <div className="h-full bg-global">
