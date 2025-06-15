@@ -3,38 +3,24 @@ import { PlatformBadge } from "@/components/ui/PlatformBadge";
 import { useBestGamesQuery } from "@/queries/useGamesQuery";
 import { Loader } from "@/components/ui/Loader";
 import gameekLogo from "@/images/gameek-removebg.png";
-import { MenuItem } from "@/components/ui/MenuItem";
-import { useGenresQuery } from "@/queries/useGenresQuery";
-import { usePlatformsQuery } from "@/queries/usePlatformsQuery";
 
 export const BestGamesSection = () => {
   const { bestGames, isSuccess } = useBestGamesQuery();
-  const { genres } = useGenresQuery();
-  const { platforms } = usePlatformsQuery();
 
   return (
     <section className="h-auto rounded-md bg-customWhite px-4 py-3">
       <div className="flex items-center justify-between gap-2 pb-3 max-md:block max-md:text-center">
         <h2 className="text-2xl font-bold">Les mieux notés</h2>
         <div className="my-1 flex justify-center gap-2">
-          <MenuItem
-            label="Genre"
-            items={genres?.results || []}
-            itemKey="name"
-          />
-          <MenuItem
-            label="Plateforme"
-            items={platforms?.results || []}
-            itemKey="name"
-          />
+          <p>Top 10</p>
         </div>
       </div>
-      <div className="flex flex-wrap gap-4 sm:justify-between">
+      <div className="flex flex-wrap gap-4 sm:justify-center">
         {isSuccess && bestGames && bestGames.results.length > 0 ? (
           bestGames.results.map((game, index) => {
             return (
               <article
-                className="flex w-full flex-col hover:opacity-85 sm:w-[48%] lg:w-80"
+                className="flex w-full flex-col hover:opacity-85 sm:w-[48.5%]"
                 key={index}
               >
                 <a href={"#" + game.slug}>
@@ -43,11 +29,11 @@ export const BestGamesSection = () => {
                       <img
                         src={game.background_image}
                         alt={game.name}
-                        className="h-64 w-full object-cover shadow-sm shadow-black lg:h-40"
+                        className="h-56 w-full object-cover shadow-sm shadow-black"
                         loading="lazy"
                       />
                     ) : (
-                      <div className="flex h-64 w-full items-center justify-center bg-global object-cover shadow-sm shadow-black lg:h-40">
+                      <div className="flex h-56 w-full items-center justify-center bg-global object-cover shadow-sm shadow-black">
                         <img
                           src={gameekLogo}
                           alt="logo du site"
