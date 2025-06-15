@@ -23,7 +23,7 @@ export const getBestGames = async () => {
     const { data: bestGames } = await axios.get(
       `https://site--gameek-backend--bf7zj7wtgltq.code.run/games/best`,
       { timeout: 5000 },
-      // "http://localhost:8000/games/best",
+      //"http://localhost:8000/games/best",
     );
     const bestGamesParsed = gameSchema.parse(bestGames);
     return bestGamesParsed;
