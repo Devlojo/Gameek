@@ -1,5 +1,3 @@
-import { GenreBadge } from "@/components/ui/GenreBadge";
-import { PlatformBadge } from "@/components/ui/PlatformBadge";
 import { useLatestReviewsQuery } from "@/queries/useGamesQuery";
 import avatar from "@/images/sample-avatar.png";
 import { Loader } from "@/components/ui/Loader";
@@ -49,11 +47,6 @@ export const LatestReviewsSection = () => {
                       <span className="text-xl text-mainYellow">18</span>
                       ∕20
                     </p>
-                    <div className="absolute right-0 top-0 flex flex-wrap gap-1">
-                      {game.genres.map((genre, index) => (
-                        <GenreBadge genre={genre.name} key={index} />
-                      ))}
-                    </div>
                   </div>
                   <div className="mt-2 flex flex-col gap-2">
                     <h3 className="text-lg">{game.name}</h3>
@@ -67,19 +60,7 @@ export const LatestReviewsSection = () => {
                         className="border-1 h-8 w-8 rounded-full shadow-sm shadow-black"
                         alt="Avatar du testeur"
                       />
-                      <p className="text-sm">Jack, le 15/11/23</p>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-2">
-                      {game.platforms && game.platforms.length > 0 ? (
-                        game.platforms.map((platform, index) => (
-                          <PlatformBadge
-                            platform={platform.platform.name}
-                            key={index}
-                          />
-                        ))
-                      ) : (
-                        <Loader />
-                      )}
+                      <p className="text-sm">Jack, le 15/11/23 à 15h50</p>
                     </div>
                   </div>
                 </a>

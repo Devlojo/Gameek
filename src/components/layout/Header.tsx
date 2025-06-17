@@ -1,22 +1,34 @@
 import gameekLogo from "@/images/gameek-removebg.png";
+import { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { InputSearch } from "@/components/ui/InputSearch";
+import { IoClose } from "react-icons/io5";
+import clsx from "clsx";
 
 type TActiveBurgerMenu = {
   activeBurgerMenu: boolean;
   handleActiveBurgerMenu: () => void;
+  handleSignInModal: () => void;
 };
 const Header = ({
   activeBurgerMenu,
   handleActiveBurgerMenu,
+  handleSignInModal,
 }: TActiveBurgerMenu): JSX.Element => {
+  const [activeSearchInput, setActiveSearchInput] = useState(false);
+
+  const handleInputSearch = () => {
+    setActiveSearchInput((prev) => !prev);
+  };
+
   return (
     <>
       <header className="sticky top-0 z-20 flex w-full items-center gap-2 bg-global py-2 text-customWhite max-lg:px-2 max-md:justify-between">
         {!activeBurgerMenu && (
           <GiHamburgerMenu
-            className="size-8 md:hidden"
+            className={clsx("size-8 md:hidden", activeSearchInput && "hidden")}
             onClick={handleActiveBurgerMenu}
           />
         )}
@@ -24,7 +36,10 @@ const Header = ({
           <img
             src={gameekLogo}
             alt="Logo du site"
-            className="h-12 w-32 md:w-48"
+            className={clsx(
+              "h-12 w-32 md:w-48",
+              activeSearchInput && "max-md:hidden",
+            )}
           />
         </a>
         <nav className="mb-1.5 hidden md:flex md:items-center md:gap-2">
@@ -41,11 +56,28 @@ const Header = ({
             Tests
           </a>
         </nav>
-        <div className="mb-1 flex justify-end gap-4 text-customWhite md:w-full">
-          <button className="hover:cursor-pointer hover:text-yellow-400">
-            <FaSearch className="size-6" />
+        <div
+          className={clsx(
+            "mb-1 flex justify-end gap-4 text-customWhite md:w-full",
+            activeSearchInput && "w-full max-md:justify-center",
+          )}
+        >
+          {activeSearchInput && <InputSearch />}
+
+          <button
+            className="hover:cursor-pointer hover:text-yellow-400"
+            onClick={handleInputSearch}
+          >
+            {activeSearchInput ? (
+              <IoClose className="size-6" />
+            ) : (
+              <FaSearch className="size-6" />
+            )}
           </button>
-          <button className="hover:cursor-pointer hover:text-yellow-400">
+          <button
+            className="hover:cursor-pointer hover:text-yellow-400"
+            onClick={handleSignInModal}
+          >
             <FaUserCircle className="size-6" />
           </button>
         </div>

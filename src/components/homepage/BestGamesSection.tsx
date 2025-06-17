@@ -1,5 +1,3 @@
-import { GenreBadge } from "@/components/ui/GenreBadge";
-import { PlatformBadge } from "@/components/ui/PlatformBadge";
 import { useBestGamesQuery } from "@/queries/useGamesQuery";
 import { Loader } from "@/components/ui/Loader";
 import gameekLogo from "@/images/gameek-removebg.png";
@@ -31,11 +29,11 @@ export const BestGamesSection = () => {
                       <img
                         src={game.background_image}
                         alt={game.name}
-                        className="h-56 w-full object-cover shadow-sm shadow-black"
+                        className="h-56 w-full rounded-md object-cover shadow-md shadow-black"
                         loading="lazy"
                       />
                     ) : (
-                      <div className="flex h-56 w-full items-center justify-center bg-global object-cover shadow-sm shadow-black">
+                      <div className="flex h-56 w-full items-center justify-center rounded-md bg-global object-cover shadow-md shadow-black">
                         <img
                           src={gameekLogo}
                           alt="logo du site"
@@ -48,27 +46,9 @@ export const BestGamesSection = () => {
                       <span className="text-xl text-mainYellow">18</span>
                       ∕20 <span className="">(5 avis)</span>
                     </p>
-
-                    <div className="absolute right-0 top-0 flex flex-wrap gap-1">
-                      {game.genres.map((genre, index) => (
-                        <GenreBadge genre={genre.name} key={index} />
-                      ))}
-                    </div>
                   </div>
 
                   <h3 className="text-lg">{game.name}</h3>
-                  <div className="flex flex-wrap items-center gap-2">
-                    {game.platforms && game.platforms.length > 0 ? (
-                      game.platforms.map((platform, index) => (
-                        <PlatformBadge
-                          platform={platform.platform.name}
-                          key={index}
-                        />
-                      ))
-                    ) : (
-                      <Loader />
-                    )}
-                  </div>
                 </a>
               </article>
             );
