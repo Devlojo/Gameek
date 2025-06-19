@@ -26,7 +26,7 @@ const App = (): JSX.Element => {
   return (
     <>
       <div className="h-full bg-global">
-        <div className="mx-auto flex max-w-5xl flex-col gap-4">
+        <div className="mx-auto flex max-w-5xl flex-col gap-6">
           <Header
             activeBurgerMenu={activeBurgerMenu}
             handleActiveBurgerMenu={handleActiveBurgerMenu}

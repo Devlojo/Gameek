@@ -42,7 +42,7 @@ export const BestGamesSection = () => {
                       </div>
                     )}
 
-                    <p className="absolute bottom-0 w-full bg-global bg-opacity-70 text-xs text-customWhite shadow-sm shadow-black">
+                    <p className="text-light absolute bottom-0 w-full bg-global bg-opacity-70 text-xs shadow-sm shadow-black">
                       <span className="text-xl text-mainYellow">18</span>
                       ∕20 <span className="">(5 avis)</span>
                     </p>

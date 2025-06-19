@@ -25,7 +25,7 @@ const Header = ({
 
   return (
     <>
-      <header className="sticky top-0 z-20 flex w-full items-center gap-2 bg-global py-2 text-customWhite max-lg:px-2 max-md:justify-between">
+      <header className="text-light sticky top-0 z-20 flex w-full items-center gap-2 bg-global py-2 max-lg:px-2 max-md:justify-between">
         {!activeBurgerMenu && (
           <GiHamburgerMenu
             className={clsx("size-8 md:hidden", activeSearchInput && "hidden")}
@@ -58,7 +58,7 @@ const Header = ({
         </nav>
         <div
           className={clsx(
-            "mb-1 flex justify-end gap-4 text-customWhite md:w-full",
+            "text-light mb-1 flex justify-end gap-4 md:w-full",
             activeSearchInput && "w-full max-md:justify-center",
           )}
         >

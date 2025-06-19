@@ -7,11 +7,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        global: "#171625",
+        global: "#0C111D",
         lastestGames: "#404447",
         mainYellow: "#FFCA2C",
-        customWhite: "#e5e7eb",
-        Action: "#111927",
+        customWhite: "#FDFDFE",
+        surface: "#111727",
+        light: "#D4E1FF",
       },
     },
   },
