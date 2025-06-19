@@ -2,6 +2,7 @@ import { useBestGamesQuery } from "@/queries/useGamesQuery";
 import { Loader } from "@/components/ui/Loader";
 import gameekLogo from "@/images/gameek-removebg.png";
 import { BsFire } from "react-icons/bs";
+import { GameHoverCard } from "../ui/GameHoverCard";
 
 export const BestGamesSection = () => {
   const { bestGames, isSuccess } = useBestGamesQuery();
@@ -20,7 +21,7 @@ export const BestGamesSection = () => {
           bestGames.results.map((game, index) => {
             return (
               <article
-                className="flex w-full flex-col hover:opacity-85 sm:w-[48.5%]"
+                className="group relative flex w-full flex-col sm:w-[48.5%]"
                 key={index}
               >
                 <a href={"#" + game.slug}>
@@ -41,8 +42,12 @@ export const BestGamesSection = () => {
                         />
                       </div>
                     )}
+                    <GameHoverCard
+                      platforms={game.platforms}
+                      genres={game.genres}
+                    />
 
-                    <p className="text-light absolute bottom-0 w-full bg-global bg-opacity-70 text-xs shadow-sm shadow-black">
+                    <p className="absolute bottom-0 w-full bg-global bg-opacity-70 text-xs text-light shadow-sm shadow-black">
                       <span className="text-xl text-mainYellow">18</span>
                       ∕20 <span className="">(5 avis)</span>
                     </p>

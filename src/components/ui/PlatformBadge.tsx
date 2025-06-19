@@ -5,7 +5,7 @@ type TPlatformBadge = {
 export const PlatformBadge = ({ platform }: TPlatformBadge) => {
   return (
     <>
-      <p className="rounded-sm p-1 text-xs text-black shadow-sm shadow-gray-800">
+      <p className="rounded-sm p-1 text-xs text-customWhite shadow-sm shadow-mainYellow">
         {platform}
       </p>
     </>

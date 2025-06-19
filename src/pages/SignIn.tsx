@@ -1,4 +1,4 @@
-export const SignInModal = () => {
+export const SignIn = (): JSX.Element => {
   return (
     <>
       <div className="fixed z-30 flex h-96 w-96 flex-col items-center justify-center gap-8 rounded-2xl bg-white p-2 shadow-md shadow-black">
