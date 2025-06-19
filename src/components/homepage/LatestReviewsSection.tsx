@@ -3,6 +3,7 @@ import avatar from "@/images/sample-avatar.png";
 import { Loader } from "@/components/ui/Loader";
 import gameekLogo from "@/images/gameek-removebg.png";
 import { IoIosTimer } from "react-icons/io";
+import { GameHoverCard } from "../ui/GameHoverCard";
 
 export const LatestReviewsSection = () => {
   const { latestReviews, isSuccess } = useLatestReviewsQuery();
@@ -21,7 +22,7 @@ export const LatestReviewsSection = () => {
           latestReviews.results.map((game, index) => {
             return (
               <article
-                className="w-full p-2 shadow-md shadow-black hover:opacity-85 sm:w-[48.5%]"
+                className="group relative w-full p-2 shadow-md shadow-black sm:w-[48.5%]"
                 key={index}
               >
                 <a href={"#" + game.slug}>
@@ -63,6 +64,10 @@ export const LatestReviewsSection = () => {
                       <p className="text-sm">Jack, le 15/11/23 à 15h50</p>
                     </div>
                   </div>
+                  <GameHoverCard
+                    platforms={game.platforms}
+                    genres={game.genres}
+                  />
                 </a>
               </article>
             );

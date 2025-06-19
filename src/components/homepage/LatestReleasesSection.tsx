@@ -3,6 +3,7 @@ import { Loader } from "@/components/ui/Loader";
 import gameekLogo from "@/images/gameek-removebg.png";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { GameHoverCard } from "@/components/ui/GameHoverCard";
 
 export const LatestReleasesSection = () => {
   const { latestGames, isSuccess } = useLatestGamesQuery();
@@ -29,10 +30,12 @@ export const LatestReleasesSection = () => {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
       items: 3,
+      slidesToSlide: 3,
     },
     tablet: {
       breakpoint: { max: 1024, min: 640 },
       items: 2,
+      slidesToSlide: 2,
     },
     mobile: {
       breakpoint: { max: 640, min: 0 },
@@ -52,9 +55,9 @@ export const LatestReleasesSection = () => {
 
   return (
     <>
-      <section className="bg-surface h-auto px-4 py-3 shadow-xl shadow-black">
+      <section className="h-auto bg-surface px-4 py-3 shadow-xl shadow-black">
         <div className="flex items-center justify-between gap-2 pb-3 max-md:block max-md:text-center">
-          <h2 className="text-light text-2xl font-bold">
+          <h2 className="text-2xl font-bold text-light">
             Les dernières sorties{" "}
           </h2>
           <div className="my-1 flex justify-center gap-1">
@@ -65,7 +68,6 @@ export const LatestReleasesSection = () => {
         </div>
 
         <Carousel
-          infinite
           itemClass="px-2"
           responsive={responsive}
           removeArrowOnDeviceType={["tablet", "mobile"]}
@@ -77,7 +79,7 @@ export const LatestReleasesSection = () => {
         >
           {isSuccess && latestGames && latestGames.results.length > 0 ? (
             latestGames.results.map((game, index) => (
-              <article className="mb-5 flex hover:opacity-85" key={index}>
+              <article className="group relative mb-5 flex" key={index}>
                 <a href={"#" + game.slug}>
                   <div className="w-full">
                     {game.background_image ? (
@@ -96,8 +98,12 @@ export const LatestReleasesSection = () => {
                         />
                       </div>
                     )}
+                    <GameHoverCard
+                      platforms={game.platforms}
+                      genres={game.genres}
+                    />
 
-                    <div className="text-light flex w-full flex-col items-center p-1">
+                    <div className="flex w-full flex-col items-center p-1 text-light">
                       <h3 className="text-center text-lg">{game.name}</h3>
                       <p className="text-sm">
                         {game.released.split("-").reverse().join("/")}

@@ -10,12 +10,10 @@ import clsx from "clsx";
 type TActiveBurgerMenu = {
   activeBurgerMenu: boolean;
   handleActiveBurgerMenu: () => void;
-  handleSignInModal: () => void;
 };
 const Header = ({
   activeBurgerMenu,
   handleActiveBurgerMenu,
-  handleSignInModal,
 }: TActiveBurgerMenu): JSX.Element => {
   const [activeSearchInput, setActiveSearchInput] = useState(false);
 
@@ -25,7 +23,7 @@ const Header = ({
 
   return (
     <>
-      <header className="text-light sticky top-0 z-20 flex w-full items-center gap-2 bg-global py-2 max-lg:px-2 max-md:justify-between">
+      <header className="sticky top-0 z-20 flex w-full items-center gap-2 bg-global py-2 text-light max-lg:px-2 max-md:justify-between">
         {!activeBurgerMenu && (
           <GiHamburgerMenu
             className={clsx("size-8 md:hidden", activeSearchInput && "hidden")}
@@ -58,7 +56,7 @@ const Header = ({
         </nav>
         <div
           className={clsx(
-            "text-light mb-1 flex justify-end gap-4 md:w-full",
+            "mb-1 flex items-center justify-end gap-4 text-light md:w-full",
             activeSearchInput && "w-full max-md:justify-center",
           )}
         >
@@ -74,12 +72,9 @@ const Header = ({
               <FaSearch className="size-6" />
             )}
           </button>
-          <button
-            className="hover:cursor-pointer hover:text-yellow-400"
-            onClick={handleSignInModal}
-          >
+          <a className="hover:cursor-pointer hover:text-yellow-400" href="">
             <FaUserCircle className="size-6" />
-          </button>
+          </a>
         </div>
       </header>
     </>
