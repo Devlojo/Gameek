@@ -22,7 +22,7 @@ export const LatestReviewsSection = () => {
           latestReviews.results.map((game, index) => {
             return (
               <article
-                className="group relative w-full p-2 shadow-md shadow-black sm:w-[48.5%]"
+                className="group relative w-full rounded-md p-2 shadow-md shadow-black sm:w-[48.5%]"
                 key={index}
               >
                 <a href={"#" + game.slug}>
@@ -67,6 +67,7 @@ export const LatestReviewsSection = () => {
                   <GameHoverCard
                     platforms={game.platforms}
                     genres={game.genres}
+                    info="Voir le test"
                   />
                 </a>
               </article>

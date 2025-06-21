@@ -6,7 +6,7 @@ const Home = (): JSX.Element => {
   return (
     <>
       <h1 className="px-4 text-center text-3xl font-bold text-customWhite">
-        Gameek - Tests et critiques de jeux vidéo
+        La plateforme de tests 100% gamers
       </h1>
       <LatestReleasesSection />
       <BestGamesSection />

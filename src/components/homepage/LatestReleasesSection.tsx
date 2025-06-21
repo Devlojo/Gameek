@@ -4,6 +4,9 @@ import gameekLogo from "@/images/gameek-removebg.png";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { GameHoverCard } from "@/components/ui/GameHoverCard";
+import clsx from "clsx";
+import { PiArrowFatLineRightFill } from "react-icons/pi";
+import { PiArrowFatLineLeftFill } from "react-icons/pi";
 
 export const LatestReleasesSection = () => {
   const { latestGames, isSuccess } = useLatestGamesQuery();
@@ -53,6 +56,28 @@ export const LatestReleasesSection = () => {
     );
   };
 
+  const CustomRightArrow = ({ onClick }: any) => {
+    return (
+      <button
+        className="absolute bottom-0 right-0 rounded-full bg-black p-2 text-customWhite opacity-40 hover:cursor-pointer hover:opacity-100"
+        onClick={onClick}
+      >
+        <PiArrowFatLineRightFill className="size-8" />
+      </button>
+    );
+  };
+
+  const CustomLeftArrow = ({ onClick }: any) => {
+    return (
+      <button
+        className="absolute bottom-0 left-0 rounded-full bg-black p-2 text-customWhite opacity-40 hover:cursor-pointer hover:opacity-100"
+        onClick={onClick}
+      >
+        <PiArrowFatLineLeftFill className="size-8" />
+      </button>
+    );
+  };
+
   return (
     <>
       <section className="h-auto bg-surface px-4 py-3 shadow-xl shadow-black">
@@ -73,9 +98,14 @@ export const LatestReleasesSection = () => {
           removeArrowOnDeviceType={["tablet", "mobile"]}
           showDots
           customDot={<CustomDot />}
-          containerClass={
-            latestGames?.results.length === 1 ? "justify-center flex" : ""
-          }
+          containerClass={clsx(
+            latestGames &&
+              latestGames.results.length <= 2 &&
+              "justify-center flex",
+            !isSuccess && "justify-center flex",
+          )}
+          customRightArrow={<CustomRightArrow />}
+          customLeftArrow={<CustomLeftArrow />}
         >
           {isSuccess && latestGames && latestGames.results.length > 0 ? (
             latestGames.results.map((game, index) => (
@@ -101,6 +131,7 @@ export const LatestReleasesSection = () => {
                     <GameHoverCard
                       platforms={game.platforms}
                       genres={game.genres}
+                      info="Voir les détails du jeu"
                     />
 
                     <div className="flex w-full flex-col items-center p-1 text-light">

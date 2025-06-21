@@ -6,7 +6,7 @@ export const getLatestReleasesGames = async () => {
     const { data: latestGames } = await axios.get(
       `https://site--gameek-backend--bf7zj7wtgltq.code.run/games/latest-releases`,
       { timeout: 5000 },
-      /*"http://localhost:8000/games/latest-releases",*/
+      //"http://localhost:8000/games/latest-releases",
     );
 
     const latestGamesParsed = gameSchema.parse(latestGames);

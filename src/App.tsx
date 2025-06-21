@@ -4,6 +4,7 @@ import Home from "@/pages/Home";
 import Footer from "@/components/layout/Footer";
 import { useState } from "react";
 import { BurgerMenu } from "./components/ui/BurgerMenu";
+import { ScrollToTopButton } from "@/components/ui/ScrollToTopButton";
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
@@ -21,6 +22,7 @@ const App = (): JSX.Element => {
   return (
     <>
       <div className="h-full bg-global">
+        <ScrollToTopButton />
         <div className="mx-auto flex max-w-5xl flex-col gap-6">
           <Header
             activeBurgerMenu={activeBurgerMenu}
