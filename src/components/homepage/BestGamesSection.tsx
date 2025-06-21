@@ -45,11 +45,15 @@ export const BestGamesSection = () => {
                     <GameHoverCard
                       platforms={game.platforms}
                       genres={game.genres}
+                      info="Voir la liste des tests"
                     />
 
-                    <p className="absolute bottom-0 w-full bg-global bg-opacity-70 text-xs text-light shadow-sm shadow-black">
+                    <p className="absolute bottom-0 w-full rounded-b-md bg-global bg-opacity-70 text-xs text-light shadow-sm shadow-black">
                       <span className="text-xl text-mainYellow">18</span>
                       ∕20 <span className="">(5 avis)</span>
+                    </p>
+                    <p className="absolute left-0 top-0 rounded-tl-md bg-mainYellow px-1 text-lg font-bold shadow-md shadow-black">
+                      {index + 1}
                     </p>
                   </div>
 
