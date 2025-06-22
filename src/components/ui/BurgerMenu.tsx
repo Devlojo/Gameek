@@ -7,7 +7,7 @@ type TActiveBurgerMenu = {
 export const BurgerMenu = ({ handleActiveBurgerMenu }: TActiveBurgerMenu) => {
   return (
     <>
-      <div className="text-light fixed z-30 flex h-full w-full bg-global md:hidden">
+      <div className="fixed z-30 flex h-full w-full bg-global text-light md:hidden">
         <IoClose
           className="absolute left-2 top-3 size-10 md:hidden"
           onClick={handleActiveBurgerMenu}
@@ -19,6 +19,12 @@ export const BurgerMenu = ({ handleActiveBurgerMenu }: TActiveBurgerMenu) => {
             className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
           >
             Jeux
+          </a>
+          <a
+            href=""
+            className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
+          >
+            Nouveautés
           </a>
           <a
             href=""

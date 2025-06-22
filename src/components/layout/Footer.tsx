@@ -3,7 +3,7 @@ const Footer = (): JSX.Element => {
     <>
       <footer className="mb-4 text-customWhite">
         <nav className="mb-2">
-          <ul className="flex flex-wrap justify-center gap-2 max-sm:text-sm">
+          <ul className="flex flex-wrap justify-center gap-1 max-sm:text-sm">
             <li>
               <a href="" className="hover:text-mainYellow">
                 Mentions Légales |
@@ -31,7 +31,7 @@ const Footer = (): JSX.Element => {
             </li>
           </ul>
         </nav>
-        <div className="flex flex-wrap justify-center gap-2 max-sm:text-sm">
+        <div className="flex flex-wrap justify-center gap-1 max-sm:text-sm">
           <p>Copyright © 2025 Gameek | Tous droits réservés |</p>
           <p>
             {" "}

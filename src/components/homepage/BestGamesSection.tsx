@@ -45,7 +45,7 @@ export const BestGamesSection = () => {
                     <GameHoverCard
                       platforms={game.platforms}
                       genres={game.genres}
-                      info="Voir la liste des tests"
+                      info="Voir les tests du jeu"
                     />
 
                     <p className="absolute bottom-0 w-full rounded-b-md bg-global bg-opacity-70 text-xs text-light shadow-sm shadow-black">
