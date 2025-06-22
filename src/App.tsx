@@ -23,15 +23,15 @@ const App = (): JSX.Element => {
     <>
       <div className="h-full bg-global">
         <ScrollToTopButton />
-        <div className="mx-auto flex max-w-5xl flex-col gap-6">
-          <Header
-            activeBurgerMenu={activeBurgerMenu}
-            handleActiveBurgerMenu={handleActiveBurgerMenu}
-          />
-          {activeBurgerMenu && (
-            <BurgerMenu handleActiveBurgerMenu={handleActiveBurgerMenu} />
-          )}
+        {activeBurgerMenu && (
+          <BurgerMenu handleActiveBurgerMenu={handleActiveBurgerMenu} />
+        )}
+        <Header
+          activeBurgerMenu={activeBurgerMenu}
+          handleActiveBurgerMenu={handleActiveBurgerMenu}
+        />
 
+        <div className="mx-auto flex max-w-5xl flex-col gap-6">
           <Home />
           <Footer />
         </div>
