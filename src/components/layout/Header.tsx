@@ -34,18 +34,26 @@ const Header = ({
           <img
             src={gameekLogo}
             alt="Logo du site"
-            className={clsx(
-              "h-12 w-32 md:w-48",
-              activeSearchInput && "max-md:hidden",
-            )}
+            className={clsx("h-12 w-32 md:w-48", activeSearchInput && "hidden")}
           />
         </a>
-        <nav className="mb-1.5 hidden md:flex md:items-center md:gap-2">
+        <nav
+          className={clsx(
+            "mb-1.5 hidden",
+            !activeSearchInput && "md:flex md:items-center md:gap-2",
+          )}
+        >
           <a
             href=""
             className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
           >
             Jeux
+          </a>
+          <a
+            href=""
+            className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
+          >
+            Nouveautés
           </a>
           <a
             href=""

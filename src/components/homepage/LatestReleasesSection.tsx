@@ -10,24 +10,6 @@ import { PiArrowFatLineLeftFill } from "react-icons/pi";
 
 export const LatestReleasesSection = () => {
   const { latestGames, isSuccess } = useLatestGamesQuery();
-  // Date du jour
-  const today = new Date();
-  const yearToday = today.getFullYear();
-  // On s'assure que le resultat soit une chaine de caractères pour pouvoir utiliser la méthode padStart qui prend deux arguments, ici le 2 pour qu'il y a deux chiffres et le "0" pour ajouter un zéro lorsque la date sera par exemple 07/01
-  const monthToday = String(today.getMonth() + 1).padStart(2, "0");
-  const dayToday = String(today.getDate()).padStart(2, "0");
-  const dateToday = `${dayToday}/${monthToday}/${yearToday}`;
-
-  // Date du jour - 3
-  const ThreeDaysAgo = new Date();
-  ThreeDaysAgo.setDate(ThreeDaysAgo.getDate() - 3);
-  const yearThreeDaysAgo = ThreeDaysAgo.getFullYear();
-  const monthThreeDaysAgo = String(ThreeDaysAgo.getMonth() + 1).padStart(
-    2,
-    "0",
-  );
-  const dayThreeDaysAgo = String(ThreeDaysAgo.getDate()).padStart(2, "0");
-  const dateThreeDaysAgo = `${dayThreeDaysAgo}/${monthThreeDaysAgo}/${yearThreeDaysAgo}`;
 
   const responsive = {
     desktop: {
@@ -80,15 +62,20 @@ export const LatestReleasesSection = () => {
 
   return (
     <>
-      <section className="h-auto bg-surface px-4 py-3 shadow-xl shadow-black">
+      <section className="relative h-auto bg-surface px-4 py-3 shadow-xl shadow-black">
         <div className="flex items-center justify-between gap-2 pb-3 max-md:block max-md:text-center">
           <h2 className="text-2xl font-bold text-light">
             Les dernières sorties{" "}
           </h2>
-          <div className="my-1 flex justify-center gap-1">
-            <p className="text-light">
-              Du {dateThreeDaysAgo} au {dateToday}
-            </p>
+          <div className="my-1 flex justify-center">
+            {(latestGames?.count as number) > 12 && (
+              <a
+                className="rounded-md p-1.5 text-light shadow-sm shadow-light hover:bg-light hover:text-surface"
+                href="#"
+              >
+                Voir plus
+              </a>
+            )}
           </div>
         </div>
 
@@ -137,6 +124,7 @@ export const LatestReleasesSection = () => {
                     <div className="flex w-full flex-col items-center p-1 text-light">
                       <h3 className="text-center text-lg">{game.name}</h3>
                       <p className="text-sm">
+                        Date de sortie :{" "}
                         {game.released.split("-").reverse().join("/")}
                       </p>
                     </div>
