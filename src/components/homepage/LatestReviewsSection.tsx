@@ -50,7 +50,7 @@ export const LatestReviewsSection = () => {
                     </p>
                   </div>
                   <div className="mt-2 flex flex-col gap-2">
-                    <h3 className="text-lg">{game.name}</h3>
+                    <h3 className="text-lg font-bold">{game.name}</h3>
                     <p>
                       Some quick example text to build on the card title and
                       make up the bulk of the card's content.
