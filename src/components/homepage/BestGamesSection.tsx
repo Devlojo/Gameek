@@ -52,12 +52,12 @@ export const BestGamesSection = () => {
                       <span className="text-xl text-mainYellow">18</span>
                       ∕20 <span className="">(5 avis)</span>
                     </p>
-                    <p className="absolute left-0 top-0 rounded-tl-md bg-mainYellow px-1 text-lg font-bold shadow-md shadow-black">
+                    <p className="absolute left-0 top-0 rounded-tl-md bg-mainYellow px-1 text-2xl font-bold shadow-md shadow-black">
                       {index + 1}
                     </p>
                   </div>
 
-                  <h3 className="text-lg">{game.name}</h3>
+                  <h3 className="pt-1 text-lg font-bold">{game.name}</h3>
                 </a>
               </article>
             );

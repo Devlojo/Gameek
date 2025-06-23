@@ -65,17 +65,15 @@ export const LatestReleasesSection = () => {
       <section className="relative h-auto bg-surface px-4 py-3 shadow-xl shadow-black">
         <div className="flex items-center justify-between gap-2 pb-3 max-md:block max-md:text-center">
           <h2 className="text-2xl font-bold text-light">
-            Les dernières sorties{" "}
+            Les sorties du mois{" "}
           </h2>
           <div className="my-1 flex justify-center">
-            {(latestGames?.count as number) > 12 && (
-              <a
-                className="rounded-md p-1.5 text-light shadow-sm shadow-light hover:bg-light hover:text-surface"
-                href="#"
-              >
-                Voir plus
-              </a>
-            )}
+            <a
+              className="rounded-md p-1.5 text-light shadow-sm shadow-light hover:bg-light hover:text-surface"
+              href="#"
+            >
+              Voir plus
+            </a>
           </div>
         </div>
 
@@ -96,22 +94,22 @@ export const LatestReleasesSection = () => {
         >
           {isSuccess && latestGames && latestGames.results.length > 0 ? (
             latestGames.results.map((game, index) => (
-              <article className="group relative mb-5 flex" key={index}>
+              <article className="group relative mb-5" key={index}>
                 <a href={"#" + game.slug}>
-                  <div className="w-full">
+                  <div className="aspect-[16/9] w-full">
                     {game.background_image ? (
                       <img
                         src={game.background_image}
                         alt={game.name}
-                        className="h-64 rounded-t-md object-cover shadow-lg shadow-black"
+                        className="h-64 w-full rounded-t-md object-cover shadow-lg shadow-black"
                         loading="lazy"
                       />
                     ) : (
-                      <div className="flex h-64 w-full items-center justify-center bg-global object-cover lg:h-40">
+                      <div className="flex h-64 w-full items-center justify-center bg-global lg:h-40">
                         <img
                           src={gameekLogo}
                           alt="logo du site"
-                          className="h-20"
+                          className="h-20 object-cover"
                         />
                       </div>
                     )}
@@ -122,8 +120,10 @@ export const LatestReleasesSection = () => {
                     />
 
                     <div className="flex w-full flex-col items-center p-1 text-light">
-                      <h3 className="text-center text-lg">{game.name}</h3>
-                      <p className="text-sm">
+                      <h3 className="text-center text-lg font-bold">
+                        {game.name}
+                      </h3>
+                      <p className="text-center text-sm">
                         Date de sortie :{" "}
                         {game.released.split("-").reverse().join("/")}
                       </p>
