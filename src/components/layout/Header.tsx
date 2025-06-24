@@ -23,7 +23,7 @@ const Header = ({
 
   return (
     <>
-      <header className="sticky top-0 z-20 border-b-2 border-surface bg-global/80 py-1 text-light">
+      <header className="sticky top-0 z-20 border-b border-black bg-gray-950/80 py-1 text-light">
         <div className="flex items-center justify-between gap-2 max-lg:px-2 lg:mx-auto lg:max-w-5xl">
           {!activeBurgerMenu && (
             <GiHamburgerMenu

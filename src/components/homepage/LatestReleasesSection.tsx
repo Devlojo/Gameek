@@ -62,7 +62,7 @@ export const LatestReleasesSection = () => {
 
   return (
     <>
-      <section className="relative h-auto bg-surface px-4 py-3 shadow-xl shadow-black">
+      <section className="relative h-auto bg-surface px-4 py-3 shadow-lg shadow-black">
         <div className="flex items-center justify-between gap-2 pb-3 max-md:block max-md:text-center">
           <h2 className="text-2xl font-bold text-light">
             Les sorties du mois{" "}
