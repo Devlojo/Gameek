@@ -13,6 +13,7 @@ export default {
         customWhite: "#FDFDFE",
         surface: "#111727",
         light: "#D4E1FF",
+        mainCyan: "#1AAEAB",
       },
     },
   },
