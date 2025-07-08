@@ -6,6 +6,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { InputSearch } from "@/components/ui/InputSearch";
 import { IoClose } from "react-icons/io5";
 import clsx from "clsx";
+import { Link } from "react-router-dom";
 
 type TActiveBurgerMenu = {
   activeBurgerMenu: boolean;
@@ -35,7 +36,7 @@ const Header = ({
             />
           )}
 
-          <a href="#">
+          <Link to="/">
             <img
               src={gameekLogo}
               alt="Logo du site"
@@ -44,7 +45,7 @@ const Header = ({
                 activeSearchInput && "hidden",
               )}
             />
-          </a>
+          </Link>
 
           <nav
             className={clsx(
