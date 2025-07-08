@@ -47,3 +47,40 @@ export const genreOrPlatformSchema = z.object({
     }),
   ),
 });
+
+export const gameDetailsSchema = z.object({
+  id: z.number(),
+  slug: z.string(),
+  name: z.string(),
+  description: z.string(),
+  released: z.string(),
+  background_image: z.string().nullable(),
+  publishers: z.array(
+    z.object({
+      id: z.number(),
+      name: z.string(),
+    }),
+  ),
+  developers: z.array(
+    z.object({
+      id: z.number(),
+      name: z.string(),
+    }),
+  ),
+  platforms: z.nullable(
+    z.array(
+      z.object({
+        platform: z.object({
+          id: z.number(),
+          name: z.string(),
+        }),
+      }),
+    ),
+  ),
+  genres: z.array(
+    z.object({
+      id: z.number(),
+      name: z.string(),
+    }),
+  ),
+});

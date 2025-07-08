@@ -1,5 +1,5 @@
 import axios from "axios";
-import { gameSchema } from "@/types/index";
+import { gameDetailsSchema, gameSchema } from "@/types/index";
 
 export const getLatestReleasesGames = async () => {
   try {
@@ -45,5 +45,19 @@ export const getLatestReviews = async () => {
   } catch (error) {
     console.log(error);
     throw error;
+  }
+};
+
+export const getGameDetail = async (id: string) => {
+  try {
+    const { data: gameDetail } = await axios.get(
+      `https://site--gameek-backend--bf7zj7wtgltq.code.run/games/${id}`,
+      { timeout: 5000 },
+      //`http://localhost:8000/games/${id}`,
+    );
+    const gameDetailParsed = gameDetailsSchema.parse(gameDetail);
+    return gameDetailParsed;
+  } catch (error) {
+    console.log(error);
   }
 };

@@ -7,6 +7,7 @@ import { GameHoverCard } from "@/components/ui/GameHoverCard";
 import clsx from "clsx";
 import { PiArrowFatLineRightFill } from "react-icons/pi";
 import { PiArrowFatLineLeftFill } from "react-icons/pi";
+import { Link } from "react-router-dom";
 
 export const LatestReleasesSection = () => {
   const { latestGames, isSuccess } = useLatestGamesQuery();
@@ -95,7 +96,7 @@ export const LatestReleasesSection = () => {
           {isSuccess && latestGames && latestGames.results.length > 0 ? (
             latestGames.results.map((game, index) => (
               <article className="group relative mb-5" key={index}>
-                <a href={"#" + game.slug}>
+                <Link to={`/games/${game.slug}`}>
                   <div className="aspect-[16/9] w-full">
                     {game.background_image ? (
                       <img
@@ -129,7 +130,7 @@ export const LatestReleasesSection = () => {
                       </p>
                     </div>
                   </div>
-                </a>
+                </Link>
               </article>
             ))
           ) : (

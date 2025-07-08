@@ -2,9 +2,11 @@
 import Header from "@/components/layout/Header";
 import Home from "@/pages/Home";
 import Footer from "@/components/layout/Footer";
+import Game from "@/pages/Game";
 import { useState } from "react";
 import { BurgerMenu } from "./components/ui/BurgerMenu";
 import { ScrollToTopButton } from "@/components/ui/ScrollToTopButton";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
@@ -21,21 +23,27 @@ const App = (): JSX.Element => {
   }
   return (
     <>
-      <div className="h-full bg-global">
-        <ScrollToTopButton />
-        {activeBurgerMenu && (
-          <BurgerMenu handleActiveBurgerMenu={handleActiveBurgerMenu} />
-        )}
-        <Header
-          activeBurgerMenu={activeBurgerMenu}
-          handleActiveBurgerMenu={handleActiveBurgerMenu}
-        />
+      <Router>
+        <div className="h-full bg-global">
+          <ScrollToTopButton />
+          {activeBurgerMenu && (
+            <BurgerMenu handleActiveBurgerMenu={handleActiveBurgerMenu} />
+          )}
+          <Header
+            activeBurgerMenu={activeBurgerMenu}
+            handleActiveBurgerMenu={handleActiveBurgerMenu}
+          />
 
-        <div className="mx-auto flex max-w-5xl flex-col gap-6">
-          <Home />
-          <Footer />
+          <div className="mx-auto flex max-w-5xl flex-col gap-6">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/games/:id" element={<Game />} />
+            </Routes>
+
+            <Footer />
+          </div>
         </div>
-      </div>
+      </Router>
     </>
   );
 };
