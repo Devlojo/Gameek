@@ -23,7 +23,7 @@ export const GameImagesMenu = () => {
         >
           <Menu />
           {isSuccessGameScreenshots && (
-            <div className="mt-5 flex flex-wrap justify-center gap-2">
+            <div className="mt-5 flex flex-wrap justify-center gap-2 max-sm:mx-3">
               {gameScreenshots?.results &&
               gameScreenshots.results.length > 0 ? (
                 gameScreenshots?.results.map((image, index) => (
@@ -31,7 +31,7 @@ export const GameImagesMenu = () => {
                     src={image.image}
                     key={index}
                     alt={`Image de ${gameDetail?.name}`}
-                    className="w-[48.5%] object-cover"
+                    className="w-[48.5%] object-cover max-sm:w-full"
                     loading="lazy"
                   />
                 ))

@@ -3,6 +3,7 @@ import { Loader } from "@/components/ui/Loader";
 import gameekLogo from "@/images/gameek-removebg.png";
 import { BsFire } from "react-icons/bs";
 import { GameHoverCard } from "../ui/GameHoverCard";
+import { Link } from "react-router-dom";
 
 export const BestGamesSection = () => {
   const { bestGames, isSuccess } = useBestGamesQuery();
@@ -24,7 +25,7 @@ export const BestGamesSection = () => {
                 className="group relative flex w-full flex-col sm:w-[48.5%]"
                 key={index}
               >
-                <a href={"#" + game.slug}>
+                <Link to={`/games/reviews/${game.slug}`}>
                   <div className="relative w-full">
                     {game.background_image ? (
                       <img
@@ -58,7 +59,7 @@ export const BestGamesSection = () => {
                   </div>
 
                   <h3 className="pt-1 text-lg font-bold">{game.name}</h3>
-                </a>
+                </Link>
               </article>
             );
           })
