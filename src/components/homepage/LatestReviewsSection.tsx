@@ -61,7 +61,7 @@ export const LatestReviewsSection = () => {
                         className="border-1 h-8 w-8 rounded-full shadow-sm shadow-black"
                         alt="Avatar du testeur"
                       />
-                      <p className="text-sm">Jack, le 15/11/23 à 15h50</p>
+                      <p className="text-sm">Jack, le 15/11/2023 à 15h50</p>
                     </div>
                   </div>
                   <GameHoverCard

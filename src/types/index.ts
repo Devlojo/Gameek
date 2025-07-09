@@ -55,6 +55,7 @@ export const gameDetailsSchema = z.object({
   description: z.string(),
   released: z.string(),
   background_image: z.string().nullable(),
+  background_image_additional: z.string().nullable(),
   publishers: z.array(
     z.object({
       id: z.number(),
@@ -81,6 +82,34 @@ export const gameDetailsSchema = z.object({
     z.object({
       id: z.number(),
       name: z.string(),
+    }),
+  ),
+});
+export const gameScreenshotsSchema = z.object({
+  count: z.number(),
+  next: z.string().nullable(),
+  previous: z.string().nullable(),
+  results: z.array(
+    z.object({
+      id: z.number(),
+      image: z.string(),
+    }),
+  ),
+});
+
+export const gameVideosSchema = z.object({
+  count: z.number(),
+  next: z.string().nullable(),
+  previous: z.string().nullable(),
+  results: z.array(
+    z.object({
+      id: z.number(),
+      name: z.string(),
+      preview: z.string(),
+      data: z.object({
+        "480": z.string(),
+        max: z.string(),
+      }),
     }),
   ),
 });

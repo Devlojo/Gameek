@@ -2,7 +2,7 @@ import { LatestReleasesSection } from "@/components/homepage/LatestReleasesSecti
 import { BestGamesSection } from "@/components/homepage/BestGamesSection";
 import { LatestReviewsSection } from "@/components/homepage/LatestReviewsSection";
 
-const Home = (): JSX.Element => {
+export const Home = (): JSX.Element => {
   return (
     <>
       <h1 className="mt-4 px-4 text-center text-3xl font-bold text-customWhite">
@@ -14,5 +14,3 @@ const Home = (): JSX.Element => {
     </>
   );
 };
-
-export default Home;

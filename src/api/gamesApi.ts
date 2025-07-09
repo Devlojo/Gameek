@@ -1,5 +1,10 @@
 import axios from "axios";
-import { gameDetailsSchema, gameSchema } from "@/types/index";
+import {
+  gameDetailsSchema,
+  gameSchema,
+  gameScreenshotsSchema,
+  gameVideosSchema,
+} from "@/types/index";
 
 export const getLatestReleasesGames = async () => {
   try {
@@ -57,6 +62,34 @@ export const getGameDetail = async (id: string) => {
     );
     const gameDetailParsed = gameDetailsSchema.parse(gameDetail);
     return gameDetailParsed;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getGameScreenshots = async (id: string) => {
+  try {
+    const { data: gameScreenshots } = await axios.get(
+      `https://site--gameek-backend--bf7zj7wtgltq.code.run/games/${id}/screenshots`,
+      { timeout: 5000 },
+      //`http://localhost:8000/games/${id}/screenshots`,
+    );
+    const gameScreenshotsParsed = gameScreenshotsSchema.parse(gameScreenshots);
+    return gameScreenshotsParsed;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getGameVideos = async (id: string) => {
+  try {
+    const { data: gameVideos } = await axios.get(
+      `https://site--gameek-backend--bf7zj7wtgltq.code.run/games/${id}/movies`,
+      { timeout: 5000 },
+      //`http://localhost:8000/games/${id}/movies`,
+    );
+    const gameVideosParsed = gameVideosSchema.parse(gameVideos);
+    return gameVideosParsed;
   } catch (error) {
     console.log(error);
   }
