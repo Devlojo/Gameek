@@ -1,8 +1,11 @@
 /* Components */
-import Header from "@/components/layout/Header";
-import Home from "@/pages/Home";
-import Footer from "@/components/layout/Footer";
-import Game from "@/pages/Game";
+import { Header } from "@/components/layout/Header";
+import { Home } from "@/pages/Home";
+import { Footer } from "@/components/layout/Footer";
+import { GameGeneralMenu } from "@/pages/GameGeneralMenu";
+import { GameReviewsMenu } from "@/pages/GameReviewsMenu";
+import { GameImagesMenu } from "@/pages/GameImagesMenu";
+import { GameVideosMenu } from "@/pages/GameVideosMenu";
 import { useState } from "react";
 import { BurgerMenu } from "./components/ui/BurgerMenu";
 import { ScrollToTopButton } from "@/components/ui/ScrollToTopButton";
@@ -24,7 +27,7 @@ const App = (): JSX.Element => {
   return (
     <>
       <Router>
-        <div className="h-full bg-global">
+        <div className="bg-global">
           <ScrollToTopButton />
           {activeBurgerMenu && (
             <BurgerMenu handleActiveBurgerMenu={handleActiveBurgerMenu} />
@@ -37,7 +40,14 @@ const App = (): JSX.Element => {
           <div className="mx-auto flex max-w-5xl flex-col gap-6">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/games/:id" element={<Game />} />
+              <Route path="/games/:id" element={<GameGeneralMenu />} />
+              <Route path="/games/reviews/:id" element={<GameReviewsMenu />} />
+
+              <Route
+                path="/games/screenshots/:id"
+                element={<GameImagesMenu />}
+              />
+              <Route path="/games/videos/:id" element={<GameVideosMenu />} />
             </Routes>
 
             <Footer />

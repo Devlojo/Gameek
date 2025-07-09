@@ -12,7 +12,7 @@ type TActiveBurgerMenu = {
   activeBurgerMenu: boolean;
   handleActiveBurgerMenu: () => void;
 };
-const Header = ({
+export const Header = ({
   activeBurgerMenu,
   handleActiveBurgerMenu,
 }: TActiveBurgerMenu): JSX.Element => {
@@ -104,5 +104,3 @@ const Header = ({
     </>
   );
 };
-
-export default Header;
