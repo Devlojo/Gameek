@@ -1,13 +1,12 @@
 import axios from "axios";
 import { genreOrPlatformSchema } from "@/types/index";
 
+const apiUrl = import.meta.env.VITE_API_URL;
 export const getAllGenres = async () => {
   try {
-    const { data: genres } = await axios.get(
-      `https://site--gameek-backend--bf7zj7wtgltq.code.run/genres`,
-      { timeout: 5000 },
-      // "http://localhost:8000/genres",
-    );
+    const { data: genres } = await axios.get(`${apiUrl}/genres`, {
+      timeout: 5000,
+    });
 
     const genresParsed = genreOrPlatformSchema.parse(genres);
 

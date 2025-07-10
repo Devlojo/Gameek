@@ -3,10 +3,14 @@ import { useGameDetailQuery } from "@/queries/useGameQuery";
 import { Menu } from "@/components/game/Menu";
 import { GameHeader } from "@/components/game/GameHeader";
 import { Loader } from "@/components/ui/Loader";
+import { useState } from "react";
+import { ForbiddenContent } from "@/components/layout/ForbiddenContent";
 
 export const GameGeneralMenu = () => {
   const { id } = useParams();
-  const { gameDetail, isLoading, isSuccessGameDetail } = useGameDetailQuery(id);
+  const { gameDetail, isLoading, isSuccessGameDetail, isError } =
+    useGameDetailQuery(id);
+  const [activeMenu, setActiveMenu] = useState<string>("general");
 
   const cleanGameDescription = (htmlTag: string) => {
     return htmlTag.replace(/<[^>]*>?/gm, "");
@@ -20,7 +24,7 @@ export const GameGeneralMenu = () => {
           background_image={gameDetail?.background_image}
           name={gameDetail?.name}
         >
-          <Menu />
+          <Menu activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
           <div className="mt-5 flex justify-center bg-customWhite">
             <div className="mx-3 w-full border p-2 shadow-md shadow-global">
               <div className="flex flex-col justify-center gap-2">
@@ -28,16 +32,20 @@ export const GameGeneralMenu = () => {
                   <p className="font-bold">Date de sortie : </p>
                   <p>{gameDetail?.released.split("-").reverse().join("/")}</p>
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <p className="font-bold">Genre :</p>
                   {gameDetail?.genres.map((genre, index) => (
-                    <p key={index}>{genre.name}</p>
+                    <p key={index} className="underline">
+                      {genre.name}
+                    </p>
                   ))}
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <p className="font-bold">Plateforme :</p>
                   {gameDetail?.platforms?.map((platform, index) => (
-                    <p key={index}>{platform.platform.name}</p>
+                    <p key={index} className="underline">
+                      {platform.platform.name}
+                    </p>
                   ))}
                 </div>
                 {gameDetail?.developers && gameDetail.developers.length > 0 && (
@@ -70,6 +78,7 @@ export const GameGeneralMenu = () => {
           </div>
         </GameHeader>
       )}
+      {isError && <ForbiddenContent />}
     </>
   );
 };

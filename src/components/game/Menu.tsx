@@ -1,13 +1,31 @@
 import { Link, useParams } from "react-router-dom";
+import { Dispatch, SetStateAction } from "react";
+import { clsx } from "clsx";
 
-export const Menu = () => {
+type MenuProps = {
+  activeMenu: string;
+  setActiveMenu: Dispatch<SetStateAction<string>>;
+};
+
+export const Menu = ({ activeMenu, setActiveMenu }: MenuProps) => {
   const { id } = useParams();
+  const handleActiveMenu = (event: React.MouseEvent<HTMLElement>) => {
+    const selectedMenu = event.currentTarget.id;
+
+    setActiveMenu(selectedMenu);
+  };
+
   return (
     <ul className="mx-3 my-2 flex items-center justify-between md:my-4">
       <li>
         <Link
+          id="general"
+          onClick={(event) => handleActiveMenu(event)}
+          className={clsx(
+            "rounded-md p-1 shadow-md shadow-global hover:opacity-80 md:p-2 md:px-10",
+            activeMenu === "general" && "bg-mainYellow",
+          )}
           to={`/games/${id}`}
-          className="rounded-md bg-mainYellow p-1 shadow-md shadow-global md:p-2 md:px-10"
         >
           Général
         </Link>
@@ -15,8 +33,15 @@ export const Menu = () => {
 
       <li>
         <Link
+          id="reviews"
+          onClick={(event: any) => {
+            handleActiveMenu(event);
+          }}
+          className={clsx(
+            "rounded-md p-1 shadow-md shadow-global hover:opacity-80 md:p-2 md:px-10",
+            activeMenu === "reviews" && "bg-mainYellow",
+          )}
           to={`/games/reviews/${id}`}
-          className="rounded-md p-1 shadow-md shadow-global hover:opacity-80 md:p-2 md:px-10"
         >
           Tests
         </Link>
@@ -24,7 +49,12 @@ export const Menu = () => {
       <li>
         <Link
           to={`/games/screenshots/${id}`}
-          className="rounded-md p-1 shadow-md shadow-global hover:opacity-80 md:p-2 md:px-10"
+          id="screenshots"
+          onClick={(event: any) => handleActiveMenu(event)}
+          className={clsx(
+            "rounded-md p-1 shadow-md shadow-global hover:opacity-80 md:p-2 md:px-10",
+            activeMenu === "screenshots" && "bg-mainYellow",
+          )}
         >
           Images
         </Link>
@@ -32,7 +62,12 @@ export const Menu = () => {
       <li>
         <Link
           to={`/games/videos/${id}`}
-          className="rounded-md p-1 shadow-md shadow-global hover:opacity-80 md:p-2 md:px-10"
+          id="videos"
+          onClick={(event: any) => handleActiveMenu(event)}
+          className={clsx(
+            "rounded-md p-1 shadow-md shadow-global hover:opacity-80 md:p-2 md:px-10",
+            activeMenu === "videos" && "bg-mainYellow",
+          )}
         >
           Videos
         </Link>

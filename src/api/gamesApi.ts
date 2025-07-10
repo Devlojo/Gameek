@@ -5,13 +5,13 @@ import {
   gameScreenshotsSchema,
   gameVideosSchema,
 } from "@/types/index";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const getLatestReleasesGames = async () => {
   try {
     const { data: latestGames } = await axios.get(
-      `https://site--gameek-backend--bf7zj7wtgltq.code.run/games/latest-releases`,
+      `${apiUrl}/games/latest-releases`,
       { timeout: 5000 },
-      //"http://localhost:8000/games/latest-releases",
     );
 
     const latestGamesParsed = gameSchema.parse(latestGames);
@@ -25,11 +25,9 @@ export const getLatestReleasesGames = async () => {
 
 export const getBestGames = async () => {
   try {
-    const { data: bestGames } = await axios.get(
-      `https://site--gameek-backend--bf7zj7wtgltq.code.run/games/best`,
-      { timeout: 5000 },
-      //"http://localhost:8000/games/best",
-    );
+    const { data: bestGames } = await axios.get(`${apiUrl}/games/best`, {
+      timeout: 5000,
+    });
     const bestGamesParsed = gameSchema.parse(bestGames);
     return bestGamesParsed;
   } catch (error) {
@@ -41,9 +39,8 @@ export const getBestGames = async () => {
 export const getLatestReviews = async () => {
   try {
     const { data: latestReviews } = await axios.get(
-      `https://site--gameek-backend--bf7zj7wtgltq.code.run/games/latest-reviews`,
+      `${apiUrl}/games/latest-reviews`,
       { timeout: 5000 },
-      //"http://localhost:8000/games/latest-reviews",
     );
     const latestReviewsParsed = gameSchema.parse(latestReviews);
     return latestReviewsParsed;
@@ -55,11 +52,9 @@ export const getLatestReviews = async () => {
 
 export const getGameDetail = async (id: string) => {
   try {
-    const { data: gameDetail } = await axios.get(
-      `https://site--gameek-backend--bf7zj7wtgltq.code.run/games/${id}`,
-      { timeout: 5000 },
-      //`http://localhost:8000/games/${id}`,
-    );
+    const { data: gameDetail } = await axios.get(`${apiUrl}/games/${id}`, {
+      timeout: 5000,
+    });
     const gameDetailParsed = gameDetailsSchema.parse(gameDetail);
     return gameDetailParsed;
   } catch (error) {
@@ -70,9 +65,8 @@ export const getGameDetail = async (id: string) => {
 export const getGameScreenshots = async (id: string) => {
   try {
     const { data: gameScreenshots } = await axios.get(
-      `https://site--gameek-backend--bf7zj7wtgltq.code.run/games/${id}/screenshots`,
+      `${apiUrl}/games/${id}/screenshots`,
       { timeout: 5000 },
-      //`http://localhost:8000/games/${id}/screenshots`,
     );
     const gameScreenshotsParsed = gameScreenshotsSchema.parse(gameScreenshots);
     return gameScreenshotsParsed;
@@ -84,9 +78,8 @@ export const getGameScreenshots = async (id: string) => {
 export const getGameVideos = async (id: string) => {
   try {
     const { data: gameVideos } = await axios.get(
-      `https://site--gameek-backend--bf7zj7wtgltq.code.run/games/${id}/movies`,
+      `${apiUrl}/games/${id}/movies`,
       { timeout: 5000 },
-      //`http://localhost:8000/games/${id}/movies`,
     );
     const gameVideosParsed = gameVideosSchema.parse(gameVideos);
     return gameVideosParsed;
