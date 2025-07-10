@@ -10,13 +10,14 @@ export const useGameDetailQuery = (game: string | undefined) => {
     data: gameDetail,
     isLoading,
     isSuccess: isSuccessGameDetail,
+    isError,
   } = useQuery({
     queryKey: ["game", game],
     queryFn: () => getGameDetail(game as string),
     retry: false,
     enabled: !!game,
   });
-  return { gameDetail, isLoading, isSuccessGameDetail };
+  return { gameDetail, isLoading, isSuccessGameDetail, isError };
 };
 
 export const useGameScreenshotsQuery = (game: string | undefined) => {
@@ -24,13 +25,14 @@ export const useGameScreenshotsQuery = (game: string | undefined) => {
     data: gameScreenshots,
     isLoading,
     isSuccess: isSuccessGameScreenshots,
+    isError,
   } = useQuery({
     queryKey: ["screenshots", game],
     queryFn: () => getGameScreenshots(game as string),
     retry: false,
     enabled: !!game,
   });
-  return { gameScreenshots, isLoading, isSuccessGameScreenshots };
+  return { gameScreenshots, isLoading, isSuccessGameScreenshots, isError };
 };
 
 export const useGameVideosQuery = (game: string | undefined) => {
@@ -38,11 +40,12 @@ export const useGameVideosQuery = (game: string | undefined) => {
     data: gameVideos,
     isLoading,
     isSuccess: isSuccessGameVideos,
+    isError,
   } = useQuery({
     queryKey: ["videos", game],
     queryFn: () => getGameVideos(game as string),
     retry: false,
     enabled: !!game,
   });
-  return { gameVideos, isLoading, isSuccessGameVideos };
+  return { gameVideos, isLoading, isSuccessGameVideos, isError };
 };

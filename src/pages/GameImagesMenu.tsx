@@ -6,12 +6,15 @@ import {
 import { Menu } from "@/components/game/Menu";
 import { GameHeader } from "@/components/game/GameHeader";
 import { Loader } from "@/components/ui/Loader";
+import { useState } from "react";
+import { ForbiddenContent } from "@/components/layout/ForbiddenContent";
 
 export const GameImagesMenu = () => {
   const { id } = useParams();
   const { gameDetail, isSuccessGameDetail, isLoading } = useGameDetailQuery(id);
-  const { gameScreenshots, isSuccessGameScreenshots } =
+  const { gameScreenshots, isSuccessGameScreenshots, isError } =
     useGameScreenshotsQuery(id);
+  const [activeMenu, setActiveMenu] = useState<string>("screenshots");
 
   return (
     <>
@@ -21,7 +24,7 @@ export const GameImagesMenu = () => {
           background_image={gameDetail?.background_image}
           name={gameDetail?.name}
         >
-          <Menu />
+          <Menu activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
           {isSuccessGameScreenshots && (
             <div className="mt-5 flex flex-wrap justify-center gap-2 max-sm:mx-3">
               {gameScreenshots?.results &&
@@ -42,6 +45,7 @@ export const GameImagesMenu = () => {
           )}
         </GameHeader>
       )}
+      {isError && <ForbiddenContent />}
     </>
   );
 };
