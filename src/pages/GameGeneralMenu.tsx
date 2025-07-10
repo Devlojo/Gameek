@@ -30,7 +30,7 @@ export const GameGeneralMenu = () => {
               <div className="flex flex-col justify-center gap-2">
                 <div className="flex gap-2">
                   <p className="font-bold">Date de sortie : </p>
-                  <p>{gameDetail?.released.split("-").reverse().join("/")}</p>
+                  <p>{gameDetail?.released?.split("-").reverse().join("/")}</p>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
                   <p className="font-bold">Genre :</p>
