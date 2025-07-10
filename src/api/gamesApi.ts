@@ -9,8 +9,6 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 export const getLatestReleasesGames = async () => {
   try {
-    console.log("Url jeux recents : " + apiUrl);
-
     const { data: latestGames } = await axios.get(
       `${apiUrl}/games/latest-releases`,
       { timeout: 5000 },
@@ -27,8 +25,6 @@ export const getLatestReleasesGames = async () => {
 
 export const getBestGames = async () => {
   try {
-    console.log("Url meilleurs jeux : " + apiUrl);
-
     const { data: bestGames } = await axios.get(`${apiUrl}/games/best`, {
       timeout: 5000,
     });
@@ -42,8 +38,6 @@ export const getBestGames = async () => {
 
 export const getLatestReviews = async () => {
   try {
-    console.log("Url derniers tests : " + apiUrl);
-
     const { data: latestReviews } = await axios.get(
       `${apiUrl}/games/latest-reviews`,
       { timeout: 5000 },

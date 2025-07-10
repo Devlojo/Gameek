@@ -2,8 +2,8 @@ import { z } from "zod";
 
 export const gameSchema = z.object({
   count: z.number(),
-  next: z.string().nullable(),
-  previous: z.string().nullable(),
+  next: z.string().nullable().optional(),
+  previous: z.string().nullable().optional(),
   results: z.array(
     z.object({
       id: z.number(),
@@ -27,6 +27,14 @@ export const gameSchema = z.object({
           }),
         ),
       ),
+      tags: z.nullable(
+        z.array(
+          z.object({
+            name: z.string(),
+            slug: z.string(),
+          }),
+        ),
+      ),
       genres: z.array(
         z.object({
           name: z.string(),
@@ -36,24 +44,12 @@ export const gameSchema = z.object({
   ),
 });
 
-export const genreOrPlatformSchema = z.object({
-  count: z.number(),
-  next: z.string().nullable(),
-  previous: z.string().nullable(),
-  results: z.array(
-    z.object({
-      id: z.number(),
-      name: z.string(),
-    }),
-  ),
-});
-
 export const gameDetailsSchema = z.object({
   id: z.number(),
   slug: z.string(),
   name: z.string(),
   description: z.string(),
-  released: z.string(),
+  released: z.string().nullable(),
   background_image: z.string().nullable(),
   background_image_additional: z.string().nullable(),
   publishers: z.array(
@@ -84,6 +80,19 @@ export const gameDetailsSchema = z.object({
       name: z.string(),
     }),
   ),
+  tags: z.nullable(
+    z.array(
+      z.object({
+        name: z.string(),
+        slug: z.string(),
+      }),
+    ),
+  ),
+  ratings: z.array(
+    z.object({
+      title: z.string(),
+    }),
+  ),
 });
 export const gameScreenshotsSchema = z.object({
   count: z.number(),
@@ -110,6 +119,18 @@ export const gameVideosSchema = z.object({
         "480": z.string(),
         max: z.string(),
       }),
+    }),
+  ),
+});
+
+export const genreOrPlatformSchema = z.object({
+  count: z.number(),
+  next: z.string().nullable(),
+  previous: z.string().nullable(),
+  results: z.array(
+    z.object({
+      id: z.number(),
+      name: z.string(),
     }),
   ),
 });
