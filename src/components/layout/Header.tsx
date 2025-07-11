@@ -53,12 +53,12 @@ export const Header = ({
               !activeSearchInput && "md:flex md:items-center md:gap-2",
             )}
           >
-            <a
-              href=""
+            <Link
+              to={"/games"}
               className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
             >
               Jeux
-            </a>
+            </Link>
             <a
               href=""
               className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"

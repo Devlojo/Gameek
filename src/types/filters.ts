@@ -1,9 +1,11 @@
 export type TFilterCategory =
-  | "Jeux"
+  | "Date"
   | "Genre"
   | "Plateforme"
   | "Auteur"
-  | "Note";
+  | "Note"
+  | "Mois"
+  | "Année";
 
 export type TActiveFilters = {
   [key in TFilterCategory]: string | null;
