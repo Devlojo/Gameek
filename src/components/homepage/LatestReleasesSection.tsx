@@ -121,7 +121,7 @@ export const LatestReleasesSection = () => {
                     />
 
                     <div className="flex w-full flex-col items-center p-1 text-light">
-                      <h3 className="text-center text-lg font-bold">
+                      <h3 className="text-center text-lg font-semibold">
                         {game.name}
                       </h3>
                       <p className="text-center text-sm">

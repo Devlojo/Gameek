@@ -12,6 +12,8 @@ import { ScrollToTopButton } from "@/components/ui/ScrollToTopButton";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { SignIn } from "./pages/SignIn";
 import { Login } from "./pages/Login";
+import { Review } from "./pages/Review";
+import { AutoScrollToTop } from "@/components/layout/AutoScrollToTop";
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
@@ -30,6 +32,7 @@ const App = (): JSX.Element => {
     <>
       <Router>
         <div className="min-h-screen bg-global">
+          <AutoScrollToTop />
           <ScrollToTopButton />
           {activeBurgerMenu && (
             <BurgerMenu handleActiveBurgerMenu={handleActiveBurgerMenu} />
@@ -50,6 +53,7 @@ const App = (): JSX.Element => {
                 element={<GameImagesMenu />}
               />
               <Route path="/games/videos/:id" element={<GameVideosMenu />} />
+              <Route path="/review/:id/:userName" element={<Review />} />
               <Route path="/signin" element={<SignIn />} />
               <Route path="/login" element={<Login />} />
             </Routes>
