@@ -1,5 +1,6 @@
 type TGame = {
   background_image: string | null | undefined;
+  background_image_additional?: string | null | undefined;
   name: string | undefined;
   children?: React.ReactNode;
 };
@@ -7,7 +8,7 @@ type TGame = {
 export const GameHeader = ({ background_image, name, children }: TGame) => {
   return (
     <>
-      <h1 className="mt-4 px-4 text-center text-3xl font-bold text-customWhite">
+      <h1 className="mx-4 mt-4 text-center text-3xl font-bold text-customWhite">
         {name}
       </h1>
       <div className="rounded-md bg-customWhite pb-5">

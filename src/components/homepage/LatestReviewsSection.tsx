@@ -49,7 +49,7 @@ export const LatestReviewsSection = () => {
                       ∕20
                     </p>
                   </div>
-                  <div className="mt-2 flex flex-col gap-2">
+                  <div className="mt-2 flex flex-col gap-3 sm:h-[250px] sm:justify-between sm:gap-0 md:h-[220px] lg:h-[180px]">
                     <h3 className="text-lg font-bold">{game.name}</h3>
                     <p className="italic">
                       Lorem ipsum dolor, sit amet consectetur adipisicing elit.

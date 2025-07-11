@@ -34,7 +34,7 @@ export const GameImagesMenu = () => {
                     src={image.image}
                     key={index}
                     alt={`Image de ${gameDetail?.name}`}
-                    className="w-[48.5%] object-cover max-sm:w-full"
+                    className="max-h-[280px] w-[48.5%] object-cover max-sm:w-full"
                     loading="lazy"
                   />
                 ))

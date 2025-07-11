@@ -95,9 +95,12 @@ export const Header = ({
                 <FaSearch className="size-6" />
               )}
             </button>
-            <a className="hover:cursor-pointer hover:text-yellow-400" href="">
+            <Link
+              to={"/signin"}
+              className="hover:cursor-pointer hover:text-yellow-400"
+            >
               <FaUserCircle className="size-6" />
-            </a>
+            </Link>
           </div>
         </div>
       </header>
