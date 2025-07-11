@@ -5,24 +5,28 @@ import { clsx } from "clsx";
 import { TFilterCategory, TActiveFilters } from "@/types/filters";
 import { IoClose } from "react-icons/io5";
 
+type Item = {
+  id: number;
+  name: string;
+};
 type TMenuItemsProps = {
   icon?: ElementType; // Pour typer une prop qui sera appeler comme composant
   label: TFilterCategory;
-  items: any[];
-  itemKey: string;
+  items: Item[];
 };
 export const MenuItem = ({
   icon: Icon, // pour pouvoir utiliser Icon en tant que composant
   label,
   items,
-  itemKey,
 }: TMenuItemsProps) => {
   const [activeFilters, setActiveFilters] = useState<TActiveFilters>({
     Genre: null,
     Plateforme: null,
     Auteur: null,
     Note: null,
-    Jeux: null,
+    Date: null,
+    Année: null,
+    Mois: null,
   });
 
   const hasActiveFilter = Object.values(activeFilters).some(
@@ -68,9 +72,9 @@ export const MenuItem = ({
           <ul className="flex flex-col gap-1">
             {items &&
               items.length > 0 &&
-              items.map((item, index) => (
+              items.map((item: Item, index) => (
                 <DropDownMenu
-                  option={item[itemKey]}
+                  option={item.name}
                   key={index}
                   icon={Icon}
                   label={label}

@@ -25,7 +25,7 @@ export const GameReviewsMenu = () => {
         >
           <Menu activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
           <div className="mx-3 mt-5 flex flex-col gap-3">
-            <article className="rounded-md bg-customWhite shadow-sm shadow-global hover:opacity-80">
+            <article className="bg-customWhite shadow-sm shadow-global hover:opacity-80">
               <Link
                 to={`/review/${gameDetail?.slug}/${userName}`}
                 className="flex flex-col sm:flex-row"
@@ -34,10 +34,10 @@ export const GameReviewsMenu = () => {
                   <img
                     src={gameDetail?.background_image as string}
                     alt={gameDetail?.name}
-                    className="h-40 w-full rounded-l-md object-cover sm:h-[200px]"
+                    className="h-40 w-full object-cover sm:h-[200px]"
                     loading="lazy"
                   />
-                  <p className="absolute bottom-0 rounded-l-md bg-global bg-opacity-70 px-0.5 text-xs text-gray-200 shadow-sm shadow-black">
+                  <p className="absolute bottom-0 bg-global bg-opacity-70 px-0.5 text-xs text-gray-200 shadow-sm shadow-black">
                     <span className="text-xl text-mainYellow">08</span>
                     ∕20
                   </p>
@@ -63,7 +63,7 @@ export const GameReviewsMenu = () => {
                 </div>
               </Link>
             </article>
-            <article className="rounded-md bg-customWhite shadow-sm shadow-global hover:opacity-80">
+            <article className="bg-customWhite shadow-sm shadow-global hover:opacity-80">
               <Link
                 to={`/review/${gameDetail?.slug}/${userName}`}
                 className="flex flex-col sm:flex-row"
@@ -72,10 +72,10 @@ export const GameReviewsMenu = () => {
                   <img
                     src={gameDetail?.background_image as string}
                     alt={gameDetail?.name}
-                    className="h-40 w-full rounded-l-md object-cover sm:h-[200px]"
+                    className="h-40 w-full object-cover sm:h-[200px]"
                     loading="lazy"
                   />
-                  <p className="absolute bottom-0 rounded-l-md bg-global bg-opacity-70 px-0.5 text-xs text-customWhite shadow-sm shadow-black">
+                  <p className="absolute bottom-0 bg-global bg-opacity-70 px-0.5 text-xs text-customWhite shadow-sm shadow-black">
                     <span className="text-xl font-semibold text-mainYellow">
                       08
                     </span>

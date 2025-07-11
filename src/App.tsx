@@ -14,6 +14,7 @@ import { SignIn } from "./pages/SignIn";
 import { Login } from "./pages/Login";
 import { Review } from "./pages/Review";
 import { AutoScrollToTop } from "@/components/layout/AutoScrollToTop";
+import { Games } from "@/pages/Games";
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
@@ -45,6 +46,7 @@ const App = (): JSX.Element => {
           <div className="mx-auto flex max-w-5xl flex-col gap-6">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/games" element={<Games />} />
               <Route path="/games/:id" element={<GameGeneralMenu />} />
               <Route path="/games/reviews/:id" element={<GameReviewsMenu />} />
 

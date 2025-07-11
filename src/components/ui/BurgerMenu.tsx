@@ -1,4 +1,5 @@
 import { IoClose } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 type TActiveBurgerMenu = {
   handleActiveBurgerMenu: () => void;
@@ -14,12 +15,13 @@ export const BurgerMenu = ({ handleActiveBurgerMenu }: TActiveBurgerMenu) => {
         />
 
         <nav className="ml-2 mt-20 flex flex-col justify-start gap-2">
-          <a
-            href=""
+          <Link
+            to={"/games"}
             className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
+            onClick={handleActiveBurgerMenu}
           >
             Jeux
-          </a>
+          </Link>
           <a
             href=""
             className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
