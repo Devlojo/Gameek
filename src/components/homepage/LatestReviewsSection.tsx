@@ -4,9 +4,11 @@ import { Loader } from "@/components/ui/Loader";
 import gameekLogo from "@/images/gameek-removebg.png";
 import { IoIosTimer } from "react-icons/io";
 import { GameHoverCard } from "../ui/GameHoverCard";
+import { Link } from "react-router-dom";
 
 export const LatestReviewsSection = () => {
   const { latestReviews, isSuccess } = useLatestReviewsQuery();
+  const userName = "TheFirstGamer";
 
   return (
     <section className="h-auto rounded-md bg-customWhite px-4 py-3">
@@ -25,7 +27,7 @@ export const LatestReviewsSection = () => {
                 className="group relative w-full rounded-md p-2 shadow-md shadow-black sm:w-[48.5%]"
                 key={index}
               >
-                <a href={"#" + game.slug}>
+                <Link to={`/review/${game.slug}/${userName}`}>
                   <div className="relative w-full">
                     {game.background_image ? (
                       <img
@@ -44,13 +46,15 @@ export const LatestReviewsSection = () => {
                       </div>
                     )}
 
-                    <p className="absolute bottom-0 bg-global bg-opacity-70 px-0.5 text-xs text-gray-200 shadow-sm shadow-black">
-                      <span className="text-xl text-mainYellow">18</span>
+                    <p className="absolute bottom-0 bg-global bg-opacity-70 px-0.5 text-xs text-customWhite shadow-sm shadow-black">
+                      <span className="text-xl font-semibold text-mainYellow">
+                        18
+                      </span>
                       ∕20
                     </p>
                   </div>
                   <div className="mt-2 flex flex-col gap-3 sm:h-[250px] sm:justify-between sm:gap-0 md:h-[220px] lg:h-[180px]">
-                    <h3 className="text-lg font-bold">{game.name}</h3>
+                    <h3 className="text-lg font-semibold">{game.name}</h3>
                     <p className="italic">
                       Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                       Incidunt soluta vitae quas, debitis omnis nesciunt sint!
@@ -64,7 +68,10 @@ export const LatestReviewsSection = () => {
                         className="border-1 h-8 w-8 rounded-full shadow-sm shadow-black"
                         alt="Avatar du testeur"
                       />
-                      <p className="text-sm">Jack, le 15/11/2023 à 15h50</p>
+                      <p className="text-sm">
+                        <span className="font-semibold">{userName}</span>, le
+                        15/11/2023 à 15h50
+                      </p>
                     </div>
                   </div>
                   <GameHoverCard
@@ -72,7 +79,7 @@ export const LatestReviewsSection = () => {
                     genres={game.genres}
                     info="Voir le test"
                   />
-                </a>
+                </Link>
               </article>
             );
           })

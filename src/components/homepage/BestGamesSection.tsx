@@ -49,8 +49,10 @@ export const BestGamesSection = () => {
                       info="Voir les tests du jeu"
                     />
 
-                    <p className="absolute bottom-0 w-full rounded-b-md bg-global bg-opacity-70 text-xs text-light shadow-sm shadow-black">
-                      <span className="text-xl text-mainYellow">18</span>
+                    <p className="absolute bottom-0 w-full rounded-b-md bg-global bg-opacity-70 text-xs text-customWhite shadow-sm shadow-black">
+                      <span className="text-xl font-semibold text-mainYellow">
+                        18
+                      </span>
                       ∕20 <span className="">(5 avis)</span>
                     </p>
                     <p className="rank absolute left-0 top-0 text-5xl text-customWhite">
@@ -58,7 +60,7 @@ export const BestGamesSection = () => {
                     </p>
                   </div>
 
-                  <h3 className="pt-1 text-lg font-bold">{game.name}</h3>
+                  <h3 className="pt-1 text-lg font-semibold">{game.name}</h3>
                 </Link>
               </article>
             );
