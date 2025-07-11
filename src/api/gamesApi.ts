@@ -14,8 +14,6 @@ export const getLatestReleasesGames = async () => {
       { timeout: 5000 },
     );
 
-    console.log(typeof latestGames);
-    console.log(latestGames);
     const latestGamesParsed = gameSchema.parse(latestGames);
 
     return latestGamesParsed;

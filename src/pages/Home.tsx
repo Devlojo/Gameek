@@ -5,7 +5,7 @@ import { LatestReviewsSection } from "@/components/homepage/LatestReviewsSection
 export const Home = (): JSX.Element => {
   return (
     <>
-      <h1 className="mt-4 px-4 text-center text-3xl font-bold text-customWhite">
+      <h1 className="mx-4 mt-4 text-center text-3xl font-bold text-customWhite">
         La plateforme de tests 100% gamers
       </h1>
       <LatestReleasesSection />

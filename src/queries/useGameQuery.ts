@@ -23,7 +23,7 @@ export const useGameDetailQuery = (game: string | undefined) => {
 export const useGameScreenshotsQuery = (game: string | undefined) => {
   const {
     data: gameScreenshots,
-    isLoading,
+    isLoading: isLoadingGameScreenshots,
     isSuccess: isSuccessGameScreenshots,
     isError,
   } = useQuery({
@@ -32,13 +32,18 @@ export const useGameScreenshotsQuery = (game: string | undefined) => {
     retry: false,
     enabled: !!game,
   });
-  return { gameScreenshots, isLoading, isSuccessGameScreenshots, isError };
+  return {
+    gameScreenshots,
+    isLoadingGameScreenshots,
+    isSuccessGameScreenshots,
+    isError,
+  };
 };
 
 export const useGameVideosQuery = (game: string | undefined) => {
   const {
     data: gameVideos,
-    isLoading,
+    isLoading: isLoadingGameVideos,
     isSuccess: isSuccessGameVideos,
     isError,
   } = useQuery({
@@ -47,5 +52,5 @@ export const useGameVideosQuery = (game: string | undefined) => {
     retry: false,
     enabled: !!game,
   });
-  return { gameVideos, isLoading, isSuccessGameVideos, isError };
+  return { gameVideos, isLoadingGameVideos, isSuccessGameVideos, isError };
 };

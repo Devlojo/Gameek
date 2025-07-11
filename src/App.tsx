@@ -10,6 +10,8 @@ import { useState } from "react";
 import { BurgerMenu } from "./components/ui/BurgerMenu";
 import { ScrollToTopButton } from "@/components/ui/ScrollToTopButton";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { SignIn } from "./pages/SignIn";
+import { Login } from "./pages/Login";
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
@@ -27,7 +29,7 @@ const App = (): JSX.Element => {
   return (
     <>
       <Router>
-        <div className="bg-global">
+        <div className="min-h-screen bg-global">
           <ScrollToTopButton />
           {activeBurgerMenu && (
             <BurgerMenu handleActiveBurgerMenu={handleActiveBurgerMenu} />
@@ -48,6 +50,8 @@ const App = (): JSX.Element => {
                 element={<GameImagesMenu />}
               />
               <Route path="/games/videos/:id" element={<GameVideosMenu />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/login" element={<Login />} />
             </Routes>
 
             <Footer />
