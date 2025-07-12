@@ -4,7 +4,7 @@ import { getAllGenres } from "@/api/genresApi";
 export const useGenresQuery = () => {
   const {
     data: genres,
-    isLoading,
+    isLoading: isLoadingGenres,
     isSuccess,
   } = useQuery({
     queryKey: ["genres"],
@@ -13,7 +13,7 @@ export const useGenresQuery = () => {
   });
   return {
     genres,
-    isLoading,
+    isLoadingGenres,
     isSuccess,
   };
 };

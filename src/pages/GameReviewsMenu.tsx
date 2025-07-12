@@ -27,7 +27,7 @@ export const GameReviewsMenu = () => {
           <div className="mx-3 mt-5 flex flex-col gap-3">
             <article className="bg-customWhite shadow-sm shadow-global hover:opacity-80">
               <Link
-                to={`/review/${gameDetail?.slug}/${userName}`}
+                to={`/test/${gameDetail?.slug}/${userName}`}
                 className="flex flex-col sm:flex-row"
               >
                 <div className="relative w-full">
@@ -65,7 +65,7 @@ export const GameReviewsMenu = () => {
             </article>
             <article className="bg-customWhite shadow-sm shadow-global hover:opacity-80">
               <Link
-                to={`/review/${gameDetail?.slug}/${userName}`}
+                to={`/test/${gameDetail?.slug}/${userName}`}
                 className="flex flex-col sm:flex-row"
               >
                 <div className="relative w-full">

@@ -3,6 +3,7 @@ import {
   getLatestReleasesGames,
   getBestGames,
   getLatestReviews,
+  getAllGames,
 } from "@/api/gamesApi";
 
 export const useLatestGamesQuery = () => {
@@ -52,6 +53,23 @@ export const useLatestReviewsQuery = () => {
   return {
     latestReviews,
     isLoading,
+    isSuccess,
+  };
+};
+
+export const useGamesQuery = (page = 1) => {
+  const {
+    data: games,
+    isLoading: isLoadingGames,
+    isSuccess,
+  } = useQuery({
+    queryKey: ["games"],
+    queryFn: () => getAllGames(page),
+    retry: false,
+  });
+  return {
+    games,
+    isLoadingGames,
     isSuccess,
   };
 };

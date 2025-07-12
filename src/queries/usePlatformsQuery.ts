@@ -4,7 +4,7 @@ import { getAllPlatforms } from "@/api/platformsApi";
 export const usePlatformsQuery = () => {
   const {
     data: platforms,
-    isLoading,
+    isLoading: isLoadingPlatforms,
     isSuccess,
   } = useQuery({
     queryKey: ["platforms"],
@@ -13,7 +13,7 @@ export const usePlatformsQuery = () => {
   });
   return {
     platforms,
-    isLoading,
+    isLoadingPlatforms,
     isSuccess,
   };
 };
