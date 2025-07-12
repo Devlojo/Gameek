@@ -96,7 +96,7 @@ export const LatestReleasesSection = () => {
           {isSuccess && latestGames && latestGames.results.length > 0 ? (
             latestGames.results.map((game, index) => (
               <article className="group relative mb-5" key={index}>
-                <Link to={`/games/${game.slug}`}>
+                <Link to={`/jeu/${game.slug}`}>
                   <div className="aspect-[16/9] w-full">
                     {game.background_image ? (
                       <img

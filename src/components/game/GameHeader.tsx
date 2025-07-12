@@ -38,7 +38,7 @@ export const GameHeader = ({
           )}
           {isReview && (
             <Link
-              to={`/games/reviews/${slug}`}
+              to={`/jeu/tests/${slug}`}
               className="absolute bottom-1 right-1 bg-mainYellow p-2 hover:opacity-80"
             >
               <BsArrowReturnLeft

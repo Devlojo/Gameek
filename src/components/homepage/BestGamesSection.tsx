@@ -25,7 +25,7 @@ export const BestGamesSection = () => {
                 className="group relative flex w-full flex-col sm:w-[48.5%]"
                 key={index}
               >
-                <Link to={`/games/reviews/${game.slug}`}>
+                <Link to={`/jeu/tests/${game.slug}`}>
                   <div className="relative w-full">
                     {game.background_image ? (
                       <img

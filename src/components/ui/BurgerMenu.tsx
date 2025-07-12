@@ -16,7 +16,7 @@ export const BurgerMenu = ({ handleActiveBurgerMenu }: TActiveBurgerMenu) => {
 
         <nav className="ml-2 mt-20 flex flex-col justify-start gap-2">
           <Link
-            to={"/games"}
+            to={"/jeux"}
             className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
             onClick={handleActiveBurgerMenu}
           >

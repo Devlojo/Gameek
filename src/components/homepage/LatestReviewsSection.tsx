@@ -27,7 +27,7 @@ export const LatestReviewsSection = () => {
                 className="group relative w-full rounded-md p-2 shadow-md shadow-black sm:w-[48.5%]"
                 key={index}
               >
-                <Link to={`/review/${game.slug}/${userName}`}>
+                <Link to={`/test/${game.slug}/${userName}`}>
                   <div className="relative w-full">
                     {game.background_image ? (
                       <img

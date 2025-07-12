@@ -46,18 +46,15 @@ const App = (): JSX.Element => {
           <div className="mx-auto flex max-w-5xl flex-col gap-6">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/games" element={<Games />} />
-              <Route path="/games/:id" element={<GameGeneralMenu />} />
-              <Route path="/games/reviews/:id" element={<GameReviewsMenu />} />
+              <Route path="/jeux" element={<Games />} />
+              <Route path="/jeu/:id" element={<GameGeneralMenu />} />
+              <Route path="/jeu/tests/:id" element={<GameReviewsMenu />} />
 
-              <Route
-                path="/games/screenshots/:id"
-                element={<GameImagesMenu />}
-              />
-              <Route path="/games/videos/:id" element={<GameVideosMenu />} />
-              <Route path="/review/:id/:userName" element={<Review />} />
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/jeu/images/:id" element={<GameImagesMenu />} />
+              <Route path="/jeu/videos/:id" element={<GameVideosMenu />} />
+              <Route path="/test/:id/:userName" element={<Review />} />
+              <Route path="/inscription" element={<SignIn />} />
+              <Route path="/connexion" element={<Login />} />
             </Routes>
 
             <Footer />

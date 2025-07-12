@@ -54,7 +54,7 @@ export const Header = ({
             )}
           >
             <Link
-              to={"/games"}
+              to={"/jeux"}
               className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
             >
               Jeux
@@ -96,7 +96,7 @@ export const Header = ({
               )}
             </button>
             <Link
-              to={"/signin"}
+              to={"/inscription"}
               className="hover:cursor-pointer hover:text-yellow-400"
             >
               <FaUserCircle className="size-6" />

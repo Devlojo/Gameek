@@ -2,8 +2,7 @@ import { z } from "zod";
 
 export const gameSchema = z.object({
   count: z.number(),
-  next: z.string().nullable().optional(),
-  previous: z.string().nullable().optional(),
+
   results: z.array(
     z.object({
       id: z.number(),
@@ -96,8 +95,6 @@ export const gameDetailsSchema = z.object({
 });
 export const gameScreenshotsSchema = z.object({
   count: z.number(),
-  next: z.string().nullable(),
-  previous: z.string().nullable(),
   results: z.array(
     z.object({
       id: z.number(),
@@ -108,8 +105,6 @@ export const gameScreenshotsSchema = z.object({
 
 export const gameVideosSchema = z.object({
   count: z.number(),
-  next: z.string().nullable(),
-  previous: z.string().nullable(),
   results: z.array(
     z.object({
       id: z.number(),
@@ -125,8 +120,7 @@ export const gameVideosSchema = z.object({
 
 export const genreOrPlatformSchema = z.object({
   count: z.number(),
-  next: z.string().nullable(),
-  previous: z.string().nullable(),
+
   results: z.array(
     z.object({
       id: z.number(),

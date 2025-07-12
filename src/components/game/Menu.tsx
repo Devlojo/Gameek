@@ -25,7 +25,7 @@ export const Menu = ({ activeMenu, setActiveMenu }: MenuProps) => {
             "rounded-md p-1 shadow-md shadow-global hover:opacity-80 md:p-2 md:px-10",
             activeMenu === "general" && "bg-mainYellow",
           )}
-          to={`/games/${id}`}
+          to={`/jeu/${id}`}
         >
           Général
         </Link>
@@ -41,14 +41,14 @@ export const Menu = ({ activeMenu, setActiveMenu }: MenuProps) => {
             "rounded-md p-1 shadow-md shadow-global hover:opacity-80 md:p-2 md:px-10",
             activeMenu === "reviews" && "bg-mainYellow",
           )}
-          to={`/games/reviews/${id}`}
+          to={`/jeu/tests/${id}`}
         >
           Tests
         </Link>
       </li>
       <li>
         <Link
-          to={`/games/screenshots/${id}`}
+          to={`/jeu/images/${id}`}
           id="screenshots"
           onClick={(event: any) => handleActiveMenu(event)}
           className={clsx(
@@ -61,7 +61,7 @@ export const Menu = ({ activeMenu, setActiveMenu }: MenuProps) => {
       </li>
       <li>
         <Link
-          to={`/games/videos/${id}`}
+          to={`/jeu/videos/${id}`}
           id="videos"
           onClick={(event: any) => handleActiveMenu(event)}
           className={clsx(
