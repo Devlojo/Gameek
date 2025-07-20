@@ -9,6 +9,7 @@ type MenuProps = {
 
 export const Menu = ({ activeMenu, setActiveMenu }: MenuProps) => {
   const { id } = useParams();
+
   const handleActiveMenu = (event: React.MouseEvent<HTMLElement>) => {
     const selectedMenu = event.currentTarget.id;
 
