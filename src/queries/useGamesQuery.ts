@@ -57,15 +57,14 @@ export const useLatestReviewsQuery = () => {
   };
 };
 
-export const useGamesQuery = (page = 1) => {
+export const useGamesQuery = (page: number) => {
   const {
     data: games,
     isLoading: isLoadingGames,
     isSuccess,
   } = useQuery({
-    queryKey: ["games"],
+    queryKey: ["games", page],
     queryFn: () => getAllGames(page),
-    retry: false,
   });
   return {
     games,

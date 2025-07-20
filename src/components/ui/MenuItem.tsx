@@ -1,5 +1,5 @@
 import { DropDownMenu } from "@/components/ui/DropDownMenu";
-import { ElementType, useState } from "react";
+import { useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import { clsx } from "clsx";
 import { TFilterCategory, TActiveFilters } from "@/types/filters";
@@ -10,15 +10,10 @@ type Item = {
   name: string;
 };
 type TMenuItemsProps = {
-  icon?: ElementType; // Pour typer une prop qui sera appeler comme composant
   label: TFilterCategory;
   items: Item[];
 };
-export const MenuItem = ({
-  icon: Icon, // pour pouvoir utiliser Icon en tant que composant
-  label,
-  items,
-}: TMenuItemsProps) => {
+export const MenuItem = ({ label, items }: TMenuItemsProps) => {
   const [activeFilters, setActiveFilters] = useState<TActiveFilters>({
     Genre: null,
     Plateforme: null,
@@ -40,20 +35,15 @@ export const MenuItem = ({
   return (
     <>
       <div className="group relative">
-        <button
-          className={clsx(
-            "flex items-center gap-1 rounded-sm p-2",
-            Icon
-              ? "hover:bg-mainYellow hover:text-black"
-              : "bg-mainYellow p-1 shadow-sm shadow-black hover:cursor-pointer md:py-1",
-          )}
-        >
-          {Icon && <Icon />}
+        <button className="flex items-center gap-1 rounded-sm bg-mainYellow p-2 shadow-sm shadow-black hover:cursor-pointer md:px-10">
           {hasActiveFilter ? (
             <>
               {" "}
               {activeFilters[label]}{" "}
-              <IoClose onClick={() => handleClearFilter(label)} />{" "}
+              <IoClose
+                onClick={() => handleClearFilter(label)}
+                className="size-5 font-bold hover:animate-pulse"
+              />{" "}
             </>
           ) : (
             <>
@@ -76,7 +66,6 @@ export const MenuItem = ({
                 <DropDownMenu
                   option={item.name}
                   key={index}
-                  icon={Icon}
                   label={label}
                   setActiveFilters={setActiveFilters}
                 />
