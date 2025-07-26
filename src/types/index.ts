@@ -21,6 +21,7 @@ export const gameSchema = z.object({
         z.array(
           z.object({
             platform: z.object({
+              id: z.number(),
               name: z.string(),
             }),
           }),
@@ -36,6 +37,7 @@ export const gameSchema = z.object({
       ),
       genres: z.array(
         z.object({
+          id: z.number(),
           name: z.string(),
         }),
       ),

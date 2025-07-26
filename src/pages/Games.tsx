@@ -1,4 +1,3 @@
-import { MenuItem } from "@/components/ui/MenuItem";
 import { useGenresQuery } from "@/queries/useGenresQuery";
 import { usePlatformsQuery } from "@/queries/usePlatformsQuery";
 import { useGamesQuery } from "@/queries/useGamesQuery";
@@ -7,15 +6,18 @@ import { GameHoverCard } from "@/components/ui/GameHoverCard";
 import { Pagination } from "@/components/ui/Pagination";
 import { Loader } from "@/components/ui/Loader";
 import { useSearchParams } from "react-router-dom";
+import { FilterSelect } from "@/components/ui/FilterSelect";
 
 export const Games = () => {
   const [searchParams] = useSearchParams();
 
   const page = parseInt(searchParams.get("page") || "1");
+  const genre = parseInt(searchParams.get("genres") || "");
+  const platform = parseInt(searchParams.get("plateformes") || "");
 
   const { genres, isLoadingGenres } = useGenresQuery();
   const { platforms, isLoadingPlatforms } = usePlatformsQuery();
-  const { games, isLoadingGames } = useGamesQuery(page);
+  const { games, isLoadingGames } = useGamesQuery(page, genre, platform);
 
   return (
     <>
@@ -27,9 +29,9 @@ export const Games = () => {
       ) : (
         <section className="flex w-full flex-col gap-2 rounded-md bg-customWhite px-3 pb-5">
           <div className="flex justify-center gap-8 pt-4">
-            {genres && <MenuItem label="Genre" items={genres?.results} />}
+            {genres && <FilterSelect label="Genre" items={genres.results} />}
             {platforms && (
-              <MenuItem label="Plateforme" items={platforms?.results} />
+              <FilterSelect label="Plateforme" items={platforms.results} />
             )}
           </div>
           <p className="text-center">{games?.count} jeux trouvés</p>

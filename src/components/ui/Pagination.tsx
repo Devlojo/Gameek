@@ -13,24 +13,30 @@ export const Pagination = ({ page }: TPage) => {
   const [searchParams] = useSearchParams();
 
   const currentPage = parseInt(searchParams.get("page") || "1");
+  const getPageUrl = (targetPage: number) => {
+    const newParams = new URLSearchParams(searchParams);
+    newParams.set("page", targetPage.toString()); // on met juste à jour le paramètre page
+    return `/jeux?${newParams.toString()}`;
+  };
 
   return (
     <>
-      <div className="flex w-full items-center justify-center gap-4">
+      <div className="flex w-full items-center justify-center sm:gap-4">
         {page != 1 && (
-          <Link to={`/jeux?page=${page - 1}`}>
+          <Link to={getPageUrl(page - 1)}>
             <LuCircleArrowLeft className="size-10 text-mainYellow hover:cursor-pointer" />
           </Link>
         )}
 
-        <div className="flex gap-4">
+        <div className="flex sm:gap-4">
           {pages.map((offset) => {
             const pageNumber = page + offset;
             return (
               <Link
-                to={`/jeux?page=${pageNumber}`}
+                key={offset}
+                to={getPageUrl(pageNumber)}
                 className={clsx(
-                  "rounded-lg p-2 text-global hover:bg-mainYellow",
+                  "rounded-lg p-2 text-global lg:hover:bg-mainYellow",
                   currentPage === pageNumber && "bg-mainYellow",
                 )}
               >
@@ -39,7 +45,7 @@ export const Pagination = ({ page }: TPage) => {
             );
           })}
         </div>
-        <Link to={`/jeux?page=${page + 1}`}>
+        <Link to={getPageUrl(page + 1)}>
           <LuCircleArrowRight className="size-10 text-mainYellow hover:cursor-pointer" />
         </Link>
       </div>
