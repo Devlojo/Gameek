@@ -41,17 +41,7 @@ export const Review = () => {
               </p>
               <div className="flex flex-col items-center gap-4">
                 <h2 className="text-2xl font-bold">Univers et scénario</h2>
-                <div className="flex w-full flex-col items-center justify-center">
-                  <img
-                    src={gameDetail?.background_image_additional as string}
-                    alt={`Photo de ${gameDetail?.name}`}
-                    className="h-[200px] w-[300px] object-cover sm:h-[300px] sm:w-4/5 lg:h-[400px]"
-                    loading="lazy"
-                  />
-                  <p className="text-center text-sm italic">
-                    L'univers est incroyable
-                  </p>
-                </div>
+
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Doloribus corrupti modi enim deleniti facere vero repudiandae
@@ -98,17 +88,6 @@ export const Review = () => {
                 <h2 className="text-2xl font-bold">
                   Gameplay et prise en main
                 </h2>
-                <div className="flex w-full flex-col items-center justify-center">
-                  <img
-                    src={gameDetail?.background_image_additional as string}
-                    alt={`Photo de ${gameDetail?.name}`}
-                    className="h-[200px] w-[300px] object-cover sm:h-[300px] sm:w-4/5 lg:h-[400px]"
-                    loading="lazy"
-                  />
-                  <p className="text-center text-sm italic">
-                    Super fun à jouer
-                  </p>
-                </div>
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Doloribus corrupti modi enim deleniti facere vero repudiandae
@@ -153,17 +132,7 @@ export const Review = () => {
               </div>
               <div className="flex flex-col items-center gap-4">
                 <h2 className="text-2xl font-bold">Réalisation et bande-son</h2>
-                <div className="flex w-full flex-col items-center justify-center">
-                  <img
-                    src={gameDetail?.background_image_additional as string}
-                    alt={`Photo de ${gameDetail?.name}`}
-                    className="h-[200px] w-[300px] object-cover sm:h-[300px] sm:w-4/5 lg:h-[400px]"
-                    loading="lazy"
-                  />
-                  <p className="text-center text-sm italic">
-                    Une OST magistrale
-                  </p>
-                </div>
+
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Doloribus corrupti modi enim deleniti facere vero repudiandae

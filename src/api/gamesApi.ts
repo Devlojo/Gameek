@@ -7,11 +7,20 @@ import {
 } from "@/types/index";
 const apiUrl = import.meta.env.VITE_API_URL;
 
-export const getAllGames = async (page: number) => {
+export const getAllGames = async (
+  page: number,
+  genres?: number,
+  platforms?: number,
+) => {
   try {
-    const { data: games } = await axios.get(`${apiUrl}/games?page=${page}`, {
-      timeout: 5000,
-    });
+    const { data: games } = await axios.get(
+      `${apiUrl}/games?page=${page}${genres ? `&genres=${genres}` : ""}${
+        platforms ? `&platforms=${platforms}` : ""
+      }`,
+      {
+        timeout: 5000,
+      },
+    );
 
     const gamesParsed = gameSchema.parse(games);
 
