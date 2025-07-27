@@ -23,16 +23,18 @@ export const GameHeader = ({
         {name}
       </h1>
       <div className="rounded-md bg-customWhite pb-5">
-        <div className="relative">
+        <div className="relative h-[150px] md:h-[300px] lg:h-[450px]">
           <img
             src={background_image as string}
             alt={`photo de couverture de ${name}`}
-            className="h-[150px] w-full object-cover md:h-[220px] lg:h-[300px]"
+            className="h-full w-full object-cover"
             loading="lazy"
           />
           {!isReview && (
-            <p className="absolute bottom-0 flex w-full items-center justify-center gap-1 rounded-b-md bg-global bg-opacity-70 text-xs text-customWhite shadow-sm shadow-black">
-              <span className="text-xl font-semibold text-mainYellow">18</span>
+            <p className="absolute bottom-0 flex w-full items-center justify-center gap-1 rounded-b-md bg-global bg-opacity-70 text-xs text-customWhite">
+              <span className="text-xl font-semibold text-mainYellow lg:text-2xl">
+                18
+              </span>
               ∕20 <span className="">(5 avis)</span>
             </p>
           )}
