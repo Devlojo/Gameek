@@ -3,6 +3,7 @@ import { GameHeader } from "@/components/game/GameHeader";
 import { useGameDetailQuery } from "@/queries/useGameQuery";
 import { Loader } from "@/components/ui/Loader";
 import avatar from "@/images/sample-avatar.png";
+import { MdArrowDropDown } from "react-icons/md";
 
 export const Review = () => {
   const { id } = useParams();
@@ -39,7 +40,41 @@ export const Review = () => {
                 praesentium enim laborum voluptates quidem explicabo esse ullam
                 quasi, id dolor voluptate dignissimos?
               </p>
-              <div className="flex flex-col items-center gap-4">
+
+              <nav className="group relative w-72">
+                <div className="flex items-center justify-between rounded-md border border-black/80 p-1">
+                  <button className="px-1">Sommaire</button>
+                  <MdArrowDropDown />
+                </div>
+                <ul className="absolute z-10 hidden w-full border border-black/80 bg-customWhite p-1 group-hover:block">
+                  <li className="p-1 hover:bg-gray-300">
+                    <a href="#univers" className="block">
+                      Univers et scénario
+                    </a>
+                  </li>
+                  <li className="p-1 hover:bg-gray-300">
+                    <a href="#gameplay" className="block">
+                      Gameplay et prise en main
+                    </a>
+                  </li>
+                  <li className="p-1 hover:bg-gray-300">
+                    <a href="#realisation" className="block">
+                      Réalisation et bande-son
+                    </a>
+                  </li>
+                  <li className="p-1 hover:bg-gray-300">
+                    <a href="#conclusion" className="block">
+                      Conclusion
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+
+              <div className="flex w-4/5 justify-center border-b border-global/40"></div>
+              <section
+                className="flex scroll-mt-16 flex-col items-center gap-4"
+                id="univers"
+              >
                 <h2 className="text-2xl font-bold">Univers et scénario</h2>
 
                 <p>
@@ -83,8 +118,11 @@ export const Review = () => {
                   aliquam earum alias, eos porro officia soluta et ducimus.
                 </p>
                 <div className="flex w-4/5 justify-center border-b border-global/40"></div>
-              </div>
-              <div className="flex flex-col items-center gap-4">
+              </section>
+              <section
+                className="flex scroll-mt-16 flex-col items-center gap-4"
+                id="gameplay"
+              >
                 <h2 className="text-2xl font-bold">
                   Gameplay et prise en main
                 </h2>
@@ -129,8 +167,11 @@ export const Review = () => {
                   aliquam earum alias, eos porro officia soluta et ducimus.
                 </p>
                 <div className="flex w-4/5 justify-center border-b border-global/40"></div>
-              </div>
-              <div className="flex flex-col items-center gap-4">
+              </section>
+              <section
+                className="flex scroll-mt-16 flex-col items-center gap-4"
+                id="realisation"
+              >
                 <h2 className="text-2xl font-bold">Réalisation et bande-son</h2>
 
                 <p>
@@ -174,8 +215,11 @@ export const Review = () => {
                   aliquam earum alias, eos porro officia soluta et ducimus.
                 </p>
                 <div className="flex w-4/5 justify-center border-b border-global/40"></div>
-              </div>
-              <div className="flex flex-col items-center gap-4">
+              </section>
+              <section
+                className="flex scroll-mt-16 flex-col items-center gap-4"
+                id="conclusion"
+              >
                 <h2 className="text-2xl font-bold">Conclusion</h2>
                 <div className="flex w-full flex-col items-center bg-global/95 p-2 text-light">
                   <p>
@@ -188,13 +232,13 @@ export const Review = () => {
                     similique delectus consequuntur mollitia!
                   </p>
                   <p className="text-xs">
-                    <span className="text-xl font-semibold text-mainYellow">
+                    <span className="text-2xl font-semibold text-mainYellow">
                       17
                     </span>
                     ∕20
                   </p>
                 </div>
-              </div>
+              </section>
               <div className="flex w-full">
                 <div className="flex w-1/2 flex-col gap-1">
                   <h2 className="text-center text-lg font-bold text-green-600 sm:text-2xl">
