@@ -39,7 +39,7 @@ export const BestGamesSection = () => {
                         <img
                           src={gameekLogo}
                           alt="logo du site"
-                          className="h-12 w-32"
+                          className="h-32"
                         />
                       </div>
                     )}

@@ -37,11 +37,11 @@ export const LatestReviewsSection = () => {
                         loading="lazy"
                       />
                     ) : (
-                      <div className="flex h-64 w-full items-center justify-center bg-global object-cover shadow-sm shadow-black lg:h-40">
+                      <div className="flex h-64 w-full items-center justify-center bg-global object-cover shadow-sm shadow-black">
                         <img
                           src={gameekLogo}
                           alt="logo du site"
-                          className="h-20"
+                          className="h-32"
                         />
                       </div>
                     )}

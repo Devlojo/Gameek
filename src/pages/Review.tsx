@@ -42,11 +42,11 @@ export const Review = () => {
               </p>
 
               <nav className="group relative w-72">
-                <div className="flex items-center justify-between rounded-md border border-black/80 p-1">
+                <div className="flex items-center justify-between border border-black p-1">
                   <button className="px-1">Sommaire</button>
                   <MdArrowDropDown />
                 </div>
-                <ul className="absolute z-10 hidden w-full border border-black/80 bg-customWhite p-1 group-hover:block">
+                <ul className="absolute z-10 hidden w-full border border-black bg-customWhite p-1 group-hover:block">
                   <li className="p-1 hover:bg-gray-300">
                     <a href="#univers" className="block">
                       Univers et scénario

@@ -1,5 +1,6 @@
 import { IoClose } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { getCurrentDate } from "@/utils/getCurrentDate";
 
 type TActiveBurgerMenu = {
   handleActiveBurgerMenu: () => void;
@@ -22,18 +23,19 @@ export const BurgerMenu = ({ handleActiveBurgerMenu }: TActiveBurgerMenu) => {
           >
             Jeux
           </Link>
-          <a
-            href=""
+          <Link
+            to={`/jeux/sorties?page=1&dates=${getCurrentDate().fromDate},${getCurrentDate().toDate}`}
             className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
+            onClick={handleActiveBurgerMenu}
           >
-            Nouveautés
-          </a>
-          <a
-            href=""
+            Sorties
+          </Link>
+          <Link
+            to={""}
             className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
           >
             Tests
-          </a>
+          </Link>
         </nav>
       </div>
     </>

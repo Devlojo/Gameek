@@ -31,7 +31,7 @@ export const GameHeader = ({
             loading="lazy"
           />
           {!isReview && (
-            <p className="absolute bottom-0 flex w-full items-center justify-center gap-1 rounded-b-md bg-global bg-opacity-70 text-xs text-customWhite">
+            <p className="absolute bottom-0 flex w-full items-center justify-center gap-1 bg-global bg-opacity-70 text-xs text-customWhite">
               <span className="text-xl font-semibold text-mainYellow lg:text-2xl">
                 18
               </span>
