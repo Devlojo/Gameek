@@ -7,6 +7,7 @@ import { InputSearch } from "@/components/ui/InputSearch";
 import { IoClose } from "react-icons/io5";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
+import { getCurrentDate } from "@/utils/getCurrentDate";
 
 type TActiveBurgerMenu = {
   activeBurgerMenu: boolean;
@@ -59,18 +60,18 @@ export const Header = ({
             >
               Jeux
             </Link>
-            <a
-              href=""
+            <Link
+              to={`/jeux/sorties?page=1&dates=${getCurrentDate().fromDate},${getCurrentDate().toDate}`}
               className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
             >
-              Nouveautés
-            </a>
-            <a
-              href=""
+              Sorties
+            </Link>
+            <Link
+              to={""}
               className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
             >
               Tests
-            </a>
+            </Link>
           </nav>
           <div
             className={clsx(

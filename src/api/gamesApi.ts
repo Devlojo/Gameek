@@ -31,6 +31,31 @@ export const getAllGames = async (
   }
 };
 
+export const getAllReleases = async (
+  page: number,
+  genres?: number,
+  platforms?: number,
+  dates?: string,
+) => {
+  try {
+    const { data: games } = await axios.get(
+      `${apiUrl}/games/releases?page=${page}${genres ? `&genres=${genres}` : ""}${
+        platforms ? `&platforms=${platforms}` : ""
+      }${dates ? `&dates=${dates}` : ""}`,
+      {
+        timeout: 5000,
+      },
+    );
+
+    const gamesParsed = gameSchema.parse(games);
+
+    return gamesParsed;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const getLatestReleasesGames = async () => {
   try {
     const { data: latestGames } = await axios.get(

@@ -5,7 +5,7 @@ export const useGenresQuery = () => {
   const {
     data: genres,
     isLoading: isLoadingGenres,
-    isSuccess,
+    isSuccess: isSuccessGenres,
   } = useQuery({
     queryKey: ["genres"],
     queryFn: () => getAllGenres(),
@@ -14,6 +14,6 @@ export const useGenresQuery = () => {
   return {
     genres,
     isLoadingGenres,
-    isSuccess,
+    isSuccessGenres,
   };
 };

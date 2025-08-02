@@ -5,7 +5,7 @@ export const usePlatformsQuery = () => {
   const {
     data: platforms,
     isLoading: isLoadingPlatforms,
-    isSuccess,
+    isSuccess: isSuccessPlatforms,
   } = useQuery({
     queryKey: ["platforms"],
     queryFn: () => getAllPlatforms(),
@@ -14,6 +14,6 @@ export const usePlatformsQuery = () => {
   return {
     platforms,
     isLoadingPlatforms,
-    isSuccess,
+    isSuccessPlatforms,
   };
 };
