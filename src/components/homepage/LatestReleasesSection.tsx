@@ -85,12 +85,7 @@ export const LatestReleasesSection = () => {
           removeArrowOnDeviceType={["tablet", "mobile"]}
           showDots
           customDot={<CustomDot />}
-          containerClass={clsx(
-            latestGames &&
-              latestGames.results.length <= 2 &&
-              "justify-center flex",
-            !isSuccess && "justify-center flex",
-          )}
+          containerClass={clsx(!isSuccess && "justify-center flex")}
           customRightArrow={<CustomRightArrow />}
           customLeftArrow={<CustomLeftArrow />}
         >
