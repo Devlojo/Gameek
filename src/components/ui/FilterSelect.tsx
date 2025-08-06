@@ -12,8 +12,13 @@ type Item = {
 type TFilterSelectProps = {
   label: string;
   items?: Item[];
+  gamesCount: number;
 };
-export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
+export const FilterSelect = ({
+  label,
+  items,
+  gamesCount,
+}: TFilterSelectProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   let paramKey = "";
@@ -147,6 +152,7 @@ export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
                   key={index}
                   label={label}
                   id={item.id}
+                  gamesCount={gamesCount}
                 />
               ))}
           </ul>

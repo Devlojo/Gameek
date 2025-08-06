@@ -6,6 +6,7 @@ import { GameHoverCard } from "@/components/ui/GameHoverCard";
 import { Pagination } from "@/components/ui/Pagination";
 import { useSearchParams } from "react-router-dom";
 import { FilterSelect } from "@/components/ui/FilterSelect";
+import { Loader } from "@/components/ui/Loader";
 
 export const Games = () => {
   const [searchParams] = useSearchParams();
@@ -25,11 +26,19 @@ export const Games = () => {
       <h1 className="mx-4 mt-4 text-center text-3xl font-bold text-customWhite">
         Explore le catalogue
       </h1>
-      {isSuccessGames && isSuccessGenres && isSuccessPlatforms && (
+      {isSuccessGames && isSuccessGenres && isSuccessPlatforms ? (
         <section className="flex w-full flex-col gap-2 rounded-md bg-customWhite px-3 pb-5">
           <div className="flex justify-center gap-8 pt-4">
-            <FilterSelect label="Genre" items={genres?.results} />
-            <FilterSelect label="Plateforme" items={platforms?.results} />
+            <FilterSelect
+              label="Genre"
+              items={genres?.results}
+              gamesCount={games?.count as number}
+            />
+            <FilterSelect
+              label="Plateforme"
+              items={platforms?.results}
+              gamesCount={games?.count as number}
+            />
           </div>
           <p className="text-center">{games?.count} jeux trouvés</p>
           <div className="flex w-full flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
@@ -61,6 +70,8 @@ export const Games = () => {
             <Pagination page={page} />
           </div>
         </section>
+      ) : (
+        <Loader />
       )}
     </>
   );
