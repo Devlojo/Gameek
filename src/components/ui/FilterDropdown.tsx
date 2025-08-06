@@ -5,9 +5,10 @@ type TOption = {
   option: string;
   id: number;
   label: string;
+  gamesCount: number;
 };
 
-export const FilterDropdown = ({ option, id, label }: TOption) => {
+export const FilterDropdown = ({ option, id, label, gamesCount }: TOption) => {
   const [searchParams] = useSearchParams();
 
   const location = useLocation(); // récuperation du chemin courant
@@ -63,7 +64,7 @@ export const FilterDropdown = ({ option, id, label }: TOption) => {
         to={`${location.pathname}?${newParams.toString()}`}
         className="p-1 text-left hover:bg-gray-300"
       >
-        {option}
+        {option} ({gamesCount})
       </Link>
     </>
   );

@@ -7,6 +7,7 @@ import { Pagination } from "@/components/ui/Pagination";
 import { FilterSelect } from "@/components/ui/FilterSelect";
 import { GameHoverCard } from "@/components/ui/GameHoverCard";
 import { getCurrentDate } from "@/utils/getCurrentDate";
+import { Loader } from "@/components/ui/Loader";
 
 type Item = {
   id: number;
@@ -65,13 +66,29 @@ export const NewGames = () => {
       <h1 className="mx-4 mt-4 text-center text-3xl font-bold text-customWhite">
         Calendrier des sorties
       </h1>
-      {isSuccessGames && isSuccessGenres && isSuccessPlatforms && (
+      {isSuccessGames && isSuccessGenres && isSuccessPlatforms ? (
         <section className="flex w-full flex-col gap-2 rounded-md bg-surface px-3 pb-5">
           <div className="flex flex-wrap justify-center gap-8 pt-4">
-            <FilterSelect label="Genre" items={genres?.results} />
-            <FilterSelect label="Plateforme" items={platforms?.results} />
-            <FilterSelect label="Mois" items={months} />
-            <FilterSelect label="Année" items={years.reverse()} />
+            <FilterSelect
+              label="Genre"
+              items={genres?.results}
+              gamesCount={games?.count as number}
+            />
+            <FilterSelect
+              label="Plateforme"
+              items={platforms?.results}
+              gamesCount={games?.count as number}
+            />
+            <FilterSelect
+              label="Mois"
+              items={months}
+              gamesCount={games?.count as number}
+            />
+            <FilterSelect
+              label="Année"
+              items={years.reverse()}
+              gamesCount={games?.count as number}
+            />
           </div>
           <p className="text-center text-customWhite">
             {games?.count} jeux trouvés
@@ -108,9 +125,12 @@ export const NewGames = () => {
                 </Link>
               </article>
             ))}
+
             <Pagination page={page} theme="dark" />
           </div>
         </section>
+      ) : (
+        <Loader />
       )}
     </>
   );
