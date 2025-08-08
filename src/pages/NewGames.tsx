@@ -69,26 +69,10 @@ export const NewGames = () => {
       {isSuccessGames && isSuccessGenres && isSuccessPlatforms ? (
         <section className="flex w-full flex-col gap-2 rounded-md bg-surface px-3 pb-5">
           <div className="flex flex-wrap justify-center gap-8 pt-4">
-            <FilterSelect
-              label="Genre"
-              items={genres?.results}
-              gamesCount={games?.count as number}
-            />
-            <FilterSelect
-              label="Plateforme"
-              items={platforms?.results}
-              gamesCount={games?.count as number}
-            />
-            <FilterSelect
-              label="Mois"
-              items={months}
-              gamesCount={games?.count as number}
-            />
-            <FilterSelect
-              label="Année"
-              items={years.reverse()}
-              gamesCount={games?.count as number}
-            />
+            <FilterSelect label="Genre" items={genres?.results} />
+            <FilterSelect label="Plateforme" items={platforms?.results} />
+            <FilterSelect label="Mois" items={months} />
+            <FilterSelect label="Année" items={years.reverse()} />
           </div>
           <p className="text-center text-customWhite">
             {games?.count} jeux trouvés
@@ -125,8 +109,9 @@ export const NewGames = () => {
                 </Link>
               </article>
             ))}
-
-            <Pagination page={page} theme="dark" />
+            {games && games.count > 10 && (
+              <Pagination page={page} theme="dark" gamesCount={games.count} />
+            )}
           </div>
         </section>
       ) : (
