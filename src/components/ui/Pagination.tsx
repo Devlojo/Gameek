@@ -3,14 +3,28 @@ import { LuCircleArrowRight } from "react-icons/lu";
 import { Link, useLocation } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { clsx } from "clsx";
+import { RxDoubleArrowLeft } from "react-icons/rx";
+import { RxDoubleArrowRight } from "react-icons/rx";
 
 type TPage = {
   page: number;
   theme?: string;
+  gamesCount?: number;
 };
 
-export const Pagination = ({ page, theme }: TPage) => {
-  const pages = [0, 1, 2, 3, 4];
+export const Pagination = ({ page, theme, gamesCount }: TPage) => {
+  const pages = [0];
+  if (theme) {
+    let count = 10;
+    let i = 0;
+    while (gamesCount && gamesCount > count) {
+      count += 10;
+      i++;
+      pages.push(i);
+    }
+  } else {
+    pages.push(1, 2, 3, 4);
+  }
 
   const [searchParams] = useSearchParams();
   const location = useLocation(); // récuperation du chemin courant
@@ -23,34 +37,84 @@ export const Pagination = ({ page, theme }: TPage) => {
 
   return (
     <>
-      <div className="flex w-full flex-wrap items-center justify-center sm:gap-4">
+      <div className="flex w-full flex-wrap items-center justify-center gap-2 sm:gap-4">
         {page != 1 && (
-          <Link to={getPageUrl(page - 1)}>
-            <LuCircleArrowLeft className="size-10 text-mainYellow hover:cursor-pointer" />
-          </Link>
+          <>
+            <Link to={getPageUrl(1)}>
+              <RxDoubleArrowLeft className="size-10 text-mainYellow hover:cursor-pointer" />
+            </Link>
+            <Link to={getPageUrl(page - 1)}>
+              <LuCircleArrowLeft className="size-10 text-mainYellow hover:cursor-pointer" />
+            </Link>
+          </>
         )}
 
-        <div className="flex sm:gap-4">
-          {pages.map((offset) => {
-            const pageNumber = page + offset;
-            return (
-              <Link
-                key={offset}
-                to={getPageUrl(pageNumber)}
-                className={clsx(
-                  "rounded-lg p-2 font-semibold text-global lg:hover:bg-mainYellow",
-                  currentPage === pageNumber && "bg-mainYellow",
-                  theme === "dark" && "font-semibold text-white",
-                )}
-              >
-                {pageNumber}
-              </Link>
-            );
-          })}
+        <div className="flex gap-2 sm:gap-4">
+          {theme &&
+            page < pages.length &&
+            pages.map((index) => {
+              const pageNumber = index + 1;
+              return (
+                <Link
+                  key={index}
+                  to={getPageUrl(pageNumber)}
+                  className={clsx(
+                    "rounded-lg p-2 font-semibold text-customWhite lg:hover:bg-mainYellow",
+                    currentPage === pageNumber && "bg-mainYellow",
+                  )}
+                >
+                  {pageNumber}
+                </Link>
+              );
+            })}
+          {theme && page === pages.length && (
+            <Link
+              to={getPageUrl(currentPage)}
+              className="rounded-lg bg-mainYellow p-2 font-semibold text-customWhite lg:hover:bg-mainYellow"
+            >
+              {currentPage}
+            </Link>
+          )}
+
+          {!theme &&
+            pages.map((offset) => {
+              const pageNumber = page + offset;
+              return (
+                <Link
+                  key={offset}
+                  to={getPageUrl(pageNumber)}
+                  className={clsx(
+                    "rounded-lg p-2 font-semibold text-global lg:hover:bg-mainYellow",
+                    currentPage === pageNumber && "bg-mainYellow",
+                    theme === "dark" && "font-semibold text-white",
+                  )}
+                >
+                  {pageNumber}
+                </Link>
+              );
+            })}
         </div>
-        <Link to={getPageUrl(page + 1)}>
-          <LuCircleArrowRight className="size-10 text-mainYellow hover:cursor-pointer" />
-        </Link>
+
+        {theme && page != pages.length && (
+          <>
+            <Link to={getPageUrl(page + 1)}>
+              <LuCircleArrowRight className="size-10 text-mainYellow hover:cursor-pointer" />
+            </Link>
+            <Link to={getPageUrl(pages.length)}>
+              <RxDoubleArrowRight className="size-10 text-mainYellow hover:cursor-pointer" />
+            </Link>
+          </>
+        )}
+        {!theme && (
+          <>
+            <Link to={getPageUrl(page + 1)}>
+              <LuCircleArrowRight className="size-10 text-mainYellow hover:cursor-pointer" />
+            </Link>
+            <Link to={getPageUrl(currentPage + 4)}>
+              <RxDoubleArrowRight className="size-10 text-mainYellow hover:cursor-pointer" />
+            </Link>
+          </>
+        )}
       </div>
     </>
   );
