@@ -92,7 +92,6 @@ export const useGamesReleasesQuery = (
   } = useQuery({
     queryKey: ["games", page, genres, platforms, dates],
     queryFn: () => getAllReleases(page, genres, platforms, dates),
-    retry: false,
   });
   return {
     games,

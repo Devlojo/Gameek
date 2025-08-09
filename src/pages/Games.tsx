@@ -60,7 +60,7 @@ export const Games = () => {
               </article>
             ))}
 
-            <Pagination page={page} />
+            <Pagination page={page} gamesCount={games?.count} />
           </div>
         </section>
       ) : (

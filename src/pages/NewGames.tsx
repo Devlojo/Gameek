@@ -110,7 +110,7 @@ export const NewGames = () => {
               </article>
             ))}
             {games && games.count > 10 && (
-              <Pagination page={page} theme="dark" gamesCount={games.count} />
+              <Pagination page={page} theme="dark" gamesCount={games?.count} />
             )}
           </div>
         </section>
