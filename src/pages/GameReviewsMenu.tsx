@@ -30,7 +30,7 @@ export const GameReviewsMenu = () => {
             <div className="flex w-full flex-col flex-wrap items-center justify-center gap-2 sm:flex-row sm:justify-between">
               <p>2 tests trouvés</p>
               <Link
-                to={""}
+                to={`/creation/test/${gameDetail?.slug}`}
                 className="flex items-center gap-2 rounded-es-2xl border-2 border-black/40 p-2 hover:bg-global hover:text-customWhite"
               >
                 Rédigez votre test <FaPen />

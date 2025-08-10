@@ -61,7 +61,7 @@ export const FilterDropdown = ({ option, id, label }: TOption) => {
     <>
       <Link
         to={`${location.pathname}?${newParams.toString()}`}
-        className="p-1 text-left hover:bg-gray-300"
+        className="p-1 text-center hover:bg-gray-300"
       >
         {option}
       </Link>
