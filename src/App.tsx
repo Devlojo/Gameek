@@ -17,6 +17,7 @@ import { AutoScrollToTop } from "@/components/layout/AutoScrollToTop";
 import { Games } from "@/pages/Games";
 import { NewGames } from "@/pages/NewGames";
 import { Reviews } from "@/pages/Reviews";
+import { ReviewForm } from "@/pages/ReviewForm";
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
@@ -51,6 +52,7 @@ const App = (): JSX.Element => {
               <Route path="/jeux" element={<Games />} />
               <Route path="/jeux/sorties" element={<NewGames />} />
               <Route path="/tests" element={<Reviews />} />
+              <Route path="/creation/test/:id" element={<ReviewForm />} />
               <Route path="/jeu/:id" element={<GameGeneralMenu />} />
               <Route path="/jeu/tests/:id" element={<GameReviewsMenu />} />
 

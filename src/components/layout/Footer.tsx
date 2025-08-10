@@ -3,25 +3,25 @@ export const Footer = (): JSX.Element => {
     <>
       <footer className="mb-4 text-customWhite">
         <nav className="mb-2">
-          <ul className="flex flex-wrap justify-center gap-1 max-sm:text-sm">
+          <ul className="flex flex-wrap justify-center gap-2 max-sm:text-sm">
             <li>
               <a href="" className="hover:text-mainYellow">
-                Mentions Légales |
+                Mentions Légales
               </a>
             </li>
             <li>
               <a href="" className="hover:text-mainYellow">
-                Politique de confidentialité |
+                Politique de confidentialité
               </a>
             </li>
             <li>
               <a href="" className="hover:text-mainYellow">
-                CGU |
+                CGU
               </a>
             </li>
             <li>
               <a href="" className="hover:text-mainYellow">
-                Contact |
+                Contact
               </a>
             </li>
             <li>

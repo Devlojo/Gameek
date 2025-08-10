@@ -133,7 +133,7 @@ export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
         </button>
         <div
           className={clsx(
-            "absolute left-0 top-full z-10 hidden w-64 overflow-y-auto rounded-sm bg-customWhite p-1 text-black shadow-sm shadow-black scrollbar-thin scrollbar-thumb-gray-500 group-hover:block",
+            "absolute left-0 top-full z-10 hidden w-full overflow-y-auto rounded-sm bg-customWhite p-1 text-black shadow-sm shadow-black scrollbar-thin scrollbar-thumb-gray-500 group-hover:block",
             items && items.length > 5 && "h-48",
           )}
         >
