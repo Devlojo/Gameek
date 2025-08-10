@@ -67,7 +67,7 @@ export const Header = ({
               Sorties
             </Link>
             <Link
-              to={""}
+              to={"/tests?page=1"}
               className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
             >
               Tests
