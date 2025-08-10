@@ -50,6 +50,7 @@ export const gameDetailsSchema = z.object({
   slug: z.string(),
   name: z.string(),
   description: z.string(),
+  description_raw: z.string(),
   released: z.string().nullable(),
   background_image: z.string().nullable(),
   background_image_additional: z.string().nullable(),

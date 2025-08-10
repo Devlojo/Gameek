@@ -105,7 +105,7 @@ export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
       <div className="group relative">
         <button
           className={clsx(
-            "flex items-center gap-1 rounded-sm bg-mainYellow p-2 shadow-sm shadow-black hover:cursor-pointer md:px-10",
+            "flex items-center rounded-sm bg-mainYellow p-2 shadow-sm shadow-black hover:cursor-pointer md:px-10",
           )}
         >
           {selectedItem ? (
@@ -133,9 +133,8 @@ export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
         </button>
         <div
           className={clsx(
-            "absolute left-0 top-full z-10 hidden h-48 w-64 overflow-y-auto rounded-sm bg-customWhite p-1 text-black shadow-sm shadow-black",
-
-            "scrollbar-thin scrollbar-thumb-gray-500 group-hover:block",
+            "absolute left-0 top-full z-10 hidden w-64 overflow-y-auto rounded-sm bg-customWhite p-1 text-black shadow-sm shadow-black scrollbar-thin scrollbar-thumb-gray-500 group-hover:block",
+            items && items.length > 5 && "h-48",
           )}
         >
           <ul className="flex flex-col gap-1">

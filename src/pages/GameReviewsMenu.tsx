@@ -7,6 +7,8 @@ import { useState } from "react";
 import { ForbiddenContent } from "@/components/layout/ForbiddenContent";
 import { Loader } from "@/components/ui/Loader";
 import { Link } from "react-router-dom";
+import { MdArrowDropDown } from "react-icons/md";
+import { FaPen } from "react-icons/fa";
 
 export const GameReviewsMenu = () => {
   const { id } = useParams();
@@ -25,6 +27,26 @@ export const GameReviewsMenu = () => {
         >
           <Menu activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
           <div className="mx-3 mt-5 flex flex-col gap-3">
+            <div className="flex w-full flex-col flex-wrap items-center justify-center gap-2 sm:flex-row sm:justify-between">
+              <p>2 tests trouvés</p>
+              <Link
+                to={""}
+                className="flex items-center gap-2 rounded-es-2xl border-2 border-black/40 p-2 hover:bg-global hover:text-customWhite"
+              >
+                Rédigez votre test <FaPen />
+              </Link>
+              <div className="group relative flex w-36 items-center border-y border-black/40 p-2 hover:cursor-pointer">
+                <button>Trier par Date</button>
+                <MdArrowDropDown />
+                <div className="absolute left-0 top-full z-10 hidden w-full overflow-y-auto rounded-sm bg-customWhite shadow-sm shadow-black group-hover:flex">
+                  <ul className="flex w-full flex-col">
+                    <li className="p-2 hover:bg-gray-300">Trier par Note</li>
+                    <li className="p-2 hover:bg-gray-300">Trier par Testeur</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
             <article className="bg-customWhite shadow-sm shadow-global hover:opacity-80">
               <Link
                 to={`/test/${gameDetail?.slug}/${userName}`}
