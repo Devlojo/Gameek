@@ -105,7 +105,7 @@ export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
       <div className="group relative">
         <button
           className={clsx(
-            "flex items-center rounded-sm bg-mainYellow p-2 shadow-sm shadow-black hover:cursor-pointer md:px-10",
+            "flex w-60 items-center justify-center rounded-sm bg-mainYellow p-2 shadow-sm shadow-black hover:cursor-pointer",
           )}
         >
           {selectedItem ? (

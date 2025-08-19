@@ -7,16 +7,17 @@ export const Login = (): JSX.Element => {
       <div className="flex flex-col items-center">
         <div className="flex h-[300px] w-[300px] flex-col items-center justify-center rounded-lg bg-customWhite p-6 sm:w-[500px]">
           <form action="" className="flex w-full flex-col gap-6">
-            <label htmlFor="">
+            <label htmlFor="email">
               Adresse mail
               <input
                 type="email"
                 className="w-full border-b border-global p-1 shadow-sm shadow-global"
                 placeholder="Entrez votre email"
+                id="email"
               />
             </label>
 
-            <label htmlFor="">
+            <label htmlFor="password">
               Mot de passe
               <input
                 type="password"

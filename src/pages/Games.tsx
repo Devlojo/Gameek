@@ -28,7 +28,7 @@ export const Games = () => {
       </h1>
       {isSuccessGames && isSuccessGenres && isSuccessPlatforms ? (
         <section className="flex w-full flex-col gap-2 rounded-md bg-customWhite px-3 pb-5">
-          <div className="flex justify-center gap-8 pt-4">
+          <div className="flex w-full flex-wrap justify-center gap-8 pt-4">
             <FilterSelect label="Genre" items={genres?.results} />
             <FilterSelect label="Plateforme" items={platforms?.results} />
           </div>

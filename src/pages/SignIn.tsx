@@ -15,28 +15,31 @@ export const SignIn = (): JSX.Element => {
                 title="Selectionnez votre photo de profil"
               />
             </div>
-            <label htmlFor="">
+            <label htmlFor="email">
               Adresse mail
               <input
                 type="email"
                 className="w-full border-b border-global p-1 shadow-sm shadow-global"
                 placeholder="Entrez votre email"
+                id="email"
               />
             </label>
-            <label htmlFor="">
+            <label htmlFor="username">
               Pseudo
               <input
                 type="text"
                 className="w-full border-b border-global p-1 shadow-sm shadow-global"
                 placeholder="Entrez votre pseudo"
+                id="username"
               />
             </label>
-            <label htmlFor="">
+            <label htmlFor="password">
               Mot de passe
               <input
                 type="password"
                 className="w-full border-b border-global p-1 shadow-sm shadow-global"
                 placeholder="Entrez votre mot de passe"
+                id="password"
               />
             </label>
 

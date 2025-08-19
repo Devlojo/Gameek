@@ -3,7 +3,7 @@ export const Footer = (): JSX.Element => {
     <>
       <footer className="mb-4 text-customWhite">
         <nav className="mb-2">
-          <ul className="flex flex-wrap justify-center gap-2 max-sm:text-sm">
+          <ul className="flex flex-wrap justify-center gap-2 px-1 max-sm:text-sm">
             <li>
               <a href="" className="hover:text-mainYellow">
                 Mentions Légales
@@ -32,18 +32,16 @@ export const Footer = (): JSX.Element => {
           </ul>
         </nav>
         <div className="flex flex-wrap justify-center gap-1 max-sm:text-sm">
-          <p>Copyright © 2025 Gameek | Tous droits réservés |</p>
-          <p>
-            {" "}
-            Images et données fournies par{" "}
-            <a
-              href="https://rawg.io/"
-              className="text-mainYellow hover:font-bold"
-              target="___blank"
-            >
-              RAWG
-            </a>
-          </p>
+          <p>Copyright © 2025 Gameek</p>
+          <p>| Tous droits réservés |</p>
+          <p> Images et données fournies par </p>
+          <a
+            href="https://rawg.io/"
+            className="text-mainYellow hover:font-bold"
+            target="___blank"
+          >
+            RAWG
+          </a>
         </div>
       </footer>
     </>
