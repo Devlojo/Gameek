@@ -5,6 +5,7 @@ import { GameHeader } from "@/components/game/GameHeader";
 import { Loader } from "@/components/ui/Loader";
 import { useState } from "react";
 import { ForbiddenContent } from "@/components/layout/ForbiddenContent";
+import { Link } from "react-router-dom";
 
 export const GameGeneralMenu = () => {
   const { id } = useParams();
@@ -35,17 +36,25 @@ export const GameGeneralMenu = () => {
                 <div className="flex flex-wrap items-center gap-2">
                   <p className="font-bold">Genre :</p>
                   {gameDetail?.genres.map((genre, index) => (
-                    <p key={index} className="underline">
+                    <Link
+                      key={index}
+                      className="underline"
+                      to={`/jeux?page=1&genres=${genre.id}`}
+                    >
                       {genre.name}
-                    </p>
+                    </Link>
                   ))}
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
                   <p className="font-bold">Plateforme :</p>
                   {gameDetail?.platforms?.map((platform, index) => (
-                    <p key={index} className="underline">
+                    <Link
+                      key={index}
+                      className="underline"
+                      to={`/jeux?page=1&plateformes=${platform.platform.id}`}
+                    >
                       {platform.platform.name}
-                    </p>
+                    </Link>
                   ))}
                 </div>
                 {gameDetail?.developers && gameDetail.developers.length > 0 && (
