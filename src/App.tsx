@@ -18,6 +18,11 @@ import { Games } from "@/pages/Games";
 import { NewGames } from "@/pages/NewGames";
 import { Reviews } from "@/pages/Reviews";
 import { ReviewForm } from "@/pages/ReviewForm";
+import { LegalMention } from "@/pages/LegalMention";
+import { PrivacyPolicy } from "@/pages/PrivacyPolicy";
+import { GeneralConditionsOfUse } from "@/pages/GeneralConditionsOfUse";
+import { Contact } from "@/pages/Contact";
+import { About } from "@/pages/About";
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
@@ -61,6 +66,17 @@ const App = (): JSX.Element => {
               <Route path="/test/:id/:userName" element={<Review />} />
               <Route path="/inscription" element={<SignIn />} />
               <Route path="/connexion" element={<Login />} />
+              <Route path="/mention-legales" element={<LegalMention />} />
+              <Route
+                path="/politique-de-confidentialite"
+                element={<PrivacyPolicy />}
+              />
+              <Route
+                path="/conditions-generales-utilisation"
+                element={<GeneralConditionsOfUse />}
+              />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/a-propos" element={<About />} />
             </Routes>
 
             <Footer />

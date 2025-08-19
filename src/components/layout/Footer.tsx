@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 export const Footer = (): JSX.Element => {
   return (
     <>
@@ -5,29 +6,35 @@ export const Footer = (): JSX.Element => {
         <nav className="mb-2">
           <ul className="flex flex-wrap justify-center gap-2 px-1 max-sm:text-sm">
             <li>
-              <a href="" className="hover:text-mainYellow">
+              <Link to="/mention-legales" className="hover:text-mainYellow">
                 Mentions Légales
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="" className="hover:text-mainYellow">
+              <Link
+                to="/politique-de-confidentialite"
+                className="hover:text-mainYellow"
+              >
                 Politique de confidentialité
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="" className="hover:text-mainYellow">
+              <Link
+                to="/conditions-generales-utilisation"
+                className="hover:text-mainYellow"
+              >
                 CGU
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="" className="hover:text-mainYellow">
+              <Link to="/contact" className="hover:text-mainYellow">
                 Contact
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="" className="hover:text-mainYellow">
+              <Link to="/a-propos" className="hover:text-mainYellow">
                 A propos
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
