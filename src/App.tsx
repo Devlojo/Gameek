@@ -23,9 +23,16 @@ import { PrivacyPolicy } from "@/pages/PrivacyPolicy";
 import { GeneralConditionsOfUse } from "@/pages/GeneralConditionsOfUse";
 import { Contact } from "@/pages/Contact";
 import { About } from "@/pages/About";
+import { TUser } from "@/types/user";
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
+  const [user, setUser] = useState<TUser | null>(() =>
+    JSON.parse(localStorage.getItem("user") || "null"),
+  );
+  const [token, setToken] = useState<string | null>(() =>
+    localStorage.getItem("token"),
+  );
 
   const handleActiveBurgerMenu = () => {
     setActiveBurgerMenu((prev) => !prev);
@@ -37,6 +44,7 @@ const App = (): JSX.Element => {
   } else {
     document.body.style.overflow = "";
   }
+
   return (
     <>
       <Router>
@@ -49,6 +57,10 @@ const App = (): JSX.Element => {
           <Header
             activeBurgerMenu={activeBurgerMenu}
             handleActiveBurgerMenu={handleActiveBurgerMenu}
+            token={token}
+            user={user}
+            setToken={setToken}
+            setUser={setUser}
           />
 
           <div className="mx-auto flex max-w-5xl flex-col gap-6">
@@ -57,15 +69,38 @@ const App = (): JSX.Element => {
               <Route path="/jeux" element={<Games />} />
               <Route path="/jeux/sorties" element={<NewGames />} />
               <Route path="/tests" element={<Reviews />} />
-              <Route path="/creation/test/:id" element={<ReviewForm />} />
+              <Route
+                path="/creation/test/:id"
+                element={<ReviewForm user={user} token={token} />}
+              />
               <Route path="/jeu/:id" element={<GameGeneralMenu />} />
               <Route path="/jeu/tests/:id" element={<GameReviewsMenu />} />
 
               <Route path="/jeu/images/:id" element={<GameImagesMenu />} />
               <Route path="/jeu/videos/:id" element={<GameVideosMenu />} />
               <Route path="/test/:id/:userName" element={<Review />} />
-              <Route path="/inscription" element={<SignIn />} />
-              <Route path="/connexion" element={<Login />} />
+              <Route
+                path="/inscription"
+                element={
+                  <SignIn
+                    setUser={setUser}
+                    setToken={setToken}
+                    token={token}
+                    user={user}
+                  />
+                }
+              />
+              <Route
+                path="/connexion"
+                element={
+                  <Login
+                    setUser={setUser}
+                    setToken={setToken}
+                    token={token}
+                    user={user}
+                  />
+                }
+              />
               <Route path="/mention-legales" element={<LegalMention />} />
               <Route
                 path="/politique-de-confidentialite"
