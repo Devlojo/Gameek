@@ -11,22 +11,19 @@ import { getCurrentDate } from "@/utils/getCurrentDate";
 import { MdArrowDropDown } from "react-icons/md";
 import { TUser } from "@/types/user";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 type THeaderProps = {
   activeBurgerMenu: boolean;
   handleActiveBurgerMenu: () => void;
-  token: string | null;
   user: TUser | null;
   setUser: React.Dispatch<React.SetStateAction<TUser | null>>;
-  setToken: React.Dispatch<React.SetStateAction<string | null>>;
 };
 export const Header = ({
   activeBurgerMenu,
   handleActiveBurgerMenu,
-  token,
   user,
   setUser,
-  setToken,
 }: THeaderProps): JSX.Element => {
   const [activeSearchInput, setActiveSearchInput] = useState(false);
   const navigate = useNavigate();
@@ -34,12 +31,11 @@ export const Header = ({
     setActiveSearchInput((prev) => !prev);
   };
 
-  const logout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+  const apiUrl = import.meta.env.VITE_API_URL;
 
+  const logout = () => {
+    axios.post(`${apiUrl}/logout`, {}, { withCredentials: true });
     setUser(null);
-    setToken(null);
 
     navigate("/");
   };
@@ -116,7 +112,7 @@ export const Header = ({
                 <FaSearch className="size-6" />
               )}
             </button>
-            {!user && !token ? (
+            {!user && !activeSearchInput ? (
               <Link
                 to={"/connexion"}
                 className="hover:cursor-pointer lg:hover:text-yellow-400"

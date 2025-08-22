@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate, Navigate } from "react-router-dom";
 import { TUser } from "@/types/user";
+
 type TForm = {
   username: string;
   password: string;
@@ -13,15 +14,12 @@ type TForm = {
 
 type SignInProps = {
   setUser: React.Dispatch<React.SetStateAction<TUser | null>>;
-  setToken: React.Dispatch<React.SetStateAction<string | null>>;
   user: TUser | null;
-  token: string | null;
 };
 export const SignIn = ({
   setUser,
-  setToken,
+
   user,
-  token,
 }: SignInProps): JSX.Element => {
   const avatars = [
     "adventurer",
@@ -58,7 +56,7 @@ export const SignIn = ({
   });
 
   // redirection vers l'accueil si l'utilisateur est connecté, replace permet de retirer la page dans l'historique du navigateur
-  if (user && token) {
+  if (user) {
     return <Navigate to="/" replace />;
   }
 
@@ -69,16 +67,11 @@ export const SignIn = ({
   };
   const onSubmit = async (data: TForm) => {
     try {
-      const res = await axios.post(apiUrl + "/signin", data);
+      const res = await axios.post(apiUrl + "/signin", data, {
+        withCredentials: true, // pour que le cookie HttpOnly (refreshToken) soit envoyé automatiquement
+      });
       if (res.status === 201) {
-        const { user, token } = res.data;
-        localStorage.setItem("token", token);
-
-        // pour pouvoir stocker un objet JSON dans le localStorage car il ne peux prendre que des chaines de caracteres
-        localStorage.setItem("user", JSON.stringify(user));
-
-        setToken(token);
-        setUser(user);
+        setUser(res.data.user);
 
         navigate("/");
       }
