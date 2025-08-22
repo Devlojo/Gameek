@@ -1,6 +1,14 @@
 import { InputStrengthOrWeakness } from "@/components/form/InputStrengthOrWeakness";
-
-export const ReviewForm = (): JSX.Element => {
+import { TUser } from "@/types/user";
+import { Navigate } from "react-router-dom";
+type TReviewFormProps = {
+  user: TUser | null;
+  token: string | null;
+};
+export const ReviewForm = ({ user, token }: TReviewFormProps): JSX.Element => {
+  if (!user && !token) {
+    return <Navigate to="/connexion" replace />;
+  }
   return (
     <>
       <h1 className="mx-4 mt-4 text-center text-3xl font-bold text-customWhite">
