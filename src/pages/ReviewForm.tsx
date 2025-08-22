@@ -1,12 +1,12 @@
 import { InputStrengthOrWeakness } from "@/components/form/InputStrengthOrWeakness";
 import { TUser } from "@/types/user";
 import { Navigate } from "react-router-dom";
+import { AlertModalReview } from "@/components/ui/AlertModalReview";
 type TReviewFormProps = {
   user: TUser | null;
-  token: string | null;
 };
-export const ReviewForm = ({ user, token }: TReviewFormProps): JSX.Element => {
-  if (!user && !token) {
+export const ReviewForm = ({ user }: TReviewFormProps): JSX.Element => {
+  if (!user) {
     return <Navigate to="/connexion" replace />;
   }
   return (
@@ -16,6 +16,7 @@ export const ReviewForm = ({ user, token }: TReviewFormProps): JSX.Element => {
       </h1>
       <div className="flex flex-col items-center">
         <div className="flex w-[300px] flex-col items-center justify-center rounded-lg bg-customWhite p-6 sm:w-[600px]">
+          <AlertModalReview />
           <form action="" className="flex w-full flex-col gap-6">
             <label htmlFor="introduction">
               Introduction

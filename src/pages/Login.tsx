@@ -11,16 +11,9 @@ type TForm = {
 
 type LoginProps = {
   setUser: React.Dispatch<React.SetStateAction<TUser | null>>;
-  setToken: React.Dispatch<React.SetStateAction<string | null>>;
   user: TUser | null;
-  token: string | null;
 };
-export const Login = ({
-  setUser,
-  setToken,
-  user,
-  token,
-}: LoginProps): JSX.Element => {
+export const Login = ({ setUser, user }: LoginProps): JSX.Element => {
   const navigate = useNavigate();
   const {
     register,
@@ -30,21 +23,19 @@ export const Login = ({
   } = useForm<TForm>();
   const apiUrl = import.meta.env.VITE_API_URL;
 
+  console.log(user);
+
   // redirection vers l'accueil si l'utilisateur est connecté, replace permet de retirer la page dans l'historique du navigateur
-  if (user && token) {
+  if (user) {
     return <Navigate to="/" replace />;
   }
   const onSubmit = async (data: TForm) => {
     try {
-      const res = await axios.post(apiUrl + "/login", data);
+      const res = await axios.post(apiUrl + "/login", data, {
+        withCredentials: true,
+      });
       if (res.status === 200) {
-        const { user, token } = res.data;
-        // Stockage dans le localStorage
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
-
-        setToken(token);
-        setUser(user);
+        setUser(res.data.user);
 
         navigate("/");
       }

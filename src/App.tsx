@@ -6,7 +6,7 @@ import { GameGeneralMenu } from "@/pages/GameGeneralMenu";
 import { GameReviewsMenu } from "@/pages/GameReviewsMenu";
 import { GameImagesMenu } from "@/pages/GameImagesMenu";
 import { GameVideosMenu } from "@/pages/GameVideosMenu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BurgerMenu } from "./components/ui/BurgerMenu";
 import { ScrollToTopButton } from "@/components/ui/ScrollToTopButton";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -24,16 +24,20 @@ import { GeneralConditionsOfUse } from "@/pages/GeneralConditionsOfUse";
 import { Contact } from "@/pages/Contact";
 import { About } from "@/pages/About";
 import { TUser } from "@/types/user";
+import axios from "axios";
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
-  const [user, setUser] = useState<TUser | null>(() =>
-    JSON.parse(localStorage.getItem("user") || "null"),
-  );
-  const [token, setToken] = useState<string | null>(() =>
-    localStorage.getItem("token"),
-  );
+  const [user, setUser] = useState<TUser | null>(null);
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+    axios
+      .get(`${apiUrl}/profile`, { withCredentials: true })
+      .then((res) => setUser(res.data.user))
+      .catch(() => setUser(null));
+  }, []);
   const handleActiveBurgerMenu = () => {
     setActiveBurgerMenu((prev) => !prev);
   };
@@ -57,9 +61,7 @@ const App = (): JSX.Element => {
           <Header
             activeBurgerMenu={activeBurgerMenu}
             handleActiveBurgerMenu={handleActiveBurgerMenu}
-            token={token}
             user={user}
-            setToken={setToken}
             setUser={setUser}
           />
 
@@ -71,7 +73,7 @@ const App = (): JSX.Element => {
               <Route path="/tests" element={<Reviews />} />
               <Route
                 path="/creation/test/:id"
-                element={<ReviewForm user={user} token={token} />}
+                element={<ReviewForm user={user} />}
               />
               <Route path="/jeu/:id" element={<GameGeneralMenu />} />
               <Route path="/jeu/tests/:id" element={<GameReviewsMenu />} />
@@ -81,25 +83,11 @@ const App = (): JSX.Element => {
               <Route path="/test/:id/:userName" element={<Review />} />
               <Route
                 path="/inscription"
-                element={
-                  <SignIn
-                    setUser={setUser}
-                    setToken={setToken}
-                    token={token}
-                    user={user}
-                  />
-                }
+                element={<SignIn setUser={setUser} user={user} />}
               />
               <Route
                 path="/connexion"
-                element={
-                  <Login
-                    setUser={setUser}
-                    setToken={setToken}
-                    token={token}
-                    user={user}
-                  />
-                }
+                element={<Login setUser={setUser} user={user} />}
               />
               <Route path="/mention-legales" element={<LegalMention />} />
               <Route
