@@ -12,8 +12,13 @@ type TForm = {
 type LoginProps = {
   setUser: React.Dispatch<React.SetStateAction<TUser | null>>;
   user: TUser | null;
+  setCsrfToken: React.Dispatch<React.SetStateAction<string | null>>;
 };
-export const Login = ({ setUser, user }: LoginProps): JSX.Element => {
+export const Login = ({
+  setUser,
+  user,
+  setCsrfToken,
+}: LoginProps): JSX.Element => {
   const navigate = useNavigate();
   const {
     register,
@@ -22,8 +27,6 @@ export const Login = ({ setUser, user }: LoginProps): JSX.Element => {
     formState: { errors },
   } = useForm<TForm>();
   const apiUrl = import.meta.env.VITE_API_URL;
-
-  console.log(user);
 
   // redirection vers l'accueil si l'utilisateur est connecté, replace permet de retirer la page dans l'historique du navigateur
   if (user) {
@@ -36,7 +39,7 @@ export const Login = ({ setUser, user }: LoginProps): JSX.Element => {
       });
       if (res.status === 200) {
         setUser(res.data.user);
-
+        setCsrfToken(res.data.csrfToken);
         navigate("/");
       }
     } catch (error) {

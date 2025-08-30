@@ -1,4 +1,3 @@
-/* Components */
 import { Header } from "@/components/layout/Header";
 import { Home } from "@/pages/Home";
 import { Footer } from "@/components/layout/Footer";
@@ -29,15 +28,27 @@ import axios from "axios";
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
   const [user, setUser] = useState<TUser | null>(null);
+  const [csrfToken, setCsrfToken] = useState<string | null>(null);
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
+  // recupere le user authentifié dès que le composant se monte
   useEffect(() => {
-    axios
-      .get(`${apiUrl}/profile`, { withCredentials: true })
-      .then((res) => setUser(res.data.user))
-      .catch(() => setUser(null));
+    const fetchProfile = async () => {
+      try {
+        const res = await axios.get(`${apiUrl}/profile`, {
+          withCredentials: true, // permet au navigateur d'envoyer le cookie HttpOnly au serveur
+        });
+
+        setUser(res.data.user);
+      } catch (error) {
+        setUser(null);
+      }
+    };
+
+    fetchProfile();
   }, []);
+
   const handleActiveBurgerMenu = () => {
     setActiveBurgerMenu((prev) => !prev);
   };
@@ -73,7 +84,7 @@ const App = (): JSX.Element => {
               <Route path="/tests" element={<Reviews />} />
               <Route
                 path="/creation/test/:id"
-                element={<ReviewForm user={user} />}
+                element={<ReviewForm user={user} csrfToken={csrfToken} />}
               />
               <Route path="/jeu/:id" element={<GameGeneralMenu />} />
               <Route path="/jeu/tests/:id" element={<GameReviewsMenu />} />
@@ -83,11 +94,23 @@ const App = (): JSX.Element => {
               <Route path="/test/:id/:userName" element={<Review />} />
               <Route
                 path="/inscription"
-                element={<SignIn setUser={setUser} user={user} />}
+                element={
+                  <SignIn
+                    setUser={setUser}
+                    user={user}
+                    setCsrfToken={setCsrfToken}
+                  />
+                }
               />
               <Route
                 path="/connexion"
-                element={<Login setUser={setUser} user={user} />}
+                element={
+                  <Login
+                    setUser={setUser}
+                    user={user}
+                    setCsrfToken={setCsrfToken}
+                  />
+                }
               />
               <Route path="/mention-legales" element={<LegalMention />} />
               <Route

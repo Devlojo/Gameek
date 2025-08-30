@@ -131,10 +131,12 @@ export const Header = ({
                   alt="Avatar de l'utilisateur"
                   className="size-8 rounded-full shadow-sm shadow-black"
                 />
+
                 <p className="hidden md:block">{user?.username}</p>
+
                 <MdArrowDropDown />
                 <div className="w-30 absolute right-0 top-full z-10 hidden gap-1 overflow-y-auto rounded-sm bg-customWhite p-1 text-black shadow-sm shadow-black group-hover:flex group-hover:flex-col md:w-full">
-                  <p className="hidden text-center font-bold max-md:block">
+                  <p className="hidden border-b border-black/40 text-center font-bold max-md:block">
                     {user?.username}
                   </p>
                   <Link to="" className="p-1 text-center hover:bg-gray-300">
