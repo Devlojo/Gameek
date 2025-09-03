@@ -15,10 +15,11 @@ type TForm = {
 type SignInProps = {
   setUser: React.Dispatch<React.SetStateAction<TUser | null>>;
   user: TUser | null;
+  setCsrfToken: React.Dispatch<React.SetStateAction<string | null>>;
 };
 export const SignIn = ({
   setUser,
-
+  setCsrfToken,
   user,
 }: SignInProps): JSX.Element => {
   const avatars = [
@@ -72,7 +73,7 @@ export const SignIn = ({
       });
       if (res.status === 201) {
         setUser(res.data.user);
-
+        setCsrfToken(res.data.csrfToken);
         navigate("/");
       }
     } catch (error) {

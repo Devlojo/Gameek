@@ -5,34 +5,50 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { useState } from "react";
+import { MdWarning } from "react-icons/md";
 
-export const AlertModalReview = () => {
-  let [isOpen, setIsOpen] = useState(true);
+type TAlertProps = {
+  title: string;
+  description: string;
+  buttonLabel: string;
+  setAlertModalCreatedReview?: React.Dispatch<React.SetStateAction<boolean>>;
+};
+export const AlertModalReview = ({
+  title,
+  description,
+  buttonLabel,
+  setAlertModalCreatedReview,
+}: TAlertProps) => {
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <>
       <button onClick={() => setIsOpen(true)}></button>
       <Dialog
         open={isOpen}
-        onClose={() => setIsOpen(false)}
+        onClose={() => {
+          setIsOpen(false);
+          if (setAlertModalCreatedReview) setAlertModalCreatedReview(false);
+        }}
         className="relative z-50"
       >
         <div className="fixed inset-0 flex w-screen items-center justify-center bg-black/70 px-4 backdrop-blur-[2px]">
-          <DialogPanel className="max-w-lg bg-customWhite px-12 py-6 shadow-md shadow-black">
-            <DialogTitle className="my-2 font-bold">
-              Sois respectueux !{" "}
+          <DialogPanel className="flex max-w-lg flex-col items-center bg-customWhite px-12 py-6 shadow-md shadow-black">
+            <DialogTitle className="my-2 flex gap-1 text-lg font-bold">
+              <MdWarning className="size-6" />
+              {title}
             </DialogTitle>
-            <Description>
-              /!\ Petit rappel : ton test sera relu par un modérateur avant
-              publication. Merci de rester poli et respectueux lors de ton test
-              !
-            </Description>
+            <Description>{description}</Description>
             <div className="mt-4">
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false);
+                  if (setAlertModalCreatedReview)
+                    setAlertModalCreatedReview(false);
+                }}
                 className="bg-mainYellow p-2 shadow-sm shadow-black"
               >
-                J'ai compris
+                {buttonLabel}
               </button>
             </div>
           </DialogPanel>

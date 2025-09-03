@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { BsArrowReturnLeft } from "react-icons/bs";
+import { useBestGamesQuery } from "@/queries/useGamesQuery";
 
 type TGame = {
   background_image: string | null | undefined;
@@ -17,6 +18,10 @@ export const GameHeader = ({
   children,
   isReview,
 }: TGame) => {
+  const { bestGames } = useBestGamesQuery();
+
+  const gameInfo = bestGames?.games.find((game) => game.name === name);
+
   return (
     <>
       <h1 className="mx-4 mt-4 text-center text-3xl font-bold text-customWhite">
@@ -30,13 +35,15 @@ export const GameHeader = ({
             className="h-full w-full object-cover"
             loading="lazy"
           />
-          {!isReview && (
-            <p className="absolute bottom-0 flex w-full items-center justify-center gap-1 bg-global bg-opacity-70 text-xs text-customWhite">
+          {!isReview && gameInfo?.avg_grade != null && (
+            <div className="absolute bottom-0 flex w-full items-center justify-center gap-1 bg-global bg-opacity-70 text-xs text-customWhite">
+              <p className="text-lg font-medium">Note moyenne : </p>
               <span className="text-xl font-semibold text-mainYellow lg:text-2xl">
-                18
+                {gameInfo?.avg_grade}
               </span>
-              ∕20 <span className="">(5 avis)</span>
-            </p>
+              ∕20
+              <span className="">({gameInfo?.number_reviews} avis)</span>
+            </div>
           )}
           {isReview && (
             <Link

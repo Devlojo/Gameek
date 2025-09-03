@@ -1,5 +1,4 @@
 import { useBestGamesQuery } from "@/queries/useGamesQuery";
-import { Loader } from "@/components/ui/Loader";
 import gameekLogo from "@/images/gameek-removebg.png";
 import { BsFire } from "react-icons/bs";
 import { GameHoverCard } from "../ui/GameHoverCard";
@@ -7,6 +6,9 @@ import { Link } from "react-router-dom";
 
 export const BestGamesSection = () => {
   const { bestGames, isSuccess } = useBestGamesQuery();
+  const checkedGames = bestGames?.games.filter(
+    (game) => game.avg_grade != null,
+  );
 
   return (
     <section className="h-auto rounded-md bg-customWhite px-4 py-3">
@@ -18,8 +20,8 @@ export const BestGamesSection = () => {
         </div>
       </div>
       <div className="flex flex-wrap gap-4 sm:justify-center">
-        {isSuccess && bestGames && bestGames.results.length > 0 ? (
-          bestGames.results.map((game, index) => {
+        {isSuccess && checkedGames && checkedGames.length > 0 ? (
+          checkedGames.map((game, index) => {
             return (
               <article
                 className="group relative flex w-full flex-col sm:w-[48.5%]"
@@ -49,12 +51,16 @@ export const BestGamesSection = () => {
                       info="Voir les tests du jeu"
                     />
 
-                    <p className="absolute bottom-0 w-full rounded-b-md bg-global bg-opacity-70 text-xs text-customWhite shadow-sm shadow-black">
+                    <div className="absolute bottom-0 flex w-full items-center rounded-b-md bg-global bg-opacity-70 text-xs text-customWhite shadow-sm shadow-black">
+                      <p className="mx-1 text-[16px] font-medium">
+                        Note moyenne :{" "}
+                      </p>
                       <span className="text-xl font-semibold text-mainYellow">
-                        18
+                        {game.avg_grade}
                       </span>
-                      ∕20 <span className="">(5 avis)</span>
-                    </p>
+                      ∕20{" "}
+                      <span className="ml-1">({game.number_reviews} avis)</span>
+                    </div>
                     <p className="rank absolute left-0 top-0 text-5xl text-customWhite">
                       {index + 1}
                     </p>
@@ -66,7 +72,7 @@ export const BestGamesSection = () => {
             );
           })
         ) : (
-          <Loader />
+          <p>Aucun jeu n’a encore été évalué</p>
         )}
       </div>
     </section>

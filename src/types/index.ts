@@ -131,3 +131,29 @@ export const genreOrPlatformSchema = z.object({
     }),
   ),
 });
+
+export const bestGamesSchema = z.object({
+  games: z.array(
+    z.object({
+      id: z.number(),
+      number_reviews: z.string(),
+      avg_grade: z.string().nullable(),
+      name: z.string(),
+      slug: z.string(),
+      rawg_id: z.number(),
+      background_image: z.string(),
+      platforms: z.array(
+        z.object({
+          platform: z.object({
+            name: z.string(),
+          }),
+        }),
+      ),
+      genres: z.array(
+        z.object({
+          name: z.string(),
+        }),
+      ),
+    }),
+  ),
+});

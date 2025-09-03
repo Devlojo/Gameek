@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import {
   getLatestReleasesGames,
   getBestGames,
-  getLatestReviews,
   getAllGames,
   getAllReleases,
 } from "@/api/gamesApi";
@@ -36,23 +35,6 @@ export const useBestGamesQuery = () => {
   });
   return {
     bestGames,
-    isLoading,
-    isSuccess,
-  };
-};
-
-export const useLatestReviewsQuery = () => {
-  const {
-    data: latestReviews,
-    isLoading,
-    isSuccess,
-  } = useQuery({
-    queryKey: ["latestReviews"],
-    queryFn: () => getLatestReviews(),
-    retry: false,
-  });
-  return {
-    latestReviews,
     isLoading,
     isSuccess,
   };
