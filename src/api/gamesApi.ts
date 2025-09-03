@@ -4,6 +4,7 @@ import {
   gameSchema,
   gameScreenshotsSchema,
   gameVideosSchema,
+  bestGamesSchema,
 } from "@/types/index";
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -77,22 +78,8 @@ export const getBestGames = async () => {
     const { data: bestGames } = await axios.get(`${apiUrl}/games/best`, {
       timeout: 5000,
     });
-    const bestGamesParsed = gameSchema.parse(bestGames);
+    const bestGamesParsed = bestGamesSchema.parse(bestGames);
     return bestGamesParsed;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
-export const getLatestReviews = async () => {
-  try {
-    const { data: latestReviews } = await axios.get(
-      `${apiUrl}/games/latest-reviews`,
-      { timeout: 5000 },
-    );
-    const latestReviewsParsed = gameSchema.parse(latestReviews);
-    return latestReviewsParsed;
   } catch (error) {
     console.log(error);
     throw error;

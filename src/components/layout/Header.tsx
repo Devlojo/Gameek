@@ -122,7 +122,7 @@ export const Header = ({
             ) : (
               <div
                 className={clsx(
-                  "group relative flex items-center gap-1",
+                  "group relative flex items-center gap-2",
                   activeSearchInput && "hidden",
                 )}
               >
@@ -135,7 +135,7 @@ export const Header = ({
                 <p className="hidden md:block">{user?.username}</p>
 
                 <MdArrowDropDown />
-                <div className="w-30 absolute right-0 top-full z-10 hidden gap-1 overflow-y-auto rounded-sm bg-customWhite p-1 text-black shadow-sm shadow-black group-hover:flex group-hover:flex-col md:w-full">
+                <div className="absolute right-0 top-full z-10 hidden w-32 gap-1 overflow-y-auto rounded-sm bg-customWhite p-1 text-black shadow-sm shadow-black group-hover:flex group-hover:flex-col md:w-full">
                   <p className="hidden border-b border-black/40 text-center font-bold max-md:block">
                     {user?.username}
                   </p>

@@ -29,6 +29,7 @@ const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
   const [user, setUser] = useState<TUser | null>(null);
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
+  const [alertModalCreatedReview, setAlertModalCreatedReview] = useState(false);
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -78,20 +79,34 @@ const App = (): JSX.Element => {
 
           <div className="mx-auto flex max-w-5xl flex-col gap-6">
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route
+                path="/"
+                element={
+                  <Home
+                    alertModalCreatedReview={alertModalCreatedReview}
+                    setAlertModalCreatedReview={setAlertModalCreatedReview}
+                  />
+                }
+              />
               <Route path="/jeux" element={<Games />} />
               <Route path="/jeux/sorties" element={<NewGames />} />
               <Route path="/tests" element={<Reviews />} />
               <Route
                 path="/creation/test/:id"
-                element={<ReviewForm user={user} csrfToken={csrfToken} />}
+                element={
+                  <ReviewForm
+                    user={user}
+                    csrfToken={csrfToken}
+                    setAlertModalCreatedReview={setAlertModalCreatedReview}
+                  />
+                }
               />
               <Route path="/jeu/:id" element={<GameGeneralMenu />} />
               <Route path="/jeu/tests/:id" element={<GameReviewsMenu />} />
 
               <Route path="/jeu/images/:id" element={<GameImagesMenu />} />
               <Route path="/jeu/videos/:id" element={<GameVideosMenu />} />
-              <Route path="/test/:id/:userName" element={<Review />} />
+              <Route path="/test/:gameSlug/:userName" element={<Review />} />
               <Route
                 path="/inscription"
                 element={
