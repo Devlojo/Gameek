@@ -80,3 +80,16 @@ export const reviewListByGameSchema = z.object({
     }),
   ),
 });
+
+export const reviewListBackSchema = z.object({
+  reviews: z.array(
+    z.object({
+      id: z.number(),
+      is_verify: z.boolean(),
+      created_at: z.string(),
+      name: z.string(),
+      slug: z.string(),
+      username: z.string(),
+    }),
+  ),
+});

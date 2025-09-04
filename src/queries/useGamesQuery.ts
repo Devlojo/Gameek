@@ -15,6 +15,7 @@ export const useLatestGamesQuery = () => {
     queryKey: ["latestGames"],
     queryFn: () => getLatestReleasesGames(),
     retry: false,
+    staleTime: 1000 * 60 * 60,
   });
   return {
     latestGames,
@@ -53,6 +54,7 @@ export const useGamesQuery = (
     queryKey: ["games", page, genres, platforms],
     queryFn: () => getAllGames(page, genres, platforms),
     retry: false,
+    staleTime: 1000 * 60 * 60,
   });
   return {
     games,
@@ -74,6 +76,7 @@ export const useGamesReleasesQuery = (
   } = useQuery({
     queryKey: ["games", page, genres, platforms, dates],
     queryFn: () => getAllReleases(page, genres, platforms, dates),
+    staleTime: 1000 * 60 * 60,
   });
   return {
     games,

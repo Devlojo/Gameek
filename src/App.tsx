@@ -20,10 +20,13 @@ import { ReviewForm } from "@/pages/ReviewForm";
 import { LegalMention } from "@/pages/LegalMention";
 import { PrivacyPolicy } from "@/pages/PrivacyPolicy";
 import { GeneralConditionsOfUse } from "@/pages/GeneralConditionsOfUse";
-import { Contact } from "@/pages/Contact";
 import { About } from "@/pages/About";
 import { TUser } from "@/types/user";
+import { DashboardBack } from "@/pages/admin/DashboardBack";
+import { ReviewListBack } from "@/pages/admin/ReviewListBack";
+import { UserListBack } from "@/pages/admin/UserListBack";
 import axios from "axios";
+import { ForbiddenContent } from "./components/layout/ForbiddenContent";
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
@@ -106,7 +109,10 @@ const App = (): JSX.Element => {
 
               <Route path="/jeu/images/:id" element={<GameImagesMenu />} />
               <Route path="/jeu/videos/:id" element={<GameVideosMenu />} />
-              <Route path="/test/:gameSlug/:userName" element={<Review />} />
+              <Route
+                path="/test/:gameSlug/:userName"
+                element={<Review userRole={user?.role} />}
+              />
               <Route
                 path="/inscription"
                 element={
@@ -136,8 +142,24 @@ const App = (): JSX.Element => {
                 path="/conditions-generales-utilisation"
                 element={<GeneralConditionsOfUse />}
               />
-              <Route path="/contact" element={<Contact />} />
+
               <Route path="/a-propos" element={<About />} />
+
+              <Route
+                path="/back"
+                element={<DashboardBack userRole={user?.role} />}
+              />
+
+              <Route
+                path="/back/utilisateurs"
+                element={<UserListBack userRole={user?.role} />}
+              />
+              <Route
+                path="/back/tests"
+                element={<ReviewListBack userRole={user?.role} />}
+              />
+              {/* 404 fallback */}
+              <Route path="*" element={<ForbiddenContent />} />
             </Routes>
 
             <Footer />

@@ -142,6 +142,14 @@ export const Header = ({
                   <Link to="" className="p-1 text-center hover:bg-gray-300">
                     Profil
                   </Link>
+                  {user?.role === "admin" && (
+                    <Link
+                      to="/back"
+                      className="p-1 text-center hover:bg-gray-300"
+                    >
+                      Back-office
+                    </Link>
+                  )}
                   <Link to="" className="p-1 text-center hover:bg-gray-300">
                     Mes tests
                   </Link>

@@ -27,11 +27,6 @@ export const Footer = (): JSX.Element => {
               </Link>
             </li>
             <li>
-              <Link to="/contact" className="hover:text-mainYellow">
-                Contact
-              </Link>
-            </li>
-            <li>
               <Link to="/a-propos" className="hover:text-mainYellow">
                 A propos
               </Link>

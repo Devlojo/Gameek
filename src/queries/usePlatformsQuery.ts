@@ -10,6 +10,7 @@ export const usePlatformsQuery = () => {
     queryKey: ["platforms"],
     queryFn: () => getAllPlatforms(),
     retry: false,
+    staleTime: 1000 * 60 * 60,
   });
   return {
     platforms,
