@@ -16,6 +16,7 @@ export const useGameDetailQuery = (game: string | undefined) => {
     queryFn: () => getGameDetail(game as string),
     retry: false,
     enabled: !!game,
+    staleTime: 1000 * 60 * 60,
   });
   return { gameDetail, isLoading, isSuccessGameDetail, isError };
 };
@@ -31,6 +32,7 @@ export const useGameScreenshotsQuery = (game: string | undefined) => {
     queryFn: () => getGameScreenshots(game as string),
     retry: false,
     enabled: !!game,
+    staleTime: 1000 * 60 * 60,
   });
   return {
     gameScreenshots,
@@ -51,6 +53,7 @@ export const useGameVideosQuery = (game: string | undefined) => {
     queryFn: () => getGameVideos(game as string),
     retry: false,
     enabled: !!game,
+    staleTime: 1000 * 60 * 60,
   });
   return { gameVideos, isLoadingGameVideos, isSuccessGameVideos, isError };
 };

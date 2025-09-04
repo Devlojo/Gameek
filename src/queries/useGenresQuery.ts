@@ -10,6 +10,7 @@ export const useGenresQuery = () => {
     queryKey: ["genres"],
     queryFn: () => getAllGenres(),
     retry: false,
+    staleTime: 1000 * 60 * 60,
   });
   return {
     genres,

@@ -27,6 +27,7 @@ export const useReviewDetailQuery = (gameSlug: string, userName: string) => {
     data: reviewDetail,
     isLoading,
     isSuccess,
+    isError,
   } = useQuery({
     queryKey: ["reviewDetail", gameSlug, userName],
     queryFn: () => getReviewDetail(gameSlug, userName),
@@ -36,6 +37,7 @@ export const useReviewDetailQuery = (gameSlug: string, userName: string) => {
     reviewDetail,
     isLoading,
     isSuccess,
+    isError,
   };
 };
 
