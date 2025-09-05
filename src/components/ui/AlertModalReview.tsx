@@ -5,7 +5,7 @@ import {
   DialogTitle,
 } from "@headlessui/react";
 import { useState } from "react";
-import { MdWarning } from "react-icons/md";
+import { CiSquareInfo } from "react-icons/ci";
 
 type TAlertProps = {
   title: string;
@@ -34,8 +34,8 @@ export const AlertModalReview = ({
       >
         <div className="fixed inset-0 flex w-screen items-center justify-center bg-black/70 px-4 backdrop-blur-[2px]">
           <DialogPanel className="flex max-w-lg flex-col items-center bg-customWhite px-12 py-6 shadow-md shadow-black">
-            <DialogTitle className="my-2 flex gap-1 text-lg font-bold">
-              <MdWarning className="size-6" />
+            <DialogTitle className="my-2 flex items-center gap-1 text-lg font-bold text-blue-600">
+              <CiSquareInfo className="size-8 text-blue-600" />
               {title}
             </DialogTitle>
             <Description>{description}</Description>

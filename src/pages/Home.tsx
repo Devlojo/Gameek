@@ -19,9 +19,9 @@ export const Home = ({
       {alertModalCreatedReview && (
         <AlertModalReview
           title="En attente de validation"
-          description="Ton test a bien été créé et sera visible dès qu’un modérateur l’aura validé"
-          buttonLabel="Ok"
-          setAlertModalCreatedReview={setAlertModalCreatedReview} // <-- reset
+          description="Ton test a bien été créé ! Il sera visible dès qu’un modérateur l’aura validé."
+          buttonLabel="J'ai compris"
+          setAlertModalCreatedReview={setAlertModalCreatedReview}
         />
       )}
       <LatestReleasesSection />
