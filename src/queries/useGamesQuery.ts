@@ -4,6 +4,7 @@ import {
   getBestGames,
   getAllGames,
   getAllReleases,
+  getAllGamesFromSeries,
 } from "@/api/gamesApi";
 
 export const useLatestGamesQuery = () => {
@@ -82,5 +83,23 @@ export const useGamesReleasesQuery = (
     games,
     isLoadingGames,
     isSuccessGames,
+  };
+};
+
+export const useAllGamesFromSeriesQuery = (game: string) => {
+  const {
+    data: seriesGames,
+    isLoading,
+    isSuccess,
+  } = useQuery({
+    queryKey: ["seriesGames", game],
+    queryFn: () => getAllGamesFromSeries(game),
+    enabled: !!game,
+    retry: false,
+  });
+  return {
+    seriesGames,
+    isLoading,
+    isSuccess,
   };
 };
