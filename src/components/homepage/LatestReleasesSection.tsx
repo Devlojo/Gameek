@@ -120,9 +120,12 @@ export const LatestReleasesSection = () => {
                       <h3 className="text-center text-lg font-semibold">
                         {game.name}
                       </h3>
+
                       <p className="text-center text-sm">
                         Date de sortie :{" "}
-                        {game.released.split("-").reverse().join("/")}
+                        {game.released
+                          ? game.released.split("-").reverse().join("/")
+                          : "inconnu"}
                       </p>
                     </div>
                   </div>

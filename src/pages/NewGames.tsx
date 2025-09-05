@@ -97,7 +97,9 @@ export const NewGames = () => {
                     </h3>{" "}
                     <p className="text-center text-sm">
                       Date de sortie :{" "}
-                      {game.released.split("-").reverse().join("/")}
+                      {game.released
+                        ? game.released.split("-").reverse().join("/")
+                        : "inconnu"}
                     </p>
                   </div>
 
