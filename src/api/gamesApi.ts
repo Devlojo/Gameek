@@ -123,3 +123,19 @@ export const getGameVideos = async (id: string) => {
     console.log(error);
   }
 };
+
+export const getAllGamesFromSeries = async (game: string) => {
+  try {
+    const { data: games } = await axios.get(
+      `${apiUrl}/games/search-games?search=${game}`,
+      {
+        timeout: 5000,
+      },
+    );
+    const gamesParsed = gameSchema.parse(games);
+
+    return gamesParsed;
+  } catch (error) {
+    console.log(error);
+  }
+};

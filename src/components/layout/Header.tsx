@@ -96,7 +96,9 @@ export const Header = ({
               activeSearchInput && "w-full",
             )}
           >
-            {activeSearchInput && <InputSearch />}
+            {activeSearchInput && (
+              <InputSearch setActiveSearchInput={setActiveSearchInput} />
+            )}
 
             <button
               className="hover:cursor-pointer hover:text-yellow-400"
