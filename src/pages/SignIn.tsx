@@ -43,6 +43,8 @@ export const SignIn = ({
     "lorelei-neutral",
   ];
   const [selectedAvatar, setSelectedAvatar] = useState(avatars[0]);
+  const [requestError, setRequestError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>();
   const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const {
@@ -76,9 +78,11 @@ export const SignIn = ({
         setCsrfToken(res.data.csrfToken);
         navigate("/");
       }
-    } catch (error) {
-      console.error(error);
-      alert("Erreur lors de la création de l'utilisateur");
+    } catch (error: any) {
+      setErrorMessage(error.response.data?.message);
+
+      setRequestError(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -93,6 +97,9 @@ export const SignIn = ({
             onSubmit={handleSubmit(onSubmit)}
             className="flex w-full flex-col gap-6"
           >
+            {requestError && (
+              <p className="font-bold text-red-600">{errorMessage}</p>
+            )}
             {selectedAvatar && (
               <div className="flex justify-center">
                 <img

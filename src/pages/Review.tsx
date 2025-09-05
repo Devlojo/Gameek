@@ -7,6 +7,7 @@ import { Loader } from "@/components/ui/Loader";
 import { TUserRole } from "@/types/user";
 import axios from "axios";
 import { CiSquareInfo } from "react-icons/ci";
+import { useState } from "react";
 
 export const Review = ({ userRole }: TUserRole) => {
   const { gameSlug, userName } = useParams() as {
@@ -15,6 +16,8 @@ export const Review = ({ userRole }: TUserRole) => {
   };
 
   const navigate = useNavigate();
+  const [requestError, setRequestError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>();
 
   const { reviewDetail, isLoading, isError } = useReviewDetailQuery(
     gameSlug,
@@ -53,9 +56,9 @@ export const Review = ({ userRole }: TUserRole) => {
       if (res.status === 200) {
         navigate("/back");
       }
-    } catch (error) {
-      console.error(error);
-      alert("Erreur lors de la connexion. Vérifiez vos identifiants");
+    } catch (error: any) {
+      setRequestError(true);
+      setErrorMessage(error.response.data?.message);
     }
   };
   return (
@@ -197,14 +200,19 @@ export const Review = ({ userRole }: TUserRole) => {
           </div>
         </div>
         {userRole === "admin" && !reviewDetail?.review.is_verify && (
-          <div className="mt-2 flex justify-center">
-            <button
-              className="rounded-lg bg-mainYellow p-2 shadow-sm shadow-global"
-              onClick={handleButtonClick}
-            >
-              Validez le test !
-            </button>
-          </div>
+          <>
+            {requestError && (
+              <p className="font-bold text-red-600">{errorMessage}</p>
+            )}
+            <div className="mt-2 flex justify-center">
+              <button
+                className="rounded-lg bg-mainYellow p-2 shadow-sm shadow-global"
+                onClick={handleButtonClick}
+              >
+                Validez le test !
+              </button>
+            </div>
+          </>
         )}
       </GameHeader>
     </>

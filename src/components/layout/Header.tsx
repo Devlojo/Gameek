@@ -57,6 +57,7 @@ export const Header = ({
             <img
               src={gameekLogo}
               alt="Logo du site"
+              loading="lazy"
               className={clsx(
                 "h-12 w-32 md:w-48",
                 activeSearchInput && "hidden",

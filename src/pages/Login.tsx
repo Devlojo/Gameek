@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { TUser } from "@/types/user";
 import { useNavigate, Navigate } from "react-router-dom";
+import { useState } from "react";
 
 type TForm = {
   password: string;
@@ -23,10 +24,12 @@ export const Login = ({
   const {
     register,
     handleSubmit,
-
     formState: { errors },
   } = useForm<TForm>();
+
   const apiUrl = import.meta.env.VITE_API_URL;
+
+  const [requestError, setRequestError] = useState(false);
 
   // redirection vers l'accueil si l'utilisateur est connecté, replace permet de retirer la page dans l'historique du navigateur
   if (user) {
@@ -43,8 +46,7 @@ export const Login = ({
         navigate("/");
       }
     } catch (error) {
-      console.error(error);
-      alert("Erreur lors de la connexion. Vérifiez vos identifiants");
+      setRequestError(true);
     }
   };
   return (
@@ -52,12 +54,18 @@ export const Login = ({
       <h1 className="mx-4 mt-4 text-center text-3xl font-bold text-customWhite">
         Connexion
       </h1>
+
       <div className="flex flex-col items-center">
         <div className="flex w-[300px] flex-col items-center justify-center rounded-lg bg-customWhite p-6 sm:w-[500px]">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex w-full flex-col gap-6"
           >
+            {requestError && (
+              <p className="font-bold text-red-600">
+                Email ou mot de passe incorrect
+              </p>
+            )}
             <label htmlFor="email">
               Adresse mail
               <input

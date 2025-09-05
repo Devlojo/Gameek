@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { z } from "zod";
 import { reviewFormSchema } from "@/types/review";
+import { useState } from "react";
 
 type TForm = z.infer<typeof reviewFormSchema>;
 type TReviewFormProps = {
@@ -21,6 +22,9 @@ export const ReviewForm = ({
   if (!user && !csrfToken) {
     return <Navigate to="/connexion" replace />;
   }
+
+  const [requestError, setRequestError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>();
   const navigate = useNavigate();
   const location = useLocation(); // récuperation du chemin courant
   const getGameFromUrl = location.pathname.split("/")[3];
@@ -59,11 +63,10 @@ export const ReviewForm = ({
         navigate("/");
       }
     } catch (error: any) {
-      if (error.response.status === 409) {
-        alert(error.response.data?.message);
-      } else {
-        alert(error.response.data.message.detail);
-      }
+      setErrorMessage(error.response.data?.message);
+
+      setRequestError(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -85,6 +88,9 @@ export const ReviewForm = ({
             onSubmit={handleSubmit(onSubmit)}
             className="flex w-full flex-col gap-6"
           >
+            {requestError && (
+              <p className="font-bold text-red-600">{errorMessage}</p>
+            )}
             <label htmlFor="introduction">
               Introduction *
               <textarea
