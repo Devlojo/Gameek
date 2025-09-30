@@ -96,6 +96,7 @@ export const useAllGamesFromSeriesQuery = (game: string) => {
     queryFn: () => getAllGamesFromSeries(game),
     enabled: !!game,
     retry: false,
+    staleTime: 10 * 60 * 1000, // 10 minutes
   });
   return {
     seriesGames,

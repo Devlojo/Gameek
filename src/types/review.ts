@@ -81,6 +81,35 @@ export const reviewListByGameSchema = z.object({
   ),
 });
 
+export const reviewListFilteredSchema = z.object({
+  reviews: z.array(
+    z.object({
+      id: z.number(),
+      username: z.string(),
+      grade: z.number(),
+      gamename: z.string(),
+      is_verify: z.boolean(),
+      avatar: z.string(),
+      created_at: z.string(),
+      slug: z.string(),
+      introduction: z.string(),
+      background_image: z.string(),
+      platforms: z.array(
+        z.object({
+          platform: z.object({
+            name: z.string(),
+          }),
+        }),
+      ),
+      genres: z.array(
+        z.object({
+          name: z.string(),
+        }),
+      ),
+    }),
+  ),
+});
+
 export const reviewListBackSchema = z.object({
   reviews: z.array(
     z.object({

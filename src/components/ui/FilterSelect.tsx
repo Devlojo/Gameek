@@ -7,7 +7,8 @@ import { useSearchParams } from "react-router-dom";
 
 type Item = {
   id: number;
-  name: string;
+  name?: string;
+  username?: string;
 };
 type TFilterSelectProps = {
   label: string;
@@ -40,6 +41,7 @@ export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
     // Recupérer l'item selectionné ainsi que ses props (id, name)
     selectedItem = items?.find((item) => String(item.id) === selectedValue);
   }
+  console.log(items);
 
   if (label === "Mois") {
     const paramDate = searchParams.get("dates");
@@ -142,7 +144,11 @@ export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
               items.length > 0 &&
               items.map((item: Item, index) => (
                 <FilterDropdown
-                  option={item.name}
+                  option={
+                    item.username
+                      ? (item.username as string)
+                      : (item.name as string)
+                  }
                   key={index}
                   label={label}
                   id={item.id}

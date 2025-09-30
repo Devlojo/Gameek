@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAllUsers } from "@/api/admin/usersApi";
+import { getAllUsers } from "@/api/usersApi";
 
 export const useGetAllUsersQuery = () => {
   const {
@@ -7,7 +7,7 @@ export const useGetAllUsersQuery = () => {
     isLoading,
     isSuccess,
   } = useQuery({
-    queryKey: ["backUsers"],
+    queryKey: ["users"],
     queryFn: () => getAllUsers(),
     retry: false,
   });
