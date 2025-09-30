@@ -74,7 +74,7 @@ export const useReviewsByFilter = (
     isSuccess,
     isError,
   } = useQuery({
-    queryKey: ["reviewsFiltered", page, grade, genres, platforms, reviewer],
+    queryKey: ["reviewsFiltered", page, reviewer, genres, platforms, grade],
     queryFn: () => getAllReviews(page, reviewer, genres, platforms, grade),
     retry: false,
   });
