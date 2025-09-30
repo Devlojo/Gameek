@@ -1,9 +1,8 @@
 import { useSearchParams } from "react-router-dom";
 import { usePlatformsQuery } from "@/queries/usePlatformsQuery";
-import { useGamesReleasesQuery } from "@/queries/useGamesQuery";
 import { useGenresQuery } from "@/queries/useGenresQuery";
 import { Link } from "react-router-dom";
-import { Pagination } from "@/components/ui/Pagination";
+
 import { FilterSelect } from "@/components/ui/FilterSelect";
 import { GameHoverCard } from "@/components/ui/GameHoverCard";
 import { getCurrentDate } from "@/utils/getCurrentDate";
@@ -20,10 +19,14 @@ export const Reviews = () => {
 
   const page = parseInt(searchParams.get("page") || "1");
   const genreParam = searchParams.get("genres");
+  const genre = genreParam ? parseInt(genreParam, 10) : undefined;
   const platformParam = searchParams.get("plateformes");
+  const platform = platformParam ? parseInt(platformParam, 10) : undefined;
+  const reviewer = searchParams.get("reviewer");
+  const grade = parseInt(searchParams.get("grade") || "0");
+
   const currentDate = getCurrentDate();
   const { users } = useGetAllUsersQuery();
-  console.log(genreParam);
 
   const years: Item[] = [];
 
@@ -40,7 +43,13 @@ export const Reviews = () => {
   }
   const { genres, isSuccessGenres } = useGenresQuery();
   const { platforms, isSuccessPlatforms } = usePlatformsQuery();
-  const { reviewsFiltered } = useReviewsByFilter(page);
+  const { reviewsFiltered } = useReviewsByFilter(
+    page,
+    reviewer as string,
+    genre,
+    platform,
+    grade,
+  );
 
   return (
     <>

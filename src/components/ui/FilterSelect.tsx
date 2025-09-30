@@ -31,18 +31,28 @@ export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
   if (label === "Année") {
     paramKey = "dates";
   }
+  if (label === "Testeur") {
+    paramKey = "reviewer";
+  }
+  if (label === "Note") {
+    paramKey = "grade";
+  }
 
   let selectedValue: string | null;
   let selectedItem: Item | undefined;
-  if (label === "Genre" || label === "Plateforme") {
-    // Récupération de la valeur active de l'url selon le label (Genre, Plateforme)
+  if (label === "Genre" || label === "Plateforme" || label === "Note") {
+    // Récupération de la valeur active de l'url selon le label (Genre, Plateforme, Note)
     selectedValue = searchParams.get(paramKey);
 
     // Recupérer l'item selectionné ainsi que ses props (id, name)
     selectedItem = items?.find((item) => String(item.id) === selectedValue);
   }
-  console.log(items);
 
+  if (label === "Testeur") {
+    selectedValue = searchParams.get(paramKey);
+
+    selectedItem = items?.find((item) => item.username === selectedValue);
+  }
   if (label === "Mois") {
     const paramDate = searchParams.get("dates");
     // récupération du premier chiffre du mois
@@ -98,6 +108,12 @@ export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
     if (label === "Plateforme") {
       searchParams.delete("plateformes");
     }
+    if (label === "Testeur") {
+      searchParams.delete("reviewer");
+    }
+    if (label === "Note") {
+      searchParams.delete("grade");
+    }
 
     setSearchParams(searchParams); // ⚠️ nécessaire même après .set()/.delete() pour déclencher la mise à jour de l'URL
   };
@@ -112,7 +128,12 @@ export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
         >
           {selectedItem ? (
             <>
-              <span>{selectedItem.name}</span>
+              {label === "Testeur" ? (
+                <span>{selectedItem.username}</span>
+              ) : (
+                <span>{selectedItem.name}</span>
+              )}
+
               {label !== "Mois" && label != "Année" ? (
                 <IoClose
                   className="size-5 font-bold lg:hover:animate-pulse"

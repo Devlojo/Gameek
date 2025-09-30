@@ -97,12 +97,14 @@ export const reviewListFilteredSchema = z.object({
       platforms: z.array(
         z.object({
           platform: z.object({
+            rawg_id: z.number(),
             name: z.string(),
           }),
         }),
       ),
       genres: z.array(
         z.object({
+          rawg_id: z.number(),
           name: z.string(),
         }),
       ),

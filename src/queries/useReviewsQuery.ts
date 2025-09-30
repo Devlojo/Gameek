@@ -63,9 +63,9 @@ export const useReviewsByGameQuery = (gameSlug: string) => {
 
 export const useReviewsByFilter = (
   page: number,
-  reviewers?: string,
-  genres?: string,
-  platforms?: string,
+  reviewer?: string,
+  genres?: number,
+  platforms?: number,
   grade?: number,
 ) => {
   const {
@@ -74,8 +74,8 @@ export const useReviewsByFilter = (
     isSuccess,
     isError,
   } = useQuery({
-    queryKey: ["reviewsFiltered", page, grade, genres, platforms, reviewers],
-    queryFn: () => getAllReviews(page, reviewers, genres, platforms, grade),
+    queryKey: ["reviewsFiltered", page, grade, genres, platforms, reviewer],
+    queryFn: () => getAllReviews(page, reviewer, genres, platforms, grade),
     retry: false,
   });
   return {

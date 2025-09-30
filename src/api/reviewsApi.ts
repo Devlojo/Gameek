@@ -51,14 +51,14 @@ export const getReviewsByGame = async (gameSlug: string) => {
 
 export const getAllReviews = async (
   page: number,
-  reviewers?: string,
-  genres?: string,
-  platforms?: string,
+  reviewer?: string,
+  genres?: number,
+  platforms?: number,
   grade?: number,
 ) => {
   try {
     const { data: reviewsFiltered } = await axios.get(
-      `${apiUrl}/reviews?page=${page}${reviewers ? `&reviewers=${reviewers}` : ""}${
+      `${apiUrl}/reviews?page=${page}${reviewer ? `&reviewer=${reviewer}` : ""}${
         platforms ? `&platforms=${platforms}` : ""
       }${genres ? `&genres=${genres}` : ""}${grade ? `&grade=${grade}` : ""}`,
       {

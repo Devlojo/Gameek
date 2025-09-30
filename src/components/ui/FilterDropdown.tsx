@@ -37,6 +37,13 @@ export const FilterDropdown = ({ option, id, label }: TOption) => {
     newParams.set("plateformes", id.toString());
   }
 
+  if (label === "Testeur") {
+    newParams.set("reviewer", option);
+  }
+  if (label === "Note") {
+    newParams.set("grade", id.toString());
+  }
+
   if (label === "Mois") {
     let index = monthList.indexOf(option) + 1;
 
