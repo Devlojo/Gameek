@@ -3,6 +3,7 @@ import {
   reviewListResponseSchema,
   reviewDetailSchema,
   reviewListByGameSchema,
+  reviewListFilteredSchema,
 } from "@/types/review";
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -42,6 +43,31 @@ export const getReviewsByGame = async (gameSlug: string) => {
     );
     const reviewByGameParsed = reviewListByGameSchema.parse(reviewsByGame);
     return reviewByGameParsed;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getAllReviews = async (
+  page: number,
+  reviewer?: string,
+  genres?: number,
+  platforms?: number,
+  grade?: number,
+) => {
+  try {
+    const { data: reviewsFiltered } = await axios.get(
+      `${apiUrl}/reviews?page=${page}${reviewer ? `&reviewer=${reviewer}` : ""}${
+        platforms ? `&platforms=${platforms}` : ""
+      }${genres ? `&genres=${genres}` : ""}${grade ? `&grade=${grade}` : ""}`,
+      {
+        timeout: 5000,
+      },
+    );
+    const reviewsFilteredParsed =
+      reviewListFilteredSchema.parse(reviewsFiltered);
+    return reviewsFilteredParsed;
   } catch (error) {
     console.log(error);
     throw error;

@@ -3,6 +3,7 @@ import {
   getLatestReviews,
   getReviewDetail,
   getReviewsByGame,
+  getAllReviews,
 } from "@/api/reviewsApi";
 
 export const useLatestReviewsQuery = () => {
@@ -54,6 +55,31 @@ export const useReviewsByGameQuery = (gameSlug: string) => {
   });
   return {
     reviewsByGame,
+    isLoading,
+    isSuccess,
+    isError,
+  };
+};
+
+export const useReviewsByFilter = (
+  page: number,
+  reviewer?: string,
+  genres?: number,
+  platforms?: number,
+  grade?: number,
+) => {
+  const {
+    data: reviewsFiltered,
+    isLoading,
+    isSuccess,
+    isError,
+  } = useQuery({
+    queryKey: ["reviewsFiltered", page, grade, genres, platforms, reviewer],
+    queryFn: () => getAllReviews(page, reviewer, genres, platforms, grade),
+    retry: false,
+  });
+  return {
+    reviewsFiltered,
     isLoading,
     isSuccess,
     isError,

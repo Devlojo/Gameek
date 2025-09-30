@@ -19,6 +19,15 @@ export const userListBackSchema = z.object({
   ),
 });
 
+export const userListSchema = z.object({
+  users: z.array(
+    z.object({
+      id: z.number(),
+      username: z.string(),
+    }),
+  ),
+});
+
 export type TUserRole = {
   userRole: string | undefined;
 };
