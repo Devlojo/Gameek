@@ -38,10 +38,10 @@ export const FilterDropdown = ({ option, id, label }: TOption) => {
   }
 
   if (label === "Testeur") {
-    newParams.set("reviewer", option);
+    newParams.set("testeur", option);
   }
   if (label === "Note") {
-    newParams.set("grade", id.toString());
+    newParams.set("note", id.toString());
   }
 
   if (label === "Mois") {

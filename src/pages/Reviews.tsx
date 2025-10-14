@@ -20,8 +20,8 @@ export const Reviews = () => {
   const genre = genreParam ? parseInt(genreParam, 10) : undefined;
   const platformParam = searchParams.get("plateformes");
   const platform = platformParam ? parseInt(platformParam, 10) : undefined;
-  const reviewer = searchParams.get("reviewer") || undefined;
-  const gradeParam = searchParams.get("grade");
+  const reviewer = searchParams.get("testeur") || undefined;
+  const gradeParam = searchParams.get("note");
   const grade = gradeParam ? parseInt(gradeParam, 10) : undefined;
 
   const { users } = useGetAllUsersQuery();

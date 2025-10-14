@@ -32,10 +32,10 @@ export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
     paramKey = "dates";
   }
   if (label === "Testeur") {
-    paramKey = "reviewer";
+    paramKey = "testeur";
   }
   if (label === "Note") {
-    paramKey = "grade";
+    paramKey = "note";
   }
 
   let selectedValue: string | null;
@@ -109,10 +109,10 @@ export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
       searchParams.delete("plateformes");
     }
     if (label === "Testeur") {
-      searchParams.delete("reviewer");
+      searchParams.delete("testeur");
     }
     if (label === "Note") {
-      searchParams.delete("grade");
+      searchParams.delete("note");
     }
 
     setSearchParams(searchParams); // ⚠️ nécessaire même après .set()/.delete() pour déclencher la mise à jour de l'URL
