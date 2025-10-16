@@ -89,8 +89,8 @@ export const LatestReleasesSection = () => {
           customRightArrow={<CustomRightArrow />}
           customLeftArrow={<CustomLeftArrow />}
         >
-          {isSuccess && latestGames && latestGames.results.length > 0 ? (
-            latestGames.results.map((game, index) => (
+          {isSuccess && latestGames && latestGames.games.length > 0 ? (
+            latestGames.games.map((game, index) => (
               <article className="group relative mb-5" key={index}>
                 <Link to={`/jeu/${game.slug}`}>
                   <div className="aspect-[16/9] w-full">
@@ -123,9 +123,13 @@ export const LatestReleasesSection = () => {
 
                       <p className="text-center text-sm">
                         Date de sortie :{" "}
-                        {game.released
-                          ? game.released.split("-").reverse().join("/")
-                          : "inconnu"}
+                        {game.released_date
+                          ? game.released_date
+                              ?.slice(0, 10)
+                              .split("-")
+                              .reverse()
+                              .join("/")
+                          : "inconnue"}
                       </p>
                     </div>
                   </div>

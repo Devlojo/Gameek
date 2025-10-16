@@ -15,12 +15,14 @@ type TPage = {
 export const Pagination = ({ page, theme, gamesCount }: TPage) => {
   const pages = [0];
   let count = 10;
+
   let i = 0;
   while (gamesCount && gamesCount > count) {
     count += 10;
     i++;
     pages.push(i);
   }
+  console.log(pages);
 
   const [searchParams] = useSearchParams();
   const location = useLocation(); // récuperation du chemin courant
@@ -33,7 +35,7 @@ export const Pagination = ({ page, theme, gamesCount }: TPage) => {
 
   return (
     <>
-      <div className="flex w-full flex-wrap items-center justify-center gap-2 sm:gap-4">
+      <div className="flex w-full flex-wrap items-center justify-center gap-2 overflow-auto sm:gap-4">
         {page != 1 && (
           <>
             {!theme && (
@@ -51,7 +53,7 @@ export const Pagination = ({ page, theme, gamesCount }: TPage) => {
         <div className="flex gap-2 sm:gap-4">
           {page < pages.length &&
             pages.map((index) => {
-              const pageNumber = index + 1;
+              const pageNumber = index;
               return (
                 <Link
                   key={index}

@@ -1,6 +1,35 @@
 import { z } from "zod";
 
 export const gameSchema = z.object({
+  games: z.array(
+    z.object({
+      id: z.number(),
+      name: z.string(),
+      slug: z.string(),
+      released_date: z.string().nullable(),
+      background_image: z.string().nullable(),
+      platforms: z.nullable(
+        z.array(
+          z.object({
+            platform: z.object({
+              id: z.number(),
+              name: z.string(),
+            }),
+          }),
+        ),
+      ),
+      genres: z.array(
+        z.object({
+          id: z.number(),
+          name: z.string(),
+        }),
+      ),
+    }),
+  ),
+  count: z.number().optional(),
+});
+
+export const gameSchemaRawg = z.object({
   count: z.number(),
 
   results: z.array(
@@ -122,12 +151,12 @@ export const gameVideosSchema = z.object({
 });
 
 export const genreOrPlatformSchema = z.object({
-  count: z.number(),
-
   results: z.array(
     z.object({
       id: z.number(),
       name: z.string(),
+      rawg_id: z.number(),
+      slug: z.string(),
     }),
   ),
 });
