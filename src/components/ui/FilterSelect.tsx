@@ -8,6 +8,7 @@ import { useSearchParams } from "react-router-dom";
 type Item = {
   id: number;
   name?: string;
+  slug?: string;
   username?: string;
 };
 type TFilterSelectProps = {
@@ -40,14 +41,21 @@ export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
 
   let selectedValue: string | null;
   let selectedItem: Item | undefined;
-  if (label === "Genre" || label === "Plateforme" || label === "Note") {
+  if (label === "Genre" || label === "Plateforme") {
+    // Récupération de la valeur active de l'url selon le label (Genre, Plateforme, Note)
+    selectedValue = searchParams.get(paramKey);
+
+    // Recupérer l'item selectionné ainsi que ses props (id, name)
+    selectedItem = items?.find((item) => item.slug === selectedValue);
+  }
+
+  if (label === "Note") {
     // Récupération de la valeur active de l'url selon le label (Genre, Plateforme, Note)
     selectedValue = searchParams.get(paramKey);
 
     // Recupérer l'item selectionné ainsi que ses props (id, name)
     selectedItem = items?.find((item) => String(item.id) === selectedValue);
   }
-
   if (label === "Testeur") {
     selectedValue = searchParams.get(paramKey);
 
@@ -173,6 +181,7 @@ export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
                   key={index}
                   label={label}
                   id={item.id}
+                  slug={item.slug}
                 />
               ))}
           </ul>

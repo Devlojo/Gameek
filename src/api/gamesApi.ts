@@ -10,8 +10,8 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 export const getAllGames = async (
   page: number,
-  genres?: number,
-  platforms?: number,
+  genres?: string,
+  platforms?: string,
 ) => {
   try {
     const { data: games } = await axios.get(

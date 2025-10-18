@@ -78,7 +78,7 @@ export const NewGames = () => {
             {games?.count} jeux trouvés
           </p>
           <div className="flex w-full flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
-            {games?.results.map((game, index) => (
+            {games?.games.map((game, index) => (
               <article
                 className="group relative flex w-full flex-col rounded-md shadow-sm shadow-black sm:w-[48.5%]"
                 key={index}
@@ -97,9 +97,13 @@ export const NewGames = () => {
                     </h3>{" "}
                     <p className="text-center text-sm">
                       Date de sortie :{" "}
-                      {game.released
-                        ? game.released.split("-").reverse().join("/")
-                        : "inconnu"}
+                      {game.released_date
+                        ? game.released_date
+                            .slice(0, 10)
+                            .split("-")
+                            .reverse()
+                            .join("/")
+                        : "inconnue"}
                     </p>
                   </div>
 
@@ -111,8 +115,8 @@ export const NewGames = () => {
                 </Link>
               </article>
             ))}
-            {games && games.count > 10 && (
-              <Pagination page={page} theme="dark" gamesCount={games?.count} />
+            {games && games.count && games.count > 10 && (
+              <Pagination page={page} theme="dark" totalGames={games.count} />
             )}
           </div>
         </section>

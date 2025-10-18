@@ -13,9 +13,10 @@ export const Games = () => {
 
   const page = parseInt(searchParams.get("page") || "1");
   const genreParam = searchParams.get("genres");
-  const genre = genreParam ? parseInt(genreParam, 10) : undefined;
+
+  const genre = genreParam ? genreParam : undefined;
   const platformParam = searchParams.get("plateformes");
-  const platform = platformParam ? parseInt(platformParam, 10) : undefined;
+  const platform = platformParam ? platformParam : undefined;
 
   const { genres } = useGenresQuery();
   const { platforms } = usePlatformsQuery();
@@ -60,7 +61,7 @@ export const Games = () => {
               </article>
             ))}
 
-            <Pagination page={page} gamesCount={games?.count} />
+            <Pagination page={page} totalGames={games?.count} />
           </div>
         </section>
       ) : (

@@ -5,9 +5,10 @@ type TOption = {
   option: string;
   id: number;
   label: string;
+  slug?: string;
 };
 
-export const FilterDropdown = ({ option, id, label }: TOption) => {
+export const FilterDropdown = ({ option, id, label, slug }: TOption) => {
   const [searchParams] = useSearchParams();
 
   const location = useLocation(); // récuperation du chemin courant
@@ -31,10 +32,10 @@ export const FilterDropdown = ({ option, id, label }: TOption) => {
 
   // On ajoute/remplace le bon filtre selon le label
   if (label === "Genre") {
-    newParams.set("genres", id.toString());
+    newParams.set("genres", slug as string);
   }
   if (label === "Plateforme") {
-    newParams.set("plateformes", id.toString());
+    newParams.set("plateformes", slug as string);
   }
 
   if (label === "Testeur") {

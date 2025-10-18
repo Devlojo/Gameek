@@ -44,8 +44,8 @@ export const useBestGamesQuery = () => {
 
 export const useGamesQuery = (
   page: number,
-  genres?: number,
-  platforms?: number,
+  genres?: string,
+  platforms?: string,
 ) => {
   const {
     data: games,
