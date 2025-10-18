@@ -1,7 +1,6 @@
 import { LuCircleArrowLeft } from "react-icons/lu";
 import { LuCircleArrowRight } from "react-icons/lu";
-import { Link, useLocation, Navigate } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
+import { Link, useLocation, Navigate, useSearchParams } from "react-router-dom";
 import { clsx } from "clsx";
 import { RxDoubleArrowLeft } from "react-icons/rx";
 import { RxDoubleArrowRight } from "react-icons/rx";

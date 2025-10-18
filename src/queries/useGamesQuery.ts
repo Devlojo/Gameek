@@ -66,17 +66,18 @@ export const useGamesQuery = (
 
 export const useGamesReleasesQuery = (
   page: number,
-  genres?: number,
-  platforms?: number,
-  dates?: string,
+  year: string,
+  month: string,
+  genres?: string,
+  platforms?: string,
 ) => {
   const {
     data: games,
     isLoading: isLoadingGames,
     isSuccess: isSuccessGames,
   } = useQuery({
-    queryKey: ["games", page, genres, platforms, dates],
-    queryFn: () => getAllReleases(page, genres, platforms, dates),
+    queryKey: ["games", page, year, month, genres, platforms],
+    queryFn: () => getAllReleases(page, year, month, genres, platforms),
     staleTime: 1000 * 60 * 60,
   });
   return {

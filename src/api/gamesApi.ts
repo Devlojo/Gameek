@@ -34,15 +34,16 @@ export const getAllGames = async (
 
 export const getAllReleases = async (
   page: number,
-  genres?: number,
-  platforms?: number,
-  dates?: string,
+  year: string,
+  month: string,
+  genres?: string,
+  platforms?: string,
 ) => {
   try {
     const { data: games } = await axios.get(
-      `${apiUrl}/games/releases?page=${page}${genres ? `&genres=${genres}` : ""}${
+      `${apiUrl}/games/releases?page=${page}&year=${year}&month=${month}${genres ? `&genres=${genres}` : ""}${
         platforms ? `&platforms=${platforms}` : ""
-      }${dates ? `&dates=${dates}` : ""}`,
+      }`,
       {
         timeout: 5000,
       },

@@ -18,16 +18,16 @@ export const NewGames = () => {
 
   const page = parseInt(searchParams.get("page") || "1");
   const genreParam = searchParams.get("genres");
-  const genre = genreParam ? parseInt(genreParam, 10) : undefined;
+  const genre = genreParam ? genreParam : undefined;
   const platformParam = searchParams.get("plateformes");
-  const platform = platformParam ? parseInt(platformParam, 10) : undefined;
+  const platform = platformParam ? platformParam : undefined;
   const currentDate = getCurrentDate();
-  const dates =
-    searchParams.get("dates") || `${currentDate.fromDate}${currentDate.toDate}`;
+  const year = searchParams.get("annee") as string;
+  const monthNumber = searchParams.get("mois") as string;
 
   const years: Item[] = [];
   let index = 0;
-  for (let fromYear = 1980; fromYear <= currentDate.year; fromYear++) {
+  for (let fromYear = 1979; fromYear <= currentDate.year; fromYear++) {
     index++;
     years.push({ id: index, name: fromYear.toString() });
   }
@@ -56,9 +56,10 @@ export const NewGames = () => {
   const { platforms, isSuccessPlatforms } = usePlatformsQuery();
   const { games, isSuccessGames } = useGamesReleasesQuery(
     page,
+    year,
+    monthNumber,
     genre,
     platform,
-    dates,
   );
 
   return (
