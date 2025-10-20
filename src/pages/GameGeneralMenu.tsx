@@ -4,8 +4,7 @@ import { Menu } from "@/components/game/Menu";
 import { GameHeader } from "@/components/game/GameHeader";
 import { Loader } from "@/components/ui/Loader";
 import { useState } from "react";
-import { ForbiddenContent } from "@/components/layout/ForbiddenContent";
-import { Link } from "react-router-dom";
+import { PageNotFound } from "@/components/layout/PageNotFound";
 
 export const GameGeneralMenu = () => {
   const { id } = useParams();
@@ -31,30 +30,30 @@ export const GameGeneralMenu = () => {
               <div className="flex flex-col justify-center gap-2">
                 <div className="flex gap-2">
                   <p className="font-bold">Date de sortie : </p>
-                  <p>{gameDetail?.released?.split("-").reverse().join("/")}</p>
+                  <p>
+                    {gameDetail?.released_date
+                      ? gameDetail?.released_date
+                          ?.slice(0, 10)
+                          .split("-")
+                          .reverse()
+                          .join("/")
+                      : "inconnue"}
+                  </p>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
                   <p className="font-bold">Genre :</p>
                   {gameDetail?.genres.map((genre, index) => (
-                    <Link
-                      key={index}
-                      className="underline"
-                      to={`/jeux?page=1&genres=${genre.id}`}
-                    >
+                    <p key={index} className="underline">
                       {genre.name}
-                    </Link>
+                    </p>
                   ))}
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
                   <p className="font-bold">Plateforme :</p>
                   {gameDetail?.platforms?.map((platform, index) => (
-                    <Link
-                      key={index}
-                      className="underline"
-                      to={`/jeux?page=1&plateformes=${platform.platform.id}`}
-                    >
+                    <p key={index} className="underline">
                       {platform.platform.name}
-                    </Link>
+                    </p>
                   ))}
                 </div>
                 {gameDetail?.developers && gameDetail.developers.length > 0 && (
@@ -78,16 +77,19 @@ export const GameGeneralMenu = () => {
                 </div>
                 <div className="flex flex-col gap-2">
                   <p className="font-bold">Description :</p>
-                  {gameDetail?.description && (
-                    <p>{cleanGameDescription(gameDetail.description_raw)}</p>
-                  )}
+
+                  <p>
+                    {cleanGameDescription(
+                      gameDetail?.description_raw as string,
+                    )}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </GameHeader>
       )}
-      {isError && <ForbiddenContent />}
+      {isError && <PageNotFound />}
     </>
   );
 };

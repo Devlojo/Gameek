@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { Menu } from "@/components/game/Menu";
 import { GameHeader } from "@/components/game/GameHeader";
 import { useState } from "react";
-import { ForbiddenContent } from "@/components/layout/ForbiddenContent";
+import { PageNotFound } from "@/components/layout/PageNotFound";
 
 import { Link } from "react-router-dom";
 import { MdArrowDropDown } from "react-icons/md";
@@ -119,7 +119,7 @@ export const GameReviewsMenu = () => {
         </div>
       </GameHeader>
 
-      {isError && <ForbiddenContent />}
+      {isError && <PageNotFound />}
     </>
   );
 };
