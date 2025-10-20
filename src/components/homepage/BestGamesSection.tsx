@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export const BestGamesSection = () => {
   const { bestGames, isSuccess } = useBestGamesQuery();
   const checkedGames = bestGames?.games.filter(
-    (game) => game.avg_grade != null,
+    (game) => game.avg_grade !== null,
   );
 
   return (

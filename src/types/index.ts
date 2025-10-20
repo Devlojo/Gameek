@@ -186,3 +186,25 @@ export const bestGamesSchema = z.object({
     }),
   ),
 });
+
+export const searchGamesSchema = z.object({
+  games: z.array(
+    z.object({
+      name: z.string(),
+      slug: z.string(),
+      background_image: z.string(),
+      platforms: z.array(
+        z.object({
+          platform: z.object({
+            name: z.string(),
+          }),
+        }),
+      ),
+      genres: z.array(
+        z.object({
+          name: z.string(),
+        }),
+      ),
+    }),
+  ),
+});

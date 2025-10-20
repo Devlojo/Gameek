@@ -6,6 +6,7 @@ import { FilterSelect } from "@/components/ui/FilterSelect";
 import { GameHoverCard } from "@/components/ui/GameHoverCard";
 import { Loader } from "@/components/ui/Loader";
 import { useReviewsByFilter } from "@/queries/useReviewsQuery";
+import { Pagination } from "@/components/ui/Pagination";
 import { useGetAllUsersQuery } from "@/queries/useUsersQuery";
 
 type Item = {
@@ -17,11 +18,12 @@ export const Reviews = () => {
 
   const page = parseInt(searchParams.get("page") || "1");
   const genreParam = searchParams.get("genres");
-  const genre = genreParam ? parseInt(genreParam, 10) : undefined;
+  const genre = genreParam ? genreParam : undefined;
   const platformParam = searchParams.get("plateformes");
-  const platform = platformParam ? parseInt(platformParam, 10) : undefined;
+  const platform = platformParam ? platformParam : undefined;
   const reviewer = searchParams.get("testeur") || undefined;
   const gradeParam = searchParams.get("note");
+
   const grade = gradeParam ? parseInt(gradeParam, 10) : undefined;
 
   const { users } = useGetAllUsersQuery();
@@ -54,9 +56,7 @@ export const Reviews = () => {
             <FilterSelect label="Testeur" items={users?.users} />
             <FilterSelect label="Note" items={scoreRange} />
           </div>
-          <p className="text-center">
-            {reviewsFiltered?.reviews?.length} tests trouvés
-          </p>
+          <p className="text-center">{reviewsFiltered?.count} tests trouvés</p>
           <div className="flex w-full flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
             {reviewsFiltered?.reviews.map((review, index) => (
               <article
@@ -82,6 +82,7 @@ export const Reviews = () => {
                     </p>
                   </div>
                   <div className="flex w-full flex-col gap-2 p-2">
+                    <h3 className="text-lg font-semibold">{review.gamename}</h3>
                     <p className="italic">{review.introduction}</p>
                     <div className="flex items-center justify-end gap-2">
                       <img
@@ -104,6 +105,7 @@ export const Reviews = () => {
                 </Link>
               </article>
             ))}
+            <Pagination page={page} totalGames={reviewsFiltered?.count} />
           </div>
         </section>
       ) : (

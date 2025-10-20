@@ -64,8 +64,8 @@ export const useReviewsByGameQuery = (gameSlug: string) => {
 export const useReviewsByFilter = (
   page: number,
   reviewer?: string,
-  genres?: number,
-  platforms?: number,
+  genres?: string,
+  platforms?: string,
   grade?: number,
 ) => {
   const {
