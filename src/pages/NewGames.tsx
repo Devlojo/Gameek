@@ -116,9 +116,8 @@ export const NewGames = () => {
                 </Link>
               </article>
             ))}
-            {games && games.count && games.count > 10 && (
-              <Pagination page={page} theme="dark" totalGames={games.count} />
-            )}
+
+            <Pagination page={page} theme="dark" totalGames={games?.count} />
           </div>
         </section>
       ) : (

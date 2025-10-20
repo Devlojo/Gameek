@@ -72,7 +72,7 @@ export const LatestReleasesSection = () => {
           <div className="my-1 flex justify-center">
             <Link
               className="rounded-md p-1.5 text-light shadow-sm shadow-light hover:bg-light hover:text-surface"
-              to={`/jeux/sorties?page=1&dates=${getCurrentDate().fromDate},${getCurrentDate().toDate}`}
+              to={`/jeux/sorties?page=1&annee=${getCurrentDate().year}&mois=${getCurrentDate().month}`}
             >
               Voir plus
             </Link>
