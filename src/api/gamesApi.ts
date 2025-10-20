@@ -5,13 +5,14 @@ import {
   gameScreenshotsSchema,
   gameVideosSchema,
   bestGamesSchema,
+  searchGamesSchema,
 } from "@/types/index";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export const getAllGames = async (
   page: number,
-  genres?: number,
-  platforms?: number,
+  genres?: string,
+  platforms?: string,
 ) => {
   try {
     const { data: games } = await axios.get(
@@ -34,15 +35,16 @@ export const getAllGames = async (
 
 export const getAllReleases = async (
   page: number,
-  genres?: number,
-  platforms?: number,
-  dates?: string,
+  year: string,
+  month: string,
+  genres?: string,
+  platforms?: string,
 ) => {
   try {
     const { data: games } = await axios.get(
-      `${apiUrl}/games/releases?page=${page}${genres ? `&genres=${genres}` : ""}${
+      `${apiUrl}/games/releases?page=${page}&year=${year}&month=${month}${genres ? `&genres=${genres}` : ""}${
         platforms ? `&platforms=${platforms}` : ""
-      }${dates ? `&dates=${dates}` : ""}`,
+      }`,
       {
         timeout: 5000,
       },
@@ -127,12 +129,12 @@ export const getGameVideos = async (id: string) => {
 export const getAllGamesFromSeries = async (game: string) => {
   try {
     const { data: games } = await axios.get(
-      `${apiUrl}/games/search-games?search=${game}`,
+      `${apiUrl}/games/search-games?game=${game}`,
       {
         timeout: 5000,
       },
     );
-    const gamesParsed = gameSchema.parse(games);
+    const gamesParsed = searchGamesSchema.parse(games);
 
     return gamesParsed;
   } catch (error) {

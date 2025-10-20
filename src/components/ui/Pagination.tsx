@@ -1,7 +1,6 @@
 import { LuCircleArrowLeft } from "react-icons/lu";
 import { LuCircleArrowRight } from "react-icons/lu";
-import { Link, useLocation } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
+import { Link, useLocation, Navigate, useSearchParams } from "react-router-dom";
 import { clsx } from "clsx";
 import { RxDoubleArrowLeft } from "react-icons/rx";
 import { RxDoubleArrowRight } from "react-icons/rx";
@@ -9,15 +8,19 @@ import { RxDoubleArrowRight } from "react-icons/rx";
 type TPage = {
   page: number;
   theme?: string;
-  gamesCount?: number;
+  totalGames?: number;
 };
 
-export const Pagination = ({ page, theme, gamesCount }: TPage) => {
-  const pages = [0];
-  let count = 10;
-  let i = 0;
-  while (gamesCount && gamesCount > count) {
-    count += 10;
+export const Pagination = ({ page, theme, totalGames }: TPage) => {
+  const pages = [1];
+  const pageSize = 10;
+  let pageThreshold = pageSize;
+  const totalPages = Math.ceil((totalGames as number) / pageSize);
+  let maxVisiblePages = 5;
+
+  let i = 1;
+  while (totalGames && totalGames > pageThreshold) {
+    pageThreshold += pageSize;
     i++;
     pages.push(i);
   }
@@ -31,9 +34,39 @@ export const Pagination = ({ page, theme, gamesCount }: TPage) => {
     return `${location.pathname}?${newParams.toString()}`;
   };
 
+  if (totalGames === 0) {
+    return <Navigate to={getPageUrl(1)} />;
+  }
+
+  if (currentPage > totalPages) {
+    return <Navigate to={getPageUrl(totalPages)} />;
+  }
+  const offset = totalPages - currentPage;
+  if (offset === 1) {
+    maxVisiblePages = 1;
+  }
+
+  if (offset === 2) {
+    maxVisiblePages = 2;
+  }
+
+  if (offset === 3) {
+    maxVisiblePages = 3;
+  }
+
+  if (offset === 4) {
+    maxVisiblePages = 4;
+  }
+
+  const endPage = Math.max(currentPage, currentPage + maxVisiblePages);
+  const visiblePages = [];
+  for (let i = currentPage; i <= endPage; i++) {
+    visiblePages.push(i);
+  }
+
   return (
     <>
-      <div className="flex w-full flex-wrap items-center justify-center gap-2 sm:gap-4">
+      <div className="flex w-full flex-wrap items-center justify-center gap-2 overflow-auto sm:gap-4">
         {page != 1 && (
           <>
             {!theme && (
@@ -50,8 +83,8 @@ export const Pagination = ({ page, theme, gamesCount }: TPage) => {
 
         <div className="flex gap-2 sm:gap-4">
           {page < pages.length &&
-            pages.map((index) => {
-              const pageNumber = index + 1;
+            visiblePages.map((index) => {
+              const pageNumber = index;
               return (
                 <Link
                   key={index}
@@ -86,7 +119,7 @@ export const Pagination = ({ page, theme, gamesCount }: TPage) => {
         )}
 
         {!theme && page < pages.length && (
-          <Link to={getPageUrl(currentPage + 4)}>
+          <Link to={getPageUrl(totalPages)}>
             <RxDoubleArrowRight className="size-10 text-mainYellow hover:cursor-pointer" />
           </Link>
         )}

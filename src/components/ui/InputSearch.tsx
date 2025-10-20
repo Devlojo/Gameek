@@ -46,10 +46,10 @@ export const InputSearch = ({ setActiveSearchInput }: inputSearchProps) => {
         <div className="absolute left-0 top-full z-10 max-h-60 w-full overflow-y-auto bg-customWhite text-black shadow-sm shadow-black">
           {isLoadingSeries ? (
             <p className="p-2">Chargement...</p>
-          ) : seriesGames && seriesGames.results.length > 0 ? (
+          ) : seriesGames && seriesGames.games.length > 0 ? (
             <ul>
-              {seriesGames.results.map((game) => (
-                <li key={game.id}>
+              {seriesGames.games.map((game, index) => (
+                <li key={index}>
                   <Link
                     to={`/jeu/${game.slug}`}
                     className="flex items-center gap-2 p-2 hover:bg-gray-100"
@@ -60,11 +60,21 @@ export const InputSearch = ({ setActiveSearchInput }: inputSearchProps) => {
                   >
                     <img
                       src={game.background_image as string}
-                      className="h-8 w-8 object-cover"
+                      className="h-8 w-8 object-cover md:h-12 md:w-12"
                       alt={`Image de ${game.name}`}
                       loading="lazy"
                     />
-                    <span>{game.name}</span>
+                    <div className="flex flex-col flex-wrap justify-center">
+                      <h3 className="font-semibold md:text-lg">{game.name} </h3>
+
+                      <div className="flex flex-wrap gap-2">
+                        {game.platforms.map((platform, index) => (
+                          <p className="text-sm" key={index}>
+                            {platform.platform.name}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
                   </Link>
                 </li>
               ))}

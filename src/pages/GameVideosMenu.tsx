@@ -3,7 +3,7 @@ import { useGameDetailQuery, useGameVideosQuery } from "@/queries/useGameQuery";
 import { Menu } from "@/components/game/Menu";
 import { GameHeader } from "@/components/game/GameHeader";
 import { useState } from "react";
-import { ForbiddenContent } from "@/components/layout/ForbiddenContent";
+import { PageNotFound } from "@/components/layout/PageNotFound";
 import { Loader } from "@/components/ui/Loader";
 
 export const GameVideosMenu = () => {
@@ -43,7 +43,7 @@ export const GameVideosMenu = () => {
           )}
         </GameHeader>
       )}
-      {isError && <ForbiddenContent />}
+      {isError && <PageNotFound />}
     </>
   );
 };

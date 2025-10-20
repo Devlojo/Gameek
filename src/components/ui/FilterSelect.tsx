@@ -8,6 +8,7 @@ import { useSearchParams } from "react-router-dom";
 type Item = {
   id: number;
   name?: string;
+  slug?: string;
   username?: string;
 };
 type TFilterSelectProps = {
@@ -25,11 +26,12 @@ export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
     paramKey = "plateformes";
   }
 
-  if (label === "Mois") {
-    paramKey = "dates";
-  }
   if (label === "Année") {
-    paramKey = "dates";
+    paramKey = "annee";
+  }
+
+  if (label === "Mois") {
+    paramKey = "mois";
   }
   if (label === "Testeur") {
     paramKey = "testeur";
@@ -40,65 +42,42 @@ export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
 
   let selectedValue: string | null;
   let selectedItem: Item | undefined;
-  if (label === "Genre" || label === "Plateforme" || label === "Note") {
+  if (label === "Genre" || label === "Plateforme") {
+    // Récupération de la valeur active de l'url selon le label (Genre, Plateforme, Note)
+    selectedValue = searchParams.get(paramKey);
+
+    // Recupérer l'item selectionné ainsi que ses props (id, name)
+    selectedItem = items?.find((item) => item.slug === selectedValue);
+  }
+
+  if (label === "Année") {
+    // Récupération de la valeur active de l'url selon le label (Genre, Plateforme, Note)
+    selectedValue = searchParams.get(paramKey);
+
+    // Recupérer l'item selectionné ainsi que ses props (id, name)
+    selectedItem = items?.find((item) => item.name === selectedValue);
+  }
+
+  if (label === "Mois") {
+    // Récupération de la valeur active de l'url selon le label (Genre, Plateforme, Note)
+    selectedValue = searchParams.get(paramKey);
+    const index = Number(selectedValue);
+
+    // Recupérer l'item selectionné ainsi que ses props (id, name)
+    selectedItem = items && items[index - 1];
+  }
+
+  if (label === "Note") {
     // Récupération de la valeur active de l'url selon le label (Genre, Plateforme, Note)
     selectedValue = searchParams.get(paramKey);
 
     // Recupérer l'item selectionné ainsi que ses props (id, name)
     selectedItem = items?.find((item) => String(item.id) === selectedValue);
   }
-
   if (label === "Testeur") {
     selectedValue = searchParams.get(paramKey);
 
     selectedItem = items?.find((item) => item.username === selectedValue);
-  }
-  if (label === "Mois") {
-    const paramDate = searchParams.get("dates");
-    // récupération du premier chiffre du mois
-    const firstMonthNumberInParam = paramDate?.charAt(5);
-    // récupération du second chiffre du mois
-    const secondMonthNumberInParam = paramDate?.charAt(6);
-
-    let monthIndex: number | "" | undefined;
-    if (firstMonthNumberInParam === "0") {
-      monthIndex =
-        secondMonthNumberInParam && parseInt(secondMonthNumberInParam) - 1;
-    } else {
-      // addition des deux chiffres pour composer le mois
-      const monthNumberInParam =
-        firstMonthNumberInParam &&
-        secondMonthNumberInParam &&
-        firstMonthNumberInParam + secondMonthNumberInParam;
-      // conversion du mois en entier pour pouvoir soustraire et correspondre aux index (commence à 0)
-      monthIndex = monthNumberInParam && parseInt(monthNumberInParam) - 1;
-    }
-
-    selectedItem = items?.find((item) => item.id === monthIndex);
-  }
-
-  if (label === "Année") {
-    const paramDate = searchParams.get("dates");
-
-    const firstYearNumberInParam = paramDate?.charAt(0);
-
-    const secondYearNumberInParam = paramDate?.charAt(1);
-    const thirdYearNumberInParam = paramDate?.charAt(2);
-    const fourthYearNumberInParam = paramDate?.charAt(3);
-    let year: string;
-    if (
-      firstYearNumberInParam &&
-      secondYearNumberInParam &&
-      thirdYearNumberInParam &&
-      fourthYearNumberInParam
-    ) {
-      year =
-        firstYearNumberInParam +
-        secondYearNumberInParam +
-        thirdYearNumberInParam +
-        fourthYearNumberInParam;
-    }
-    selectedItem = items?.find((item) => item.name === year);
   }
 
   const removeFilter = () => {
@@ -173,6 +152,7 @@ export const FilterSelect = ({ label, items }: TFilterSelectProps) => {
                   key={index}
                   label={label}
                   id={item.id}
+                  slug={item.slug}
                 />
               ))}
           </ul>

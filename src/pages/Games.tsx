@@ -13,12 +13,13 @@ export const Games = () => {
 
   const page = parseInt(searchParams.get("page") || "1");
   const genreParam = searchParams.get("genres");
-  const genre = genreParam ? parseInt(genreParam, 10) : undefined;
-  const platformParam = searchParams.get("plateformes");
-  const platform = platformParam ? parseInt(platformParam, 10) : undefined;
 
-  const { genres, isSuccessGenres } = useGenresQuery();
-  const { platforms, isSuccessPlatforms } = usePlatformsQuery();
+  const genre = genreParam ? genreParam : undefined;
+  const platformParam = searchParams.get("plateformes");
+  const platform = platformParam ? platformParam : undefined;
+
+  const { genres } = useGenresQuery();
+  const { platforms } = usePlatformsQuery();
   const { games, isSuccessGames } = useGamesQuery(page, genre, platform);
 
   return (
@@ -26,7 +27,7 @@ export const Games = () => {
       <h1 className="mx-4 mt-4 text-center text-3xl font-bold text-customWhite">
         Explore le catalogue
       </h1>
-      {isSuccessGames && isSuccessGenres && isSuccessPlatforms ? (
+      {isSuccessGames ? (
         <section className="flex w-full flex-col gap-2 rounded-md bg-customWhite px-3 pb-5">
           <div className="flex w-full flex-wrap justify-center gap-8 pt-4">
             <FilterSelect label="Genre" items={genres?.results} />
@@ -34,7 +35,7 @@ export const Games = () => {
           </div>
           <p className="text-center">{games?.count} jeux trouvés</p>
           <div className="flex w-full flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
-            {games?.results.map((game, index) => (
+            {games?.games.map((game, index) => (
               <article
                 className="group relative flex w-full flex-col rounded-md shadow-sm shadow-global sm:w-[48.5%]"
                 key={index}
@@ -60,7 +61,7 @@ export const Games = () => {
               </article>
             ))}
 
-            <Pagination page={page} gamesCount={games?.count} />
+            <Pagination page={page} totalGames={games?.count} />
           </div>
         </section>
       ) : (

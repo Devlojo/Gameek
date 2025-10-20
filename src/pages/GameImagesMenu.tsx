@@ -7,7 +7,7 @@ import { Menu } from "@/components/game/Menu";
 import { GameHeader } from "@/components/game/GameHeader";
 import { Loader } from "@/components/ui/Loader";
 import { useState } from "react";
-import { ForbiddenContent } from "@/components/layout/ForbiddenContent";
+import { PageNotFound } from "@/components/layout/PageNotFound";
 
 export const GameImagesMenu = () => {
   const { id } = useParams();
@@ -45,7 +45,7 @@ export const GameImagesMenu = () => {
           )}
         </GameHeader>
       )}
-      {isError && <ForbiddenContent />}
+      {isError && <PageNotFound />}
     </>
   );
 };

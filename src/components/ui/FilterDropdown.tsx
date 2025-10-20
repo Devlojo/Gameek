@@ -1,13 +1,13 @@
 import { Link, useLocation, useSearchParams } from "react-router-dom";
-import { getLastDayOfMonth } from "@/utils/getCurrentDate";
 
 type TOption = {
   option: string;
   id: number;
   label: string;
+  slug?: string;
 };
 
-export const FilterDropdown = ({ option, id, label }: TOption) => {
+export const FilterDropdown = ({ option, id, label, slug }: TOption) => {
   const [searchParams] = useSearchParams();
 
   const location = useLocation(); // récuperation du chemin courant
@@ -31,10 +31,10 @@ export const FilterDropdown = ({ option, id, label }: TOption) => {
 
   // On ajoute/remplace le bon filtre selon le label
   if (label === "Genre") {
-    newParams.set("genres", id.toString());
+    newParams.set("genres", slug as string);
   }
   if (label === "Plateforme") {
-    newParams.set("plateformes", id.toString());
+    newParams.set("plateformes", slug as string);
   }
 
   if (label === "Testeur") {
@@ -48,20 +48,11 @@ export const FilterDropdown = ({ option, id, label }: TOption) => {
     let index = monthList.indexOf(option) + 1;
 
     let numberMonth = index.toString().padStart(2, "0");
-    // Récupère l'année déjà dans les paramètres si dispo, sinon 2025 par défaut
-    let currentYear = searchParams.get("dates")?.split("-")[0];
 
-    newParams.set(
-      "dates",
-      `${currentYear}-${numberMonth}-01,${currentYear}-${numberMonth}-${getLastDayOfMonth(parseInt(currentYear as string), index)}`,
-    );
+    newParams.set("mois", numberMonth);
   }
   if (label === "Année") {
-    let currentMonth = searchParams.get("dates")?.split("-")[1];
-    newParams.set(
-      "dates",
-      `${option}-${currentMonth}-01,${option}-${currentMonth}-${getLastDayOfMonth(parseInt(option), parseInt(currentMonth as string))}`,
-    );
+    newParams.set("annee", option);
   }
 
   return (

@@ -1,6 +1,35 @@
 import { z } from "zod";
 
 export const gameSchema = z.object({
+  games: z.array(
+    z.object({
+      id: z.number(),
+      name: z.string(),
+      slug: z.string(),
+      released_date: z.string().nullable(),
+      background_image: z.string().nullable(),
+      platforms: z.nullable(
+        z.array(
+          z.object({
+            platform: z.object({
+              id: z.number(),
+              name: z.string(),
+            }),
+          }),
+        ),
+      ),
+      genres: z.array(
+        z.object({
+          id: z.number(),
+          name: z.string(),
+        }),
+      ),
+    }),
+  ),
+  count: z.number().optional(),
+});
+
+export const gameSchemaRawg = z.object({
   count: z.number(),
 
   results: z.array(
@@ -47,52 +76,36 @@ export const gameSchema = z.object({
 
 export const gameDetailsSchema = z.object({
   id: z.number(),
-  slug: z.string(),
   name: z.string(),
-  description: z.string(),
+  slug: z.string(),
+  rawg_id: z.number(),
+  background_image: z.string(),
+  released_date: z.string().nullable(),
   description_raw: z.string(),
-  released: z.string().nullable(),
-  background_image: z.string().nullable(),
-  background_image_additional: z.string().nullable(),
+  platforms: z.array(
+    z.object({
+      platform: z.object({
+        name: z.string(),
+      }),
+    }),
+  ),
+  genres: z.array(
+    z.object({
+      name: z.string(),
+    }),
+  ),
   publishers: z.array(
     z.object({
       id: z.number(),
       name: z.string(),
+      slug: z.string(),
     }),
   ),
   developers: z.array(
     z.object({
       id: z.number(),
       name: z.string(),
-    }),
-  ),
-  platforms: z.nullable(
-    z.array(
-      z.object({
-        platform: z.object({
-          id: z.number(),
-          name: z.string(),
-        }),
-      }),
-    ),
-  ),
-  genres: z.array(
-    z.object({
-      id: z.number(),
-      name: z.string(),
-    }),
-  ),
-  tags: z.nullable(
-    z.array(
-      z.object({
-        name: z.string(),
-        slug: z.string(),
-      }),
-    ),
-  ),
-  ratings: z.array(
-    z.object({
-      title: z.string(),
+      slug: z.string(),
     }),
   ),
 });
@@ -122,12 +135,12 @@ export const gameVideosSchema = z.object({
 });
 
 export const genreOrPlatformSchema = z.object({
-  count: z.number(),
-
   results: z.array(
     z.object({
       id: z.number(),
       name: z.string(),
+      rawg_id: z.number(),
+      slug: z.string(),
     }),
   ),
 });
@@ -141,6 +154,28 @@ export const bestGamesSchema = z.object({
       name: z.string(),
       slug: z.string(),
       rawg_id: z.number(),
+      background_image: z.string(),
+      platforms: z.array(
+        z.object({
+          platform: z.object({
+            name: z.string(),
+          }),
+        }),
+      ),
+      genres: z.array(
+        z.object({
+          name: z.string(),
+        }),
+      ),
+    }),
+  ),
+});
+
+export const searchGamesSchema = z.object({
+  games: z.array(
+    z.object({
+      name: z.string(),
+      slug: z.string(),
       background_image: z.string(),
       platforms: z.array(
         z.object({

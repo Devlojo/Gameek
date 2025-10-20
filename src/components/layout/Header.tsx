@@ -78,7 +78,7 @@ export const Header = ({
               Jeux
             </Link>
             <Link
-              to={`/jeux/sorties?page=1&dates=${getCurrentDate().fromDate},${getCurrentDate().toDate}`}
+              to={`/jeux/sorties?page=1&annee=${getCurrentDate().year}&mois=${getCurrentDate().month}`}
               className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
             >
               Sorties

@@ -110,6 +110,7 @@ export const reviewListFilteredSchema = z.object({
       ),
     }),
   ),
+  count: z.number().optional(),
 });
 
 export const reviewListBackSchema = z.object({

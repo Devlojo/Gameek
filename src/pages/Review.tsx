@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { GameHeader } from "@/components/game/GameHeader";
-import { ForbiddenContent } from "@/components/layout/ForbiddenContent";
+import { PageNotFound } from "@/components/layout/PageNotFound";
 import { MdArrowDropDown } from "react-icons/md";
 import { useReviewDetailQuery } from "@/queries/useReviewsQuery";
 import { Loader } from "@/components/ui/Loader";
@@ -29,7 +29,7 @@ export const Review = ({ userRole }: TUserRole) => {
   }
 
   if (isError) {
-    return <ForbiddenContent />;
+    return <PageNotFound />;
   }
   if (!reviewDetail?.review.is_verify && userRole !== "admin") {
     return (

@@ -26,7 +26,7 @@ import { DashboardBack } from "@/pages/admin/DashboardBack";
 import { ReviewListBack } from "@/pages/admin/ReviewListBack";
 import { UserListBack } from "@/pages/admin/UserListBack";
 import axios from "axios";
-import { ForbiddenContent } from "./components/layout/ForbiddenContent";
+import { PageNotFound } from "./components/layout/PageNotFound";
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
@@ -159,7 +159,7 @@ const App = (): JSX.Element => {
                 element={<ReviewListBack userRole={user?.role} />}
               />
               {/* 404 fallback */}
-              <Route path="*" element={<ForbiddenContent />} />
+              <Route path="*" element={<PageNotFound />} />
             </Routes>
 
             <Footer />

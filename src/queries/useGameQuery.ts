@@ -16,7 +16,7 @@ export const useGameDetailQuery = (game: string | undefined) => {
     queryFn: () => getGameDetail(game as string),
     retry: false,
     enabled: !!game,
-    staleTime: 1000 * 60 * 60,
+    staleTime: 1000 * 60 * 60 * 24 * 7, // 1 semaine
   });
   return { gameDetail, isLoading, isSuccessGameDetail, isError };
 };
