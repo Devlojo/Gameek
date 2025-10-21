@@ -3,12 +3,11 @@ import { useGetAllReviewsQuery } from "@/queries/admin/useReviewsQuery";
 import { TUserRole } from "@/types/user";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
-import { GoIssueClosed } from "react-icons/go";
-import { IoMdCloseCircleOutline } from "react-icons/io";
 import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import { ConfirmModal } from "@/components/ui/admin/ConfirmModal";
+import clsx from "clsx";
 
 export const ReviewListBack = ({ userRole }: TUserRole) => {
   const { reviews } = useGetAllReviewsQuery();
@@ -81,7 +80,7 @@ export const ReviewListBack = ({ userRole }: TUserRole) => {
                 Nom du jeu
               </th>
               <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
-                Vérifié
+                Statut
               </th>
               <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
                 Date de création
@@ -98,12 +97,16 @@ export const ReviewListBack = ({ userRole }: TUserRole) => {
                 <td className="px-4 py-2">{review.id}</td>
                 <td className="px-4 py-2">{review.username}</td>
                 <td className="px-4 py-2">{review.name}</td>
-                <td className="px-4 py-2">
-                  {review.is_verify === false ? (
-                    <IoMdCloseCircleOutline className="size-6 text-red-600" />
-                  ) : (
-                    <GoIssueClosed className="size-6 text-green-600" />
+                <td
+                  className={clsx(
+                    "px-4 py-2",
+                    review.status === "en_attente" && "text-orange-600",
+                    review.status === "valide" && "text-green-600",
+                    review.status === "refuse" && "text-red-600",
+                    review.status === "a_modifier" && "text-yellow-600",
                   )}
+                >
+                  {review.status}
                 </td>
                 <td className="px-4 py-2">{review.created_at}</td>
                 <td className="flex gap-3 px-4 py-2">

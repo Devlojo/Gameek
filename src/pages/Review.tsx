@@ -24,6 +24,14 @@ export const Review = ({ userRole }: TUserRole) => {
     userName,
   );
 
+  const reviewStatus = [
+    { value: "en_attente", label: "En attente" },
+    { value: "valide", label: "Validé" },
+    { value: "a_modifier", label: "À modifier" },
+    { value: "refuse", label: "Refusé" },
+  ];
+
+  const [selectedStatus, setSelectedStatus] = useState(reviewStatus[0].value);
   if (isLoading) {
     return <Loader />; // ton loader custom
   }
@@ -31,7 +39,7 @@ export const Review = ({ userRole }: TUserRole) => {
   if (isError) {
     return <PageNotFound />;
   }
-  if (!reviewDetail?.review.is_verify && userRole !== "admin") {
+  if (reviewDetail?.review.status !== "valide" && userRole !== "admin") {
     return (
       <div className="mt-4 flex h-32 flex-col items-center justify-center bg-customWhite shadow-md shadow-blue-500">
         <CiSquareInfo className="size-10 text-blue-500" />
@@ -44,11 +52,13 @@ export const Review = ({ userRole }: TUserRole) => {
   }
   const apiUrl = import.meta.env.VITE_API_URL;
 
-  const handleButtonClick = async () => {
+  const handleOnChange = async (e: any) => {
+    const newStatus = e.target.value;
     try {
+      setSelectedStatus(newStatus);
       const res = await axios.put(
         `${apiUrl}/back/reviews/${reviewDetail?.review.id}`,
-        { is_verify: true }, // body à envoyer
+        { status: newStatus }, // body à envoyer
         {
           withCredentials: true,
         },
@@ -199,18 +209,24 @@ export const Review = ({ userRole }: TUserRole) => {
             </div>
           </div>
         </div>
-        {userRole === "admin" && !reviewDetail?.review.is_verify && (
+        {userRole === "admin" && (
           <>
             {requestError && (
               <p className="font-bold text-red-600">{errorMessage}</p>
             )}
-            <div className="mt-2 flex justify-center">
-              <button
-                className="rounded-lg bg-mainYellow p-2 shadow-sm shadow-global"
-                onClick={handleButtonClick}
+            <div className="mt-2 flex items-center justify-center gap-2">
+              <p>Selectionnez un statut :</p>
+              <select
+                value={selectedStatus}
+                onChange={(e) => handleOnChange(e)}
+                className="rounded-md border border-black p-2"
               >
-                Validez le test !
-              </button>
+                {reviewStatus.map(({ value, label }) => (
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
+                ))}
+              </select>
             </div>
           </>
         )}

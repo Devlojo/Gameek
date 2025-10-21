@@ -7,7 +7,9 @@ import { Navigate } from "react-router-dom";
 export const DashboardBack = ({ userRole }: TUserRole) => {
   const { users } = useGetAllUsersQuery();
   const { reviews } = useGetAllReviewsQuery();
-  const pendingReviews = reviews?.reviews.filter((review) => !review.is_verify);
+  const pendingReviews = reviews?.reviews.filter(
+    (review) => review.status !== "valide",
+  );
   if (userRole !== "admin") {
     return <Navigate to={"/"} replace />;
   }
