@@ -3,9 +3,10 @@ import gameekLogo from "@/images/gameek-removebg.png";
 import { BsFire } from "react-icons/bs";
 import { GameHoverCard } from "../ui/GameHoverCard";
 import { Link } from "react-router-dom";
+import { Loader } from "../ui/Loader";
 
 export const BestGamesSection = () => {
-  const { bestGames, isSuccess } = useBestGamesQuery();
+  const { bestGames, isSuccess, isLoading } = useBestGamesQuery();
   const checkedGames = bestGames?.games.filter(
     (game) => game.avg_grade !== null,
   );
@@ -20,6 +21,7 @@ export const BestGamesSection = () => {
         </div>
       </div>
       <div className="flex flex-wrap gap-4 sm:justify-center">
+        {isLoading && <Loader />}
         {isSuccess && checkedGames && checkedGames.length > 0 ? (
           checkedGames.map((game, index) => {
             return (

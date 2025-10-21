@@ -3,9 +3,10 @@ import gameekLogo from "@/images/gameek-removebg.png";
 import { IoIosTimer } from "react-icons/io";
 import { GameHoverCard } from "../ui/GameHoverCard";
 import { Link } from "react-router-dom";
+import { Loader } from "../ui/Loader";
 
 export const LatestReviewsSection = () => {
-  const { latestReviews, isSuccess } = useLatestReviewsQuery();
+  const { latestReviews, isSuccess, isLoading } = useLatestReviewsQuery();
   const verifiedReviews = latestReviews?.reviews.filter(
     (review) => review.is_verify,
   );
@@ -20,6 +21,7 @@ export const LatestReviewsSection = () => {
         </div>
       </div>
       <div className="flex flex-wrap gap-4 sm:justify-center">
+        {isLoading && <Loader />}
         {isSuccess && verifiedReviews && verifiedReviews.length > 0 ? (
           verifiedReviews.map((review, index) => {
             return (
