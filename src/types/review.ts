@@ -86,6 +86,7 @@ export const reviewListByGameSchema = z.object({
       image: z.string(),
     }),
   ),
+  count: z.number().optional(),
 });
 
 export const reviewListFilteredSchema = z.object({

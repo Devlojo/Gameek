@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { Menu } from "@/components/game/Menu";
 import { GameHeader } from "@/components/game/GameHeader";
 import { useState } from "react";
@@ -10,10 +10,14 @@ import { FaPen } from "react-icons/fa";
 import { useReviewsByGameQuery } from "@/queries/useReviewsQuery";
 import { useGameDetailQuery } from "@/queries/useGameQuery";
 import { clsx } from "clsx";
+import { Pagination } from "@/components/ui/Pagination";
+import { Loader } from "@/components/ui/Loader";
 
 export const GameReviewsMenu = () => {
   const { id } = useParams() as { id: string };
-  const { reviewsByGame, isError } = useReviewsByGameQuery(id);
+  const [searchParams] = useSearchParams();
+  const page = parseInt(searchParams.get("page") || "1");
+  const { reviewsByGame, isError, isLoading } = useReviewsByGameQuery(id);
   const [activeMenu, setActiveMenu] = useState<string>("reviews");
   const { gameDetail } = useGameDetailQuery(id);
 
@@ -29,97 +33,112 @@ export const GameReviewsMenu = () => {
     ? reviewsByGame.reviews[0].slug
     : gameDetail?.slug;
 
-  const verifiedReviews = reviewsByGame?.reviews.filter(
-    (review) => review.is_verify,
-  );
-
   return (
     <>
-      <GameHeader background_image={headerBackground} name={headerName}>
-        <Menu activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
-        <div className="mx-3 mt-5 flex flex-col gap-3">
-          <div
-            className={clsx(
-              "flex w-full flex-col flex-wrap items-center justify-center gap-2",
-              verifiedReviews &&
-                verifiedReviews.length > 0 &&
-                "justify-center sm:flex-row sm:justify-between",
-            )}
-          >
-            {verifiedReviews && verifiedReviews.length > 0 && (
-              <p>{verifiedReviews.length} tests trouvés</p>
-            )}
-            <Link
-              to={`/creation/test/${gameSlug}`}
-              className="flex items-center gap-2 rounded-es-2xl border-2 border-black/40 p-2 hover:bg-global hover:text-customWhite"
-            >
-              Rédigez votre test <FaPen />
-            </Link>
-            {verifiedReviews && verifiedReviews.length > 0 && (
-              <div className="group relative flex w-36 items-center border-y border-black/40 p-2 hover:cursor-pointer">
-                <button>Trier par Date</button>
-                <MdArrowDropDown />
-                <div className="absolute left-0 top-full z-10 hidden w-full overflow-y-auto rounded-sm bg-customWhite shadow-sm shadow-black group-hover:flex">
-                  <ul className="flex w-full flex-col">
-                    <li className="p-2 hover:bg-gray-300">Trier par Note</li>
-                    <li className="p-2 hover:bg-gray-300">Trier par Testeur</li>
-                  </ul>
-                </div>
-              </div>
-            )}
-          </div>
-          {verifiedReviews && verifiedReviews.length > 0 ? (
-            verifiedReviews?.map((review, index) => {
-              return (
-                <article
-                  className="bg-customWhite shadow-sm shadow-global hover:opacity-80"
-                  key={index}
-                >
-                  <Link
-                    to={`/test/${review.slug}/${review.username}`}
-                    className="flex flex-col sm:flex-row"
+      {isError ? (
+        <PageNotFound />
+      ) : (
+        <>
+          <GameHeader background_image={headerBackground} name={headerName}>
+            <Menu activeMenu={activeMenu} setActiveMenu={setActiveMenu} />
+            <div className="mx-3 mt-5 flex flex-col gap-3">
+              {isLoading ? (
+                <Loader />
+              ) : (
+                <>
+                  <div
+                    className={clsx(
+                      "flex w-full flex-col flex-wrap items-center justify-center gap-2",
+                      reviewsByGame &&
+                        reviewsByGame.reviews.length > 0 &&
+                        "justify-center sm:flex-row sm:justify-between",
+                    )}
                   >
-                    <div className="relative w-full">
-                      <img
-                        src={review.background_image}
-                        alt={review.name}
-                        className="h-40 w-full object-cover sm:h-[200px]"
-                        loading="lazy"
-                      />
-                      <p className="absolute bottom-0 bg-global bg-opacity-70 px-0.5 text-xs text-gray-200 shadow-sm shadow-black">
-                        <span className="text-xl text-mainYellow">
-                          {review.grade}
-                        </span>
-                        ∕20
-                      </p>
-                    </div>
-                    <div className="flex w-full flex-col gap-2 p-2">
-                      <p className="italic">{review.introduction}</p>
-                      <div className="flex items-center justify-end gap-2">
-                        <img
-                          src={review.image}
-                          className="border-1 h-8 w-8 rounded-full shadow-sm shadow-black"
-                          alt="Avatar du testeur"
-                        />
-                        <p className="text-sm">
-                          <span className="font-semibold">
-                            {review.username}
-                          </span>
-                          , {review.created_at}
-                        </p>
-                      </div>
-                    </div>
-                  </Link>
-                </article>
-              );
-            })
-          ) : (
-            <p className="text-center">Ce jeu n'a pas encore été évalué</p>
-          )}
-        </div>
-      </GameHeader>
+                    {reviewsByGame?.reviews &&
+                      reviewsByGame.reviews.length > 0 && (
+                        <p>{reviewsByGame?.count} tests trouvés</p>
+                      )}
 
-      {isError && <PageNotFound />}
+                    <Link
+                      to={`/creation/test/${gameSlug}`}
+                      className="flex items-center gap-2 rounded-es-2xl border-2 border-black/40 p-2 hover:bg-global hover:text-customWhite"
+                    >
+                      Rédigez votre test <FaPen />
+                    </Link>
+                    {reviewsByGame && reviewsByGame.reviews.length > 0 && (
+                      <div className="group relative flex w-36 items-center border-y border-black/40 p-2 hover:cursor-pointer">
+                        <button>Trier par Date</button>
+                        <MdArrowDropDown />
+                        <div className="absolute left-0 top-full z-10 hidden w-full overflow-y-auto rounded-sm bg-customWhite shadow-sm shadow-black group-hover:flex">
+                          <ul className="flex w-full flex-col">
+                            <li className="p-2 hover:bg-gray-300">
+                              Trier par Note
+                            </li>
+                            <li className="p-2 hover:bg-gray-300">
+                              Trier par Testeur
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    )}
+                  </div>{" "}
+                  {reviewsByGame && reviewsByGame.reviews.length > 0 ? (
+                    reviewsByGame.reviews?.map((review, index) => {
+                      return (
+                        <article
+                          className="bg-customWhite shadow-sm shadow-global hover:opacity-80"
+                          key={index}
+                        >
+                          <Link
+                            to={`/test/${review.slug}/${review.username}`}
+                            className="flex flex-col sm:flex-row"
+                          >
+                            <div className="relative w-full">
+                              <img
+                                src={review.background_image}
+                                alt={review.name}
+                                className="h-40 w-full object-cover sm:h-[200px]"
+                                loading="lazy"
+                              />
+                              <p className="absolute bottom-0 bg-global bg-opacity-70 px-0.5 text-xs text-gray-200 shadow-sm shadow-black">
+                                <span className="text-xl text-mainYellow">
+                                  {review.grade}
+                                </span>
+                                ∕20
+                              </p>
+                            </div>
+                            <div className="flex w-full flex-col gap-2 p-2">
+                              <p className="italic">{review.introduction}</p>
+                              <div className="flex items-center justify-end gap-2">
+                                <img
+                                  src={review.image}
+                                  className="border-1 h-8 w-8 rounded-full shadow-sm shadow-black"
+                                  alt="Avatar du testeur"
+                                />
+                                <p className="text-sm">
+                                  <span className="font-semibold">
+                                    {review.username}
+                                  </span>
+                                  , {review.created_at}
+                                </p>
+                              </div>
+                            </div>
+                          </Link>
+                        </article>
+                      );
+                    })
+                  ) : (
+                    <p className="text-center">
+                      Ce jeu n'a pas encore été évalué
+                    </p>
+                  )}
+                  <Pagination page={page} totalGames={reviewsByGame?.count} />
+                </>
+              )}
+            </div>
+          </GameHeader>{" "}
+        </>
+      )}
     </>
   );
 };
