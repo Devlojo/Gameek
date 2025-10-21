@@ -7,9 +7,6 @@ import { Loader } from "../ui/Loader";
 
 export const LatestReviewsSection = () => {
   const { latestReviews, isSuccess, isLoading } = useLatestReviewsQuery();
-  const verifiedReviews = latestReviews?.reviews.filter(
-    (review) => review.is_verify,
-  );
 
   return (
     <section className="h-auto rounded-md bg-customWhite px-4 py-3">
@@ -22,8 +19,8 @@ export const LatestReviewsSection = () => {
       </div>
       <div className="flex flex-wrap gap-4 sm:justify-center">
         {isLoading && <Loader />}
-        {isSuccess && verifiedReviews && verifiedReviews.length > 0 ? (
-          verifiedReviews.map((review, index) => {
+        {isSuccess && latestReviews && latestReviews.reviews.length > 0 ? (
+          latestReviews.reviews.map((review, index) => {
             return (
               <article
                 className="group relative w-full rounded-md p-2 shadow-md shadow-black sm:w-[48.5%]"

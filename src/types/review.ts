@@ -1,5 +1,12 @@
 import { z } from "zod";
 
+// Définition de l'ENUM
+const reviewStatusEnum = z.enum([
+  "en_attente",
+  "valide",
+  "a_modifier",
+  "refuse",
+]);
 export const reviewFormSchema = z.object({
   slug: z.string(),
   introduction: z.string(),
@@ -18,7 +25,7 @@ export const reviewListResponseSchema = z.object({
       id: z.number(),
       introduction: z.string(),
       grade: z.number(),
-      is_verify: z.boolean(),
+      status: reviewStatusEnum,
       created_at: z.string(),
       gamename: z.string(),
       slug: z.string(),
@@ -51,7 +58,7 @@ export const reviewDetailSchema = z.object({
     graphics: z.string(),
     conclusion: z.string(),
     grade: z.number(),
-    is_verify: z.boolean(),
+    status: reviewStatusEnum,
     created_at: z.string(),
     gamename: z.string(),
     slug: z.string(),
@@ -70,7 +77,7 @@ export const reviewListByGameSchema = z.object({
       id: z.number(),
       grade: z.number(),
       introduction: z.string(),
-      is_verify: z.boolean(),
+      status: reviewStatusEnum,
       created_at: z.string(),
       slug: z.string(),
       name: z.string(),
@@ -88,7 +95,7 @@ export const reviewListFilteredSchema = z.object({
       username: z.string(),
       grade: z.number(),
       gamename: z.string(),
-      is_verify: z.boolean(),
+      status: reviewStatusEnum,
       avatar: z.string(),
       created_at: z.string(),
       slug: z.string(),
@@ -117,7 +124,7 @@ export const reviewListBackSchema = z.object({
   reviews: z.array(
     z.object({
       id: z.number(),
-      is_verify: z.boolean(),
+      status: reviewStatusEnum,
       created_at: z.string(),
       name: z.string(),
       slug: z.string(),
