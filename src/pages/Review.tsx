@@ -8,6 +8,7 @@ import { TUserRole } from "@/types/user";
 import axios from "axios";
 import { CiSquareInfo } from "react-icons/ci";
 import { useState } from "react";
+import { Comments } from "@/components/ui/Comments";
 
 export const Review = ({ userRole }: TUserRole) => {
   const { gameSlug, userName } = useParams() as {
@@ -230,6 +231,11 @@ export const Review = ({ userRole }: TUserRole) => {
             </div>
           </>
         )}
+        <div className="mx-3 mt-4 flex flex-wrap items-center justify-center border-2 border-black p-4 font-semibold">
+          <CiSquareInfo className="size-10" />
+          <p>Vous devez vous connectez pour ajouter un commentaire</p>
+        </div>
+        <Comments gameSlug={gameSlug} userName={userName} />
       </GameHeader>
     </>
   );
