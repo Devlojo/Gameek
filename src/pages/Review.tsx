@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { GameHeader } from "@/components/game/GameHeader";
 import { PageNotFound } from "@/components/layout/PageNotFound";
 import { MdArrowDropDown } from "react-icons/md";
@@ -9,6 +9,7 @@ import axios from "axios";
 import { CiSquareInfo } from "react-icons/ci";
 import { useState } from "react";
 import { Comments } from "@/components/ui/Comments";
+import { IoMdSend } from "react-icons/io";
 
 export const Review = ({ userRole }: TUserRole) => {
   const { gameSlug, userName } = useParams() as {
@@ -215,8 +216,8 @@ export const Review = ({ userRole }: TUserRole) => {
             {requestError && (
               <p className="font-bold text-red-600">{errorMessage}</p>
             )}
-            <div className="mt-2 flex items-center justify-center gap-2">
-              <p>Selectionnez un statut :</p>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2 px-3">
+              <p>Selectionnez un statut de validation pour ce test :</p>
               <select
                 value={selectedStatus}
                 onChange={(e) => handleOnChange(e)}
@@ -231,10 +232,31 @@ export const Review = ({ userRole }: TUserRole) => {
             </div>
           </>
         )}
-        <div className="mx-3 mt-4 flex flex-wrap items-center justify-center border-2 border-black p-4 font-semibold">
-          <CiSquareInfo className="size-10" />
-          <p>Vous devez vous connectez pour ajouter un commentaire</p>
-        </div>
+        {!userRole ? (
+          <div className="mx-3 mt-4 flex flex-wrap items-center justify-center gap-2 border-2 border-black p-4 font-semibold">
+            <CiSquareInfo className="size-10" />
+            <p>Vous devez être connecté pour ajouter un commentaire.</p>
+            <Link
+              to={"/connexion"}
+              className="rounded-lg bg-mainYellow p-2 shadow-sm shadow-global"
+            >
+              Connectez-vous
+            </Link>
+          </div>
+        ) : (
+          <div className="mx-3 mt-4 flex gap-2">
+            <input
+              type="text"
+              className="w-full rounded-md border border-black/50 p-2"
+              placeholder="Ajoutez un commentaire ..."
+            />
+
+            <button>
+              <IoMdSend className="size-6" />
+            </button>
+          </div>
+        )}
+
         <Comments gameSlug={gameSlug} userName={userName} />
       </GameHeader>
     </>

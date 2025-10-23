@@ -15,6 +15,8 @@ export const commentListSchema = z.object({
       avatar: z.string(),
       created_at: z.string(),
       review_id: z.number(),
+      is_blocked: z.boolean(),
+      report_count: z.number(),
     }),
   ),
   count: z.number().optional(),

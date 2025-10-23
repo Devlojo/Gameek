@@ -22,7 +22,7 @@ export const Comments = ({ gameSlug, userName }: TProps) => {
           {comments?.comments.map((comment, index) => (
             <article
               key={index}
-              className="flex flex-col flex-wrap bg-global/5 p-2 shadow-sm shadow-black"
+              className="flex flex-col flex-wrap rounded-b-xl bg-global/5 p-2 shadow-sm shadow-black"
             >
               <div className="flex items-center gap-2">
                 <img
@@ -37,9 +37,12 @@ export const Comments = ({ gameSlug, userName }: TProps) => {
                   <BsThreeDotsVertical className="size-4" />
                 </div>
               </div>
-              <div className="pl-10">
+              <div className="flex flex-col items-start gap-2 pl-10">
                 <p className="text-xs text-gray-800">{comment.created_at}</p>
                 <p>{comment.content}</p>
+                <button className="text-sm font-semibold text-gray-800">
+                  Répondre
+                </button>
               </div>
             </article>
           ))}
