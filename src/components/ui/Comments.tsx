@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useUser } from "@/hooks/useUser";
 import { IoMdSend } from "react-icons/io";
 import { CiSquareInfo } from "react-icons/ci";
+import { useState } from "react";
 
 type TCommentProps = {
   gameSlug: string;
@@ -14,6 +15,7 @@ type TCommentProps = {
 export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
   const { comments } = useCommentsByReview(gameSlug, userName);
   const { user } = useUser();
+  const [input, setInput] = useState("");
 
   const { mutate: addCommentMutate } = useAddComment(gameSlug, userName);
 
@@ -23,10 +25,17 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
     const formData = new FormData(e.currentTarget);
     const content = formData.get("comment");
 
-    addCommentMutate({
-      content: content as string,
-      review_id: reviewId,
-    });
+    addCommentMutate(
+      {
+        content: content as string,
+        review_id: reviewId,
+      },
+      {
+        onSuccess: () => {
+          setInput("");
+        },
+      },
+    );
   };
 
   return (
@@ -49,6 +58,8 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
             className="w-full rounded-md border border-black/50 p-2"
             placeholder="Ajoutez un commentaire ..."
             name="comment"
+            value={input}
+            onChange={(e) => setInput(e.currentTarget.value)}
           />
 
           <button>

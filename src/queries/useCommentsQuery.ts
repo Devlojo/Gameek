@@ -26,7 +26,7 @@ export const useAddComment = (gameSlug: string, userName: string) => {
     onSuccess: () => {
       // Rafraîchit automatiquement les commentaires après ajout
       queryClient.invalidateQueries({
-        queryKey: ["comment", gameSlug, userName],
+        queryKey: ["comments", gameSlug, userName],
       });
     },
   });
