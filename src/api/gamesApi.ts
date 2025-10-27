@@ -7,7 +7,7 @@ import {
   bestGamesSchema,
   searchGamesSchema,
 } from "@/types/index";
-const apiUrl = import.meta.env.VITE_API_URL;
+import { apiUrl } from "@/config";
 
 export const getAllGames = async (
   page: number,

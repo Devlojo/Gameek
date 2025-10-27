@@ -1,5 +1,5 @@
 import { InputStrengthOrWeakness } from "@/components/form/InputStrengthOrWeakness";
-import { TUser } from "@/types/user";
+import { useUser } from "@/hooks/useUser";
 import { Navigate, useNavigate, useLocation } from "react-router-dom";
 import { AlertModalReview } from "@/components/ui/AlertModalReview";
 import { useForm } from "react-hook-form";
@@ -7,18 +7,18 @@ import axios from "axios";
 import { z } from "zod";
 import { reviewFormSchema } from "@/types/review";
 import { useState } from "react";
+import { useCsrfToken } from "@/hooks/useCsrfToken";
+import { apiUrl } from "@/config";
 
 type TForm = z.infer<typeof reviewFormSchema>;
 type TReviewFormProps = {
-  user: TUser | null;
-  csrfToken: string | null;
   setAlertModalCreatedReview: React.Dispatch<React.SetStateAction<boolean>>;
 };
 export const ReviewForm = ({
-  user,
-  csrfToken,
   setAlertModalCreatedReview,
 }: TReviewFormProps): JSX.Element => {
+  const { user } = useUser();
+  const { csrfToken } = useCsrfToken();
   if (!user && !csrfToken) {
     return <Navigate to="/connexion" replace />;
   }
@@ -29,7 +29,6 @@ export const ReviewForm = ({
   const location = useLocation(); // récuperation du chemin courant
   const getGameFromUrl = location.pathname.split("/")[3];
 
-  const apiUrl = import.meta.env.VITE_API_URL;
   const {
     register,
     handleSubmit,
@@ -50,11 +49,10 @@ export const ReviewForm = ({
         withCredentials: true,
       });
 
-      csrfToken = csrfRes.csrfToken;
       const res = await axios.post(apiUrl + "/reviews/create", parsedData, {
         withCredentials: true,
         headers: {
-          "x-csrf-token": csrfToken,
+          "x-csrf-token": csrfRes.csrfToken,
         }, // pour que le cookie HttpOnly (refreshToken) soit envoyé automatiquement
       });
 

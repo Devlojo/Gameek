@@ -1,6 +1,6 @@
 import axios from "axios";
 import { userListBackSchema } from "@/types/user";
-const apiUrl = import.meta.env.VITE_API_URL;
+import { apiUrl } from "@/config";
 
 export const getAllUsers = async () => {
   try {

@@ -2,7 +2,6 @@ import { z } from "zod";
 
 export const commentFormSchema = z.object({
   content: z.string().min(1),
-  userName: z.string(),
   review_id: z.number(),
 });
 
@@ -21,3 +20,6 @@ export const commentListSchema = z.object({
   ),
   count: z.number().optional(),
 });
+
+export type TCommentForm = z.infer<typeof commentFormSchema>;
+export type TCommentList = z.infer<typeof commentListSchema>;

@@ -4,8 +4,9 @@ import {
   reviewDetailSchema,
   reviewListByGameSchema,
   reviewListFilteredSchema,
+  TReviewDetail,
 } from "@/types/review";
-const apiUrl = import.meta.env.VITE_API_URL;
+import { apiUrl } from "@/config";
 
 export const getLatestReviews = async () => {
   try {
@@ -23,7 +24,7 @@ export const getLatestReviews = async () => {
 
 export const getReviewDetail = async (gameSlug: string, userName: string) => {
   try {
-    const { data: reviewDetail } = await axios.get(
+    const { data: reviewDetail } = await axios.get<TReviewDetail>(
       `${apiUrl}/reviews/${gameSlug}/${userName}`,
       { timeout: 5000 },
     );

@@ -1,33 +1,27 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { TUser } from "@/types/user";
+import { useUser } from "@/hooks/useUser";
+import { useCsrfToken } from "@/hooks/useCsrfToken";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useState } from "react";
+import { apiUrl } from "@/config";
 
 type TForm = {
   password: string;
   email: string;
 };
 
-type LoginProps = {
-  setUser: React.Dispatch<React.SetStateAction<TUser | null>>;
-  user: TUser | null;
-  setCsrfToken: React.Dispatch<React.SetStateAction<string | null>>;
-};
-export const Login = ({
-  setUser,
-  user,
-  setCsrfToken,
-}: LoginProps): JSX.Element => {
+export const Login = (): JSX.Element => {
+  const { user, setUser } = useUser();
+  const { setCsrfToken } = useCsrfToken();
+
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<TForm>();
-
-  const apiUrl = import.meta.env.VITE_API_URL;
 
   const [requestError, setRequestError] = useState(false);
 

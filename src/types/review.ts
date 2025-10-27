@@ -139,3 +139,5 @@ export const reviewListBackSchema = z.object({
     }),
   ),
 });
+
+export type TReviewDetail = z.infer<typeof reviewDetailSchema>;

@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/admin/Navbar";
 import { useGetAllReviewsQuery } from "@/queries/admin/useReviewsQuery";
-import { TUserRole } from "@/types/user";
+import { useUser } from "@/hooks/useUser";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { Link, Navigate } from "react-router-dom";
@@ -8,11 +8,12 @@ import axios from "axios";
 import { useState } from "react";
 import { ConfirmModal } from "@/components/ui/admin/ConfirmModal";
 import clsx from "clsx";
+import { apiUrl } from "@/config";
 
-export const ReviewListBack = ({ userRole }: TUserRole) => {
+export const ReviewListBack = () => {
   const { reviews } = useGetAllReviewsQuery();
-
-  if (userRole !== "admin") {
+  const { user } = useUser();
+  if (user?.role !== "admin") {
     return <Navigate to={"/"} replace />;
   }
 
@@ -21,7 +22,6 @@ export const ReviewListBack = ({ userRole }: TUserRole) => {
   const [localReviews, setLocalReviews] = useState(reviews?.reviews || []);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
-  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleDelete = async (id: number) => {
     try {

@@ -19,7 +19,7 @@ export const LatestReviewsSection = () => {
           <IoIosTimer className="size-5 text-global" />
         </div>
       </div>
-      <div className="flex flex-wrap gap-4 sm:justify-center">
+      <div className="flex flex-wrap gap-4">
         {isLoading && <Loader />}
         {isSuccess && latestReviews && latestReviews.reviews.length > 0 ? (
           latestReviews.reviews.map((review, index) => {

@@ -1,22 +1,22 @@
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { GameHeader } from "@/components/game/GameHeader";
 import { PageNotFound } from "@/components/layout/PageNotFound";
 import { MdArrowDropDown } from "react-icons/md";
 import { useReviewDetailQuery } from "@/queries/useReviewsQuery";
 import { Loader } from "@/components/ui/Loader";
-import { TUserRole } from "@/types/user";
 import axios from "axios";
 import { CiSquareInfo } from "react-icons/ci";
 import { useState } from "react";
 import { Comments } from "@/components/ui/Comments";
-import { IoMdSend } from "react-icons/io";
+import { useUser } from "@/hooks/useUser";
+import { apiUrl } from "@/config";
 
-export const Review = ({ userRole }: TUserRole) => {
+export const Review = () => {
   const { gameSlug, userName } = useParams() as {
     gameSlug: string;
     userName: string;
   };
-
+  const { user } = useUser();
   const navigate = useNavigate();
   const [requestError, setRequestError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
@@ -41,7 +41,7 @@ export const Review = ({ userRole }: TUserRole) => {
   if (isError) {
     return <PageNotFound />;
   }
-  if (reviewDetail?.review.status !== "valide" && userRole !== "admin") {
+  if (reviewDetail?.review.status !== "valide" && user?.role !== "admin") {
     return (
       <div className="mt-4 flex h-32 flex-col items-center justify-center bg-customWhite shadow-md shadow-blue-500">
         <CiSquareInfo className="size-10 text-blue-500" />
@@ -52,7 +52,6 @@ export const Review = ({ userRole }: TUserRole) => {
       </div>
     );
   }
-  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleOnChange = async (e: any) => {
     const newStatus = e.target.value;
@@ -211,7 +210,7 @@ export const Review = ({ userRole }: TUserRole) => {
             </div>
           </div>
         </div>
-        {userRole === "admin" && (
+        {user?.role === "admin" && (
           <>
             {requestError && (
               <p className="font-bold text-red-600">{errorMessage}</p>
@@ -232,32 +231,12 @@ export const Review = ({ userRole }: TUserRole) => {
             </div>
           </>
         )}
-        {!userRole ? (
-          <div className="mx-3 mt-4 flex flex-wrap items-center justify-center gap-2 border-2 border-black p-4 font-semibold">
-            <CiSquareInfo className="size-10" />
-            <p>Vous devez être connecté pour ajouter un commentaire.</p>
-            <Link
-              to={"/connexion"}
-              className="rounded-lg bg-mainYellow p-2 shadow-sm shadow-global"
-            >
-              Connectez-vous
-            </Link>
-          </div>
-        ) : (
-          <div className="mx-3 mt-4 flex gap-2">
-            <input
-              type="text"
-              className="w-full rounded-md border border-black/50 p-2"
-              placeholder="Ajoutez un commentaire ..."
-            />
 
-            <button>
-              <IoMdSend className="size-6" />
-            </button>
-          </div>
-        )}
-
-        <Comments gameSlug={gameSlug} userName={userName} />
+        <Comments
+          gameSlug={gameSlug}
+          userName={userName}
+          reviewId={reviewDetail?.review.id as number}
+        />
       </GameHeader>
     </>
   );

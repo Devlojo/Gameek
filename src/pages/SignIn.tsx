@@ -3,7 +3,9 @@ import { clsx } from "clsx";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate, Navigate } from "react-router-dom";
-import { TUser } from "@/types/user";
+import { useUser } from "@/hooks/useUser";
+import { useCsrfToken } from "@/hooks/useCsrfToken";
+import { apiUrl } from "@/config";
 
 type TForm = {
   username: string;
@@ -12,16 +14,10 @@ type TForm = {
   image: string;
 };
 
-type SignInProps = {
-  setUser: React.Dispatch<React.SetStateAction<TUser | null>>;
-  user: TUser | null;
-  setCsrfToken: React.Dispatch<React.SetStateAction<string | null>>;
-};
-export const SignIn = ({
-  setUser,
-  setCsrfToken,
-  user,
-}: SignInProps): JSX.Element => {
+export const SignIn = (): JSX.Element => {
+  const { user, setUser } = useUser();
+  const { setCsrfToken } = useCsrfToken();
+
   const avatars = [
     "adventurer",
     "bottts",
@@ -45,7 +41,7 @@ export const SignIn = ({
   const [selectedAvatar, setSelectedAvatar] = useState(avatars[0]);
   const [requestError, setRequestError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
-  const apiUrl = import.meta.env.VITE_API_URL;
+
   const navigate = useNavigate();
   const {
     register,
