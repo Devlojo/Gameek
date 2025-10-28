@@ -24,7 +24,11 @@ export const getAllCommentsByReview = async (
   }
 };
 
-export const addComment = async ({ content, review_id }: TCommentForm) => {
+export const addComment = async ({
+  content,
+  review_id,
+  parent_id,
+}: TCommentForm) => {
   try {
     const { data: csrfRes } = await axios.get(`${apiUrl}/csrf-token`, {
       withCredentials: true,
@@ -34,6 +38,7 @@ export const addComment = async ({ content, review_id }: TCommentForm) => {
       {
         content,
         review_id,
+        parent_id,
       },
       {
         withCredentials: true,
@@ -44,6 +49,24 @@ export const addComment = async ({ content, review_id }: TCommentForm) => {
     );
     const commentParsed = commentFormSchema.parse(comment);
     return commentParsed;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const deleteCommentById = async (id: number) => {
+  try {
+    const { data: csrfRes } = await axios.get(`${apiUrl}/csrf-token`, {
+      withCredentials: true,
+    });
+    const { data: comment } = await axios.delete(`${apiUrl}/comments/${id}`, {
+      withCredentials: true,
+      headers: {
+        "x-csrf-token": csrfRes.csrfToken,
+      },
+    });
+    return comment;
   } catch (error) {
     console.log(error);
     throw error;

@@ -3,6 +3,7 @@ import { z } from "zod";
 export const commentFormSchema = z.object({
   content: z.string().min(1),
   review_id: z.number(),
+  parent_id: z.number().nullable(),
 });
 
 export const commentListSchema = z.object({
@@ -16,6 +17,7 @@ export const commentListSchema = z.object({
       review_id: z.number(),
       is_blocked: z.boolean(),
       report_count: z.number(),
+      parent_id: z.number().nullable(),
     }),
   ),
   count: z.number().optional(),

@@ -19,24 +19,24 @@ export const SignIn = (): JSX.Element => {
   const { setCsrfToken } = useCsrfToken();
 
   const avatars = [
-    "adventurer",
-    "bottts",
-    "avataaars",
-    "avataaars-neutral",
-    "lorelei",
-    "croodles",
-    "fun-emoji",
-    "personas",
-    "pixel-art",
-    "shapes",
-    "thumbs",
-    "open-peeps",
-    "big-smile",
-    "notionists",
-    "micah",
-    "glass",
-    "rings",
-    "lorelei-neutral",
+    "Katherine",
+    "George",
+    "Mason",
+    "Caleb",
+    "Jade",
+    "Luis",
+    "Easton",
+    "Avery",
+    "Valentina",
+    "Chase",
+    "Maria",
+    "Aneka",
+    "Eliza",
+    "Sawyer",
+    "Jessica",
+    "Ryan",
+    "Jocelyn",
+    "Brooklynn",
   ];
   const [selectedAvatar, setSelectedAvatar] = useState(avatars[0]);
   const [requestError, setRequestError] = useState(false);
@@ -50,7 +50,10 @@ export const SignIn = (): JSX.Element => {
     formState: { errors },
   } = useForm<TForm>({
     defaultValues: {
-      image: "https://api.dicebear.com/9.x/adventurer/svg",
+      image:
+        "https://api.dicebear.com/9.x/avataaars/svg?seed=" +
+        avatars[0] +
+        "&backgroundColor=b6e3f4,c0aede&backgroundType=gradientLinear",
     },
   });
 
@@ -62,7 +65,10 @@ export const SignIn = (): JSX.Element => {
   const handleAvatar = (avatar: string) => {
     setSelectedAvatar(avatar);
     // pour recupérer l'url complet de l'image pour envoyer en BDD"
-    setValue("image", `https://api.dicebear.com/9.x/${avatar}/svg`);
+    setValue(
+      "image",
+      `https://api.dicebear.com/9.x/avataaars/svg?seed=${avatar}&backgroundColor=b6e3f4,c0aede&backgroundType=gradientLinear`,
+    );
   };
   const onSubmit = async (data: TForm) => {
     try {
@@ -96,10 +102,11 @@ export const SignIn = (): JSX.Element => {
             {requestError && (
               <p className="font-bold text-red-600">{errorMessage}</p>
             )}
+            <p className="text-center">Votre avatar :</p>
             {selectedAvatar && (
               <div className="flex justify-center">
                 <img
-                  src={`https://api.dicebear.com/9.x/${selectedAvatar}/svg`}
+                  src={`https://api.dicebear.com/9.x/avataaars/svg?seed=${selectedAvatar}&backgroundColor=b6e3f4,c0aede&backgroundType=gradientLinear`}
                   className="size-20 rounded-full shadow-sm shadow-black"
                 ></img>
               </div>
@@ -108,7 +115,7 @@ export const SignIn = (): JSX.Element => {
               {avatars.map((avatar) => (
                 <img
                   key={avatar}
-                  src={`https://api.dicebear.com/9.x/${avatar}/svg`}
+                  src={`https://api.dicebear.com/9.x/avataaars/svg?seed=${avatar}&backgroundColor=b6e3f4,c0aede&backgroundType=gradientLinear`}
                   alt="avatar"
                   className={clsx(
                     "size-16 rounded-full shadow-sm shadow-black hover:cursor-pointer hover:opacity-50",
