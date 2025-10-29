@@ -3,6 +3,7 @@ import {
   addComment,
   deleteCommentById,
   getAllCommentsByReview,
+  reportCommentById,
 } from "@/api/commentsApi";
 import { TCommentForm } from "@/types/comment";
 
@@ -49,4 +50,10 @@ export const useDeleteCommentById = (gameSlug: string, userName: string) => {
     },
   });
   return mutation;
+};
+
+export const useReportCommentById = () => {
+  return useMutation({
+    mutationFn: (id: number) => reportCommentById(id),
+  });
 };

@@ -1,4 +1,7 @@
-import { useCommentsByReview } from "@/queries/useCommentsQuery";
+import {
+  useCommentsByReview,
+  useReportCommentById,
+} from "@/queries/useCommentsQuery";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import {
   useAddComment,
@@ -23,6 +26,7 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
   const { user } = useUser();
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
+  const notConnectedRef = useRef<HTMLDivElement | null>(null);
   const [replyToComment, setReplyToComment] = useState("");
   const [replyToCommentId, setReplyToCommentId] = useState<number | null>(null);
   const mainComments = comments?.comments.filter((c) => !c.parent_id);
@@ -31,6 +35,7 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
 
   const { mutate: addCommentMutate } = useAddComment(gameSlug, userName);
   const { mutate: deleteComment } = useDeleteCommentById(gameSlug, userName);
+  const { mutate: reportComment } = useReportCommentById();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,8 +60,16 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
   const handleReply = (id: number, username: string, comment: string) => {
     setReplyToCommentId(id);
     setReplyToComment(`@${username} : ${comment}`);
-    inputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-    inputRef.current?.focus();
+    if (!user) {
+      notConnectedRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+      notConnectedRef.current?.focus();
+    } else {
+      inputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      inputRef.current?.focus();
+    }
   };
 
   const handleCloseReply = () => {
@@ -83,11 +96,14 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
   return (
     <>
       {!user?.username ? (
-        <div className="mx-3 mt-4 flex flex-wrap items-center justify-center gap-2 border-2 border-black p-4 font-semibold">
+        <div
+          className="mx-3 mt-4 flex flex-wrap items-center justify-center gap-2 border-2 border-black p-4 font-semibold"
+          ref={notConnectedRef}
+        >
           <CiSquareInfo className="size-10" />
           <p>
-            Vous devez être connecté pour ajouter un commentaire ou répondre à
-            un commentaire.
+            Vous devez être connecté pour ajouter, répondre ou signaler un
+            commentaire.
           </p>
           <Link
             to={"/connexion"}
@@ -170,7 +186,10 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
                             </button>
                             {showActionComment.includes(comment.id) && (
                               <div className="absolute right-0 flex flex-col rounded-md bg-surface p-2 text-light">
-                                <button className="rounded-md p-1 hover:bg-gray-700">
+                                <button
+                                  className="rounded-md p-1 hover:bg-gray-700"
+                                  onClick={() => reportComment(comment.id)}
+                                >
                                   Signaler
                                 </button>
                                 {user?.role === "admin" && (
@@ -192,25 +211,23 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
                       </div>
                     </div>
                     <div className="mt-2 flex flex-col items-start gap-2">
-                      {user && (
-                        <button
-                          type="button"
-                          className="rounded-md p-2 text-xs font-bold text-gray-600 shadow-sm shadow-global hover:bg-mainYellow hover:text-black"
-                          onClick={() =>
-                            handleReply(
-                              comment.id,
-                              comment.username,
-                              comment.content,
-                            )
-                          }
-                        >
-                          Répondre
-                        </button>
-                      )}
+                      <button
+                        type="button"
+                        className="rounded-md p-2 text-xs font-bold text-gray-600 shadow-sm shadow-global hover:bg-mainYellow hover:text-black"
+                        onClick={() =>
+                          handleReply(
+                            comment.id,
+                            comment.username,
+                            comment.content,
+                          )
+                        }
+                      >
+                        Répondre
+                      </button>
 
                       {replyCount > 0 && (
                         <button
-                          className="flex items-center gap-1 rounded-md p-2 hover:bg-mainYellow"
+                          className="flex items-center gap-1 rounded-md p-2 sm:hover:bg-mainYellow"
                           onClick={() => handleShowReplies(comment.id)}
                         >
                           {showRepliesFor.includes(comment.id) ? (
@@ -237,7 +254,37 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
                                     <p className="font-semibold">
                                       {reply.username}
                                     </p>
-                                    <BsThreeDotsVertical className="size-4" />
+                                    <div className="relative">
+                                      <button
+                                        onClick={() =>
+                                          handleShowActionComment(reply.id)
+                                        }
+                                      >
+                                        <BsThreeDotsVertical className="size-4" />
+                                      </button>
+                                      {showActionComment.includes(reply.id) && (
+                                        <div className="absolute right-0 flex flex-col rounded-md bg-surface p-2 text-light">
+                                          <button
+                                            className="rounded-md p-1 hover:bg-gray-700"
+                                            onClick={() =>
+                                              reportComment(reply.id)
+                                            }
+                                          >
+                                            Signaler
+                                          </button>
+                                          {user?.role === "admin" && (
+                                            <button
+                                              className="rounded-md p-1 hover:bg-gray-700"
+                                              onClick={() =>
+                                                deleteComment(reply.id)
+                                              }
+                                            >
+                                              Supprimer le commentaire
+                                            </button>
+                                          )}
+                                        </div>
+                                      )}
+                                    </div>
                                   </div>
                                   <p className="text-xs text-gray-800">
                                     {reply.created_at}

@@ -72,3 +72,25 @@ export const deleteCommentById = async (id: number) => {
     throw error;
   }
 };
+
+export const reportCommentById = async (id: number) => {
+  try {
+    const { data: csrfRes } = await axios.get(`${apiUrl}/csrf-token`, {
+      withCredentials: true,
+    });
+    const { data: comment } = await axios.patch(
+      `${apiUrl}/comments/${id}`,
+      {},
+      {
+        withCredentials: true,
+        headers: {
+          "x-csrf-token": csrfRes.csrfToken,
+        },
+      },
+    );
+    return comment;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
