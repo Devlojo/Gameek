@@ -10,6 +10,8 @@ import { useState } from "react";
 import { Comments } from "@/components/ui/Comments";
 import { useUser } from "@/hooks/useUser";
 import { apiUrl } from "@/config";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { useAddLike } from "@/queries/useLikesQuery";
 
 export const Review = () => {
   const { gameSlug, userName } = useParams() as {
@@ -25,6 +27,8 @@ export const Review = () => {
     gameSlug,
     userName,
   );
+
+  const { mutate: addLikeMutate } = useAddLike(gameSlug, userName);
 
   const reviewStatus = [
     { value: "en_attente", label: "En attente" },
@@ -72,6 +76,7 @@ export const Review = () => {
       setErrorMessage(error.response.data?.message);
     }
   };
+
   return (
     <>
       <GameHeader
@@ -183,8 +188,8 @@ export const Review = () => {
                 <ul className="flex flex-col gap-1">
                   {reviewDetail?.review.strengths &&
                     reviewDetail.review.strengths.length > 0 &&
-                    reviewDetail.review.strengths.map((strength) => (
-                      <li className="flex gap-1">
+                    reviewDetail.review.strengths.map((strength, index) => (
+                      <li className="flex gap-1" key={index}>
                         <span className="font-bold text-green-600">+</span>
                         {strength}
                       </li>
@@ -199,8 +204,8 @@ export const Review = () => {
                 <ul className="flex flex-col gap-1 pl-5">
                   {reviewDetail?.review.weaknesses &&
                     reviewDetail.review.weaknesses.length > 0 &&
-                    reviewDetail.review.weaknesses.map((weakness) => (
-                      <li className="flex gap-1">
+                    reviewDetail.review.weaknesses.map((weakness, index) => (
+                      <li className="flex gap-1" key={index}>
                         <span className="font-bold text-red-600">-</span>
                         {weakness}
                       </li>
@@ -208,6 +213,18 @@ export const Review = () => {
                 </ul>
               </div>
             </div>
+
+            <button
+              onClick={() =>
+                addLikeMutate({ review_id: reviewDetail?.review.id as number })
+              }
+            >
+              {reviewDetail?.review.like_id ? (
+                <BsHeartFill size={30} color="black" />
+              ) : (
+                <BsHeart size={30} />
+              )}
+            </button>
           </div>
         </div>
         {user?.role === "admin" && (

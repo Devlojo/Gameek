@@ -108,7 +108,7 @@ export const Reviews = () => {
                         <div className="absolute bottom-0 right-0 flex items-center gap-2 bg-global bg-opacity-70 p-1 text-customWhite">
                           <FaRegHeart className="size-4" />
                           {review.likes_count > 0 && (
-                            <p className="text-sm"></p>
+                            <p className="text-sm">{review.likes_count}</p>
                           )}
                           <BiConversation className="size-4" />
                           {review.comments_count > 0 && (

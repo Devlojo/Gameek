@@ -68,6 +68,7 @@ export const reviewDetailSchema = z.object({
     background_image: z.string(),
     username: z.string(),
     image: z.string(),
+    like_id: z.number().nullable(),
     strengths: z.array(z.string()).max(5).optional(),
     weaknesses: z.array(z.string()).max(5).optional(),
   }),
