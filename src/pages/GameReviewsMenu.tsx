@@ -6,12 +6,13 @@ import { PageNotFound } from "@/components/layout/PageNotFound";
 
 import { Link } from "react-router-dom";
 import { MdArrowDropDown } from "react-icons/md";
-import { FaPen } from "react-icons/fa";
+import { FaPen, FaRegHeart } from "react-icons/fa";
 import { useReviewsByGameQuery } from "@/queries/useReviewsQuery";
 import { useGameDetailQuery } from "@/queries/useGameQuery";
 import { clsx } from "clsx";
 import { Pagination } from "@/components/ui/Pagination";
 import { Loader } from "@/components/ui/Loader";
+import { BiConversation } from "react-icons/bi";
 
 export const GameReviewsMenu = () => {
   const { id } = useParams() as { id: string };
@@ -56,7 +57,7 @@ export const GameReviewsMenu = () => {
                   >
                     {reviewsByGame?.reviews &&
                       reviewsByGame.reviews.length > 0 && (
-                        <p>{reviewsByGame?.count} tests trouvés</p>
+                        <p>{reviewsByGame?.count} test(s) trouvé(s)</p>
                       )}
 
                     <Link
@@ -66,16 +67,19 @@ export const GameReviewsMenu = () => {
                       Rédigez votre test <FaPen />
                     </Link>
                     {reviewsByGame && reviewsByGame.reviews.length > 0 && (
-                      <div className="group relative flex w-36 items-center border-y border-black/40 p-2 hover:cursor-pointer">
-                        <button>Trier par Date</button>
+                      <div className="group relative flex w-44 items-center justify-between border-y border-black/40 p-2 hover:cursor-pointer">
+                        <button>Trier par date</button>
                         <MdArrowDropDown />
                         <div className="absolute left-0 top-full z-10 hidden w-full overflow-y-auto rounded-sm bg-customWhite shadow-sm shadow-black group-hover:flex">
                           <ul className="flex w-full flex-col">
                             <li className="p-2 hover:bg-gray-300">
-                              Trier par Note
+                              Trier par note
                             </li>
                             <li className="p-2 hover:bg-gray-300">
-                              Trier par Testeur
+                              Trier par testeur
+                            </li>
+                            <li className="p-2 hover:bg-gray-300">
+                              Trier par popularité
                             </li>
                           </ul>
                         </div>
@@ -100,12 +104,24 @@ export const GameReviewsMenu = () => {
                                 className="h-40 w-full object-cover sm:h-[200px]"
                                 loading="lazy"
                               />
-                              <p className="absolute bottom-0 bg-global bg-opacity-70 px-0.5 text-xs text-gray-200 shadow-sm shadow-black">
-                                <span className="text-xl text-mainYellow">
+                              <div className="absolute bottom-0 flex items-center bg-global bg-opacity-70 px-0.5 text-xs text-gray-200 shadow-sm shadow-black">
+                                <p className="text-xl text-mainYellow">
                                   {review.grade}
-                                </span>
+                                </p>
                                 ∕20
-                              </p>
+                              </div>
+                              <div className="absolute bottom-0 right-0 flex items-center gap-2 bg-global bg-opacity-70 p-1 text-customWhite">
+                                <FaRegHeart className="size-4" />
+                                {review.likes_count > 0 && (
+                                  <p className="text-sm"></p>
+                                )}
+                                <BiConversation className="size-4" />
+                                {review.comments_count > 0 && (
+                                  <p className="text-sm">
+                                    {review.comments_count}
+                                  </p>
+                                )}
+                              </div>
                             </div>
                             <div className="flex w-full flex-col gap-2 p-2">
                               <p className="italic">{review.introduction}</p>

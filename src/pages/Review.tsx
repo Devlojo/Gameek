@@ -4,17 +4,19 @@ import { PageNotFound } from "@/components/layout/PageNotFound";
 import { MdArrowDropDown } from "react-icons/md";
 import { useReviewDetailQuery } from "@/queries/useReviewsQuery";
 import { Loader } from "@/components/ui/Loader";
-import { TUserRole } from "@/types/user";
 import axios from "axios";
 import { CiSquareInfo } from "react-icons/ci";
 import { useState } from "react";
+import { Comments } from "@/components/ui/Comments";
+import { useUser } from "@/hooks/useUser";
+import { apiUrl } from "@/config";
 
-export const Review = ({ userRole }: TUserRole) => {
+export const Review = () => {
   const { gameSlug, userName } = useParams() as {
     gameSlug: string;
     userName: string;
   };
-
+  const { user } = useUser();
   const navigate = useNavigate();
   const [requestError, setRequestError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
@@ -39,7 +41,7 @@ export const Review = ({ userRole }: TUserRole) => {
   if (isError) {
     return <PageNotFound />;
   }
-  if (reviewDetail?.review.status !== "valide" && userRole !== "admin") {
+  if (reviewDetail?.review.status !== "valide" && user?.role !== "admin") {
     return (
       <div className="mt-4 flex h-32 flex-col items-center justify-center bg-customWhite shadow-md shadow-blue-500">
         <CiSquareInfo className="size-10 text-blue-500" />
@@ -50,7 +52,6 @@ export const Review = ({ userRole }: TUserRole) => {
       </div>
     );
   }
-  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleOnChange = async (e: any) => {
     const newStatus = e.target.value;
@@ -209,13 +210,13 @@ export const Review = ({ userRole }: TUserRole) => {
             </div>
           </div>
         </div>
-        {userRole === "admin" && (
+        {user?.role === "admin" && (
           <>
             {requestError && (
               <p className="font-bold text-red-600">{errorMessage}</p>
             )}
-            <div className="mt-2 flex items-center justify-center gap-2">
-              <p>Selectionnez un statut :</p>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2 px-3">
+              <p>Selectionnez un statut de validation pour ce test :</p>
               <select
                 value={selectedStatus}
                 onChange={(e) => handleOnChange(e)}
@@ -230,6 +231,12 @@ export const Review = ({ userRole }: TUserRole) => {
             </div>
           </>
         )}
+
+        <Comments
+          gameSlug={gameSlug}
+          userName={userName}
+          reviewId={reviewDetail?.review.id as number}
+        />
       </GameHeader>
     </>
   );

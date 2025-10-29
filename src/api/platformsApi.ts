@@ -1,7 +1,6 @@
 import axios from "axios";
 import { genreOrPlatformSchema } from "@/types/index";
-
-const apiUrl = import.meta.env.VITE_API_URL;
+import { apiUrl } from "@/config";
 
 export const getAllPlatforms = async () => {
   try {

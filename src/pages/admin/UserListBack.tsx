@@ -1,15 +1,18 @@
 import { Navbar } from "@/components/admin/Navbar";
 import { ConfirmModal } from "@/components/ui/admin/ConfirmModal";
 import { useGetAllUsersQuery } from "@/queries/admin/useUsersQuery";
-import { TUserRole } from "@/types/user";
+import { useUser } from "@/hooks/useUser";
 import axios from "axios";
 import { useState } from "react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaEdit } from "react-icons/fa";
 import { Navigate } from "react-router-dom";
-export const UserListBack = ({ userRole }: TUserRole) => {
+import { apiUrl } from "@/config";
+
+export const UserListBack = () => {
   const { users } = useGetAllUsersQuery();
-  if (userRole !== "admin") {
+  const { user } = useUser();
+  if (user?.role !== "admin") {
     return <Navigate to={"/"} replace />;
   }
 
@@ -18,7 +21,7 @@ export const UserListBack = ({ userRole }: TUserRole) => {
   const [localUsers, setLocalUsers] = useState(users?.users || []);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
-  const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleDelete = async (id: number) => {
     try {
       const res = await axios.delete(`${apiUrl}/back/users/${id}`, {

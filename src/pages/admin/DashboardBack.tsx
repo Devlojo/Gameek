@@ -1,16 +1,18 @@
 import { Navbar } from "@/components/admin/Navbar";
 import { useGetAllUsersQuery } from "@/queries/admin/useUsersQuery";
 import { useGetAllReviewsQuery } from "@/queries/admin/useReviewsQuery";
-import { TUserRole } from "@/types/user";
+import { useUser } from "@/hooks/useUser";
 import { Navigate } from "react-router-dom";
 
-export const DashboardBack = ({ userRole }: TUserRole) => {
+export const DashboardBack = () => {
   const { users } = useGetAllUsersQuery();
   const { reviews } = useGetAllReviewsQuery();
   const pendingReviews = reviews?.reviews.filter(
     (review) => review.status !== "valide",
   );
-  if (userRole !== "admin") {
+
+  const { user } = useUser();
+  if (user?.role !== "admin") {
     return <Navigate to={"/"} replace />;
   }
 

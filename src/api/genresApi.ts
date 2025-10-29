@@ -1,7 +1,7 @@
 import axios from "axios";
 import { genreOrPlatformSchema } from "@/types/index";
+import { apiUrl } from "@/config";
 
-const apiUrl = import.meta.env.VITE_API_URL;
 export const getAllGenres = async () => {
   try {
     const { data: genres } = await axios.get(`${apiUrl}/genres`, {

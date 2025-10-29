@@ -1,6 +1,6 @@
 import axios from "axios";
 import { reviewListBackSchema } from "@/types/review";
-const apiUrl = import.meta.env.VITE_API_URL;
+import { apiUrl } from "@/config";
 
 export const getAllReviews = async () => {
   try {

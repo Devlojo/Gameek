@@ -20,7 +20,7 @@ export const BestGamesSection = () => {
           <BsFire className="size-5 text-orange-600" />
         </div>
       </div>
-      <div className="flex flex-wrap gap-4 sm:justify-center">
+      <div className="flex flex-wrap gap-4">
         {isLoading && <Loader />}
         {isSuccess && checkedGames && checkedGames.length > 0 ? (
           checkedGames.map((game, index) => {

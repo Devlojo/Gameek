@@ -3,7 +3,9 @@ import { clsx } from "clsx";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate, Navigate } from "react-router-dom";
-import { TUser } from "@/types/user";
+import { useUser } from "@/hooks/useUser";
+import { useCsrfToken } from "@/hooks/useCsrfToken";
+import { apiUrl } from "@/config";
 
 type TForm = {
   username: string;
@@ -12,40 +14,34 @@ type TForm = {
   image: string;
 };
 
-type SignInProps = {
-  setUser: React.Dispatch<React.SetStateAction<TUser | null>>;
-  user: TUser | null;
-  setCsrfToken: React.Dispatch<React.SetStateAction<string | null>>;
-};
-export const SignIn = ({
-  setUser,
-  setCsrfToken,
-  user,
-}: SignInProps): JSX.Element => {
+export const SignIn = (): JSX.Element => {
+  const { user, setUser } = useUser();
+  const { setCsrfToken } = useCsrfToken();
+
   const avatars = [
-    "adventurer",
-    "bottts",
-    "avataaars",
-    "avataaars-neutral",
-    "lorelei",
-    "croodles",
-    "fun-emoji",
-    "personas",
-    "pixel-art",
-    "shapes",
-    "thumbs",
-    "open-peeps",
-    "big-smile",
-    "notionists",
-    "micah",
-    "glass",
-    "rings",
-    "lorelei-neutral",
+    "Katherine",
+    "George",
+    "Mason",
+    "Caleb",
+    "Jade",
+    "Luis",
+    "Easton",
+    "Avery",
+    "Valentina",
+    "Chase",
+    "Maria",
+    "Aneka",
+    "Eliza",
+    "Sawyer",
+    "Jessica",
+    "Ryan",
+    "Jocelyn",
+    "Brooklynn",
   ];
   const [selectedAvatar, setSelectedAvatar] = useState(avatars[0]);
   const [requestError, setRequestError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
-  const apiUrl = import.meta.env.VITE_API_URL;
+
   const navigate = useNavigate();
   const {
     register,
@@ -54,7 +50,10 @@ export const SignIn = ({
     formState: { errors },
   } = useForm<TForm>({
     defaultValues: {
-      image: "https://api.dicebear.com/9.x/adventurer/svg",
+      image:
+        "https://api.dicebear.com/9.x/avataaars/svg?seed=" +
+        avatars[0] +
+        "&backgroundColor=b6e3f4,c0aede&backgroundType=gradientLinear",
     },
   });
 
@@ -66,7 +65,10 @@ export const SignIn = ({
   const handleAvatar = (avatar: string) => {
     setSelectedAvatar(avatar);
     // pour recupérer l'url complet de l'image pour envoyer en BDD"
-    setValue("image", `https://api.dicebear.com/9.x/${avatar}/svg`);
+    setValue(
+      "image",
+      `https://api.dicebear.com/9.x/avataaars/svg?seed=${avatar}&backgroundColor=b6e3f4,c0aede&backgroundType=gradientLinear`,
+    );
   };
   const onSubmit = async (data: TForm) => {
     try {
@@ -100,10 +102,11 @@ export const SignIn = ({
             {requestError && (
               <p className="font-bold text-red-600">{errorMessage}</p>
             )}
+            <p className="text-center">Votre avatar :</p>
             {selectedAvatar && (
               <div className="flex justify-center">
                 <img
-                  src={`https://api.dicebear.com/9.x/${selectedAvatar}/svg`}
+                  src={`https://api.dicebear.com/9.x/avataaars/svg?seed=${selectedAvatar}&backgroundColor=b6e3f4,c0aede&backgroundType=gradientLinear`}
                   className="size-20 rounded-full shadow-sm shadow-black"
                 ></img>
               </div>
@@ -112,7 +115,7 @@ export const SignIn = ({
               {avatars.map((avatar) => (
                 <img
                   key={avatar}
-                  src={`https://api.dicebear.com/9.x/${avatar}/svg`}
+                  src={`https://api.dicebear.com/9.x/avataaars/svg?seed=${avatar}&backgroundColor=b6e3f4,c0aede&backgroundType=gradientLinear`}
                   alt="avatar"
                   className={clsx(
                     "size-16 rounded-full shadow-sm shadow-black hover:cursor-pointer hover:opacity-50",

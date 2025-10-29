@@ -33,6 +33,8 @@ export const reviewListResponseSchema = z.object({
       background_image: z.string(),
       username: z.string(),
       image: z.string(),
+      likes_count: z.number(),
+      comments_count: z.number(),
       platforms: z.array(
         z.object({
           platform: z.object({
@@ -84,6 +86,8 @@ export const reviewListByGameSchema = z.object({
       background_image: z.string(),
       username: z.string(),
       image: z.string(),
+      likes_count: z.number(),
+      comments_count: z.number(),
     }),
   ),
   count: z.number().optional(),
@@ -102,6 +106,8 @@ export const reviewListFilteredSchema = z.object({
       slug: z.string(),
       introduction: z.string(),
       background_image: z.string(),
+      likes_count: z.number(),
+      comments_count: z.number(),
       platforms: z.array(
         z.object({
           platform: z.object({
@@ -133,3 +139,5 @@ export const reviewListBackSchema = z.object({
     }),
   ),
 });
+
+export type TReviewDetail = z.infer<typeof reviewDetailSchema>;

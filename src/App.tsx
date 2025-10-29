@@ -5,7 +5,7 @@ import { GameGeneralMenu } from "@/pages/GameGeneralMenu";
 import { GameReviewsMenu } from "@/pages/GameReviewsMenu";
 import { GameImagesMenu } from "@/pages/GameImagesMenu";
 import { GameVideosMenu } from "@/pages/GameVideosMenu";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BurgerMenu } from "./components/ui/BurgerMenu";
 import { ScrollToTopButton } from "@/components/ui/ScrollToTopButton";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -21,37 +21,17 @@ import { LegalMention } from "@/pages/LegalMention";
 import { PrivacyPolicy } from "@/pages/PrivacyPolicy";
 import { GeneralConditionsOfUse } from "@/pages/GeneralConditionsOfUse";
 import { About } from "@/pages/About";
-import { TUser } from "@/types/user";
 import { DashboardBack } from "@/pages/admin/DashboardBack";
 import { ReviewListBack } from "@/pages/admin/ReviewListBack";
 import { UserListBack } from "@/pages/admin/UserListBack";
-import axios from "axios";
-import { PageNotFound } from "./components/layout/PageNotFound";
+import { PageNotFound } from "@/components/layout/PageNotFound";
+import { useUser } from "@/hooks/useUser";
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
-  const [user, setUser] = useState<TUser | null>(null);
-  const [csrfToken, setCsrfToken] = useState<string | null>(null);
   const [alertModalCreatedReview, setAlertModalCreatedReview] = useState(false);
 
-  const apiUrl = import.meta.env.VITE_API_URL;
-
-  // recupere le user authentifié dès que le composant se monte
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const res = await axios.get(`${apiUrl}/profile`, {
-          withCredentials: true, // permet au navigateur d'envoyer le cookie HttpOnly au serveur
-        });
-
-        setUser(res.data.user);
-      } catch (error) {
-        setUser(null);
-      }
-    };
-
-    fetchProfile();
-  }, []);
+  const { loading } = useUser();
 
   const handleActiveBurgerMenu = () => {
     setActiveBurgerMenu((prev) => !prev);
@@ -64,6 +44,8 @@ const App = (): JSX.Element => {
     document.body.style.overflow = "";
   }
 
+  if (loading) return <p></p>;
+
   return (
     <>
       <Router>
@@ -73,11 +55,10 @@ const App = (): JSX.Element => {
           {activeBurgerMenu && (
             <BurgerMenu handleActiveBurgerMenu={handleActiveBurgerMenu} />
           )}
+
           <Header
             activeBurgerMenu={activeBurgerMenu}
             handleActiveBurgerMenu={handleActiveBurgerMenu}
-            user={user}
-            setUser={setUser}
           />
 
           <div className="mx-auto flex max-w-5xl flex-col gap-6">
@@ -98,8 +79,6 @@ const App = (): JSX.Element => {
                 path="/creation/test/:id"
                 element={
                   <ReviewForm
-                    user={user}
-                    csrfToken={csrfToken}
                     setAlertModalCreatedReview={setAlertModalCreatedReview}
                   />
                 }
@@ -109,30 +88,9 @@ const App = (): JSX.Element => {
 
               <Route path="/jeu/images/:id" element={<GameImagesMenu />} />
               <Route path="/jeu/videos/:id" element={<GameVideosMenu />} />
-              <Route
-                path="/test/:gameSlug/:userName"
-                element={<Review userRole={user?.role} />}
-              />
-              <Route
-                path="/inscription"
-                element={
-                  <SignIn
-                    setUser={setUser}
-                    user={user}
-                    setCsrfToken={setCsrfToken}
-                  />
-                }
-              />
-              <Route
-                path="/connexion"
-                element={
-                  <Login
-                    setUser={setUser}
-                    user={user}
-                    setCsrfToken={setCsrfToken}
-                  />
-                }
-              />
+              <Route path="/test/:gameSlug/:userName" element={<Review />} />
+              <Route path="/inscription" element={<SignIn />} />
+              <Route path="/connexion" element={<Login />} />
               <Route path="/mention-legales" element={<LegalMention />} />
               <Route
                 path="/politique-de-confidentialite"
@@ -145,19 +103,10 @@ const App = (): JSX.Element => {
 
               <Route path="/a-propos" element={<About />} />
 
-              <Route
-                path="/back"
-                element={<DashboardBack userRole={user?.role} />}
-              />
+              <Route path="/back" element={<DashboardBack />} />
 
-              <Route
-                path="/back/utilisateurs"
-                element={<UserListBack userRole={user?.role} />}
-              />
-              <Route
-                path="/back/tests"
-                element={<ReviewListBack userRole={user?.role} />}
-              />
+              <Route path="/back/utilisateurs" element={<UserListBack />} />
+              <Route path="/back/tests" element={<ReviewListBack />} />
               {/* 404 fallback */}
               <Route path="*" element={<PageNotFound />} />
             </Routes>

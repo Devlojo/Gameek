@@ -9,29 +9,25 @@ import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { getCurrentDate } from "@/utils/getCurrentDate";
 import { MdArrowDropDown } from "react-icons/md";
-import { TUser } from "@/types/user";
+import { useUser } from "@/hooks/useUser";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { apiUrl } from "@/config";
 
 type THeaderProps = {
   activeBurgerMenu: boolean;
   handleActiveBurgerMenu: () => void;
-  user: TUser | null;
-  setUser: React.Dispatch<React.SetStateAction<TUser | null>>;
 };
 export const Header = ({
   activeBurgerMenu,
   handleActiveBurgerMenu,
-  user,
-  setUser,
 }: THeaderProps): JSX.Element => {
   const [activeSearchInput, setActiveSearchInput] = useState(false);
   const navigate = useNavigate();
   const handleInputSearch = () => {
     setActiveSearchInput((prev) => !prev);
   };
-
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const { user, setUser } = useUser();
 
   const logout = () => {
     axios.post(`${apiUrl}/logout`, {}, { withCredentials: true });

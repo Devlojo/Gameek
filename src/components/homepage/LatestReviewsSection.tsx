@@ -4,6 +4,8 @@ import { IoIosTimer } from "react-icons/io";
 import { GameHoverCard } from "../ui/GameHoverCard";
 import { Link } from "react-router-dom";
 import { Loader } from "../ui/Loader";
+import { BiConversation } from "react-icons/bi";
+import { FaRegHeart } from "react-icons/fa";
 
 export const LatestReviewsSection = () => {
   const { latestReviews, isSuccess, isLoading } = useLatestReviewsQuery();
@@ -17,7 +19,7 @@ export const LatestReviewsSection = () => {
           <IoIosTimer className="size-5 text-global" />
         </div>
       </div>
-      <div className="flex flex-wrap gap-4 sm:justify-center">
+      <div className="flex flex-wrap gap-4">
         {isLoading && <Loader />}
         {isSuccess && latestReviews && latestReviews.reviews.length > 0 ? (
           latestReviews.reviews.map((review, index) => {
@@ -45,12 +47,21 @@ export const LatestReviewsSection = () => {
                       </div>
                     )}
 
-                    <p className="absolute bottom-0 bg-global bg-opacity-70 px-0.5 text-xs text-customWhite shadow-sm shadow-black">
-                      <span className="text-xl font-semibold text-mainYellow">
+                    <div className="absolute bottom-0 flex items-center bg-global bg-opacity-70 px-0.5 text-xs text-customWhite shadow-sm shadow-black">
+                      <p className="text-xl font-semibold text-mainYellow">
                         {review.grade}
-                      </span>
+                      </p>
                       ∕20
-                    </p>
+                    </div>
+
+                    <div className="absolute bottom-0 right-0 flex items-center gap-2 bg-global bg-opacity-70 p-1 text-customWhite">
+                      <FaRegHeart className="size-4" />
+                      {review.likes_count > 0 && <p className="text-sm"></p>}
+                      <BiConversation className="size-4" />
+                      {review.comments_count > 0 && (
+                        <p className="text-sm">{review.comments_count}</p>
+                      )}
+                    </div>
                   </div>
                   <div className="mt-2 flex flex-col gap-3 sm:h-[250px] sm:justify-between sm:gap-0 md:h-[220px] lg:h-[180px]">
                     <h3 className="text-lg font-semibold">{review.gamename}</h3>
