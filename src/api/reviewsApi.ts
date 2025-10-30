@@ -12,7 +12,7 @@ export const getLatestReviews = async () => {
   try {
     const { data: latestReviews } = await axios.get(
       `${apiUrl}/reviews/latest`,
-      { timeout: 5000 },
+      { withCredentials: true, timeout: 5000 },
     );
     const latestReviewsParsed = reviewListResponseSchema.parse(latestReviews);
     return latestReviewsParsed;
@@ -26,7 +26,7 @@ export const getReviewDetail = async (gameSlug: string, userName: string) => {
   try {
     const { data: reviewDetail } = await axios.get<TReviewDetail>(
       `${apiUrl}/reviews/${gameSlug}/${userName}`,
-      { timeout: 5000 },
+      { withCredentials: true, timeout: 5000 },
     );
     const reviewDetailParsed = reviewDetailSchema.parse(reviewDetail);
     return reviewDetailParsed;
@@ -40,7 +40,7 @@ export const getReviewsByGame = async (gameSlug: string) => {
   try {
     const { data: reviewsByGame } = await axios.get(
       `${apiUrl}/reviews/${gameSlug}`,
-      { timeout: 5000 },
+      { withCredentials: true, timeout: 5000 },
     );
     const reviewByGameParsed = reviewListByGameSchema.parse(reviewsByGame);
     return reviewByGameParsed;
@@ -63,6 +63,7 @@ export const getAllReviews = async (
         platforms ? `&platforms=${platforms}` : ""
       }${genres ? `&genres=${genres}` : ""}${grade !== undefined && grade !== null ? `&grade=${grade}` : ""}`,
       {
+        withCredentials: true,
         timeout: 5000,
       },
     );

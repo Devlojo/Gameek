@@ -13,6 +13,7 @@ import { useUser } from "@/hooks/useUser";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { apiUrl } from "@/config";
+import { useQueryClient } from "@tanstack/react-query";
 
 type THeaderProps = {
   activeBurgerMenu: boolean;
@@ -28,12 +29,12 @@ export const Header = ({
     setActiveSearchInput((prev) => !prev);
   };
   const { user, setUser } = useUser();
-
+  const queryClient = useQueryClient();
   const logout = async () => {
     try {
       await axios.post(`${apiUrl}/logout`, {}, { withCredentials: true });
       setUser(null);
-
+      queryClient.invalidateQueries({ queryKey: ["latestReviews"] });
       navigate("/");
     } catch (error) {
       console.error("Erreur lors de la déconnexion :", error);

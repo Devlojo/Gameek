@@ -11,7 +11,7 @@ import { Comments } from "@/components/ui/Comments";
 import { useUser } from "@/hooks/useUser";
 import { apiUrl } from "@/config";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
-import { useAddLike } from "@/queries/useLikesQuery";
+import { useToggleLike } from "@/queries/useLikesQuery";
 
 export const Review = () => {
   const { gameSlug, userName } = useParams() as {
@@ -28,7 +28,7 @@ export const Review = () => {
     userName,
   );
 
-  const { mutate: addLikeMutate } = useAddLike(gameSlug, userName);
+  const { mutate: toggleLikeMutate } = useToggleLike(gameSlug, userName);
 
   const reviewStatus = [
     { value: "en_attente", label: "En attente" },
@@ -216,14 +216,18 @@ export const Review = () => {
 
             <button
               onClick={() =>
-                addLikeMutate({ review_id: reviewDetail?.review.id as number })
+                toggleLikeMutate({
+                  review_id: reviewDetail?.review.id as number,
+                })
               }
+              className="flex items-center gap-2 border border-gray-400 p-2 shadow-sm shadow-black md:hover:shadow-indigo-300"
             >
-              {reviewDetail?.review.like_id ? (
-                <BsHeartFill size={30} color="black" />
+              {reviewDetail?.review.user_id_like ? (
+                <BsHeartFill size={20} />
               ) : (
-                <BsHeart size={30} />
+                <BsHeart size={20} />
               )}
+              <span>Like</span>
             </button>
           </div>
         </div>
