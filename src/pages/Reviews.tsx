@@ -9,7 +9,7 @@ import { useReviewsByFilter } from "@/queries/useReviewsQuery";
 import { Pagination } from "@/components/ui/Pagination";
 import { useGetAllUsersQuery } from "@/queries/useUsersQuery";
 import { BiConversation } from "react-icons/bi";
-import { FaRegHeart } from "react-icons/fa";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { MdArrowDropDown } from "react-icons/md";
 
 type Item = {
@@ -106,9 +106,13 @@ export const Reviews = () => {
                           ∕20
                         </div>
                         <div className="absolute bottom-0 right-0 flex items-center gap-2 bg-global bg-opacity-70 p-1 text-customWhite">
-                          <FaRegHeart className="size-4" />
+                          {review.user_id_like ? (
+                            <BsHeartFill className="size-4" />
+                          ) : (
+                            <BsHeart className="size-4" />
+                          )}
                           {review.likes_count > 0 && (
-                            <p className="text-sm"></p>
+                            <p className="text-sm">{review.likes_count}</p>
                           )}
                           <BiConversation className="size-4" />
                           {review.comments_count > 0 && (

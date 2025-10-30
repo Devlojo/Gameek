@@ -31,7 +31,8 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
   const [replyToCommentId, setReplyToCommentId] = useState<number | null>(null);
   const mainComments = comments?.comments.filter((c) => !c.parent_id);
   const [showRepliesFor, setShowRepliesFor] = useState<number[]>([]);
-  const [showActionComment, setShowActionComment] = useState<number[]>([]);
+  const [openActionComments, setOpenActionComments] = useState<number[]>([]);
+  const [actionMessage, setActionMessage] = useState<string | null>(null);
 
   const { mutate: addCommentMutate } = useAddComment(gameSlug, userName);
   const { mutate: deleteComment } = useDeleteCommentById(gameSlug, userName);
@@ -72,6 +73,30 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
     }
   };
 
+  const handleReport = (commentId: number) => {
+    if (!user) {
+      notConnectedRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+      notConnectedRef.current?.focus();
+    } else {
+      reportComment(commentId);
+      setActionMessage("Le commentaire a bien été signalé");
+
+      // faire disparaître le message après 3 secondes
+      setTimeout(() => {
+        setActionMessage(null);
+      }, 3000);
+      inputRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      inputRef.current?.focus();
+      setOpenActionComments((prev) =>
+        prev.includes(commentId)
+          ? prev.filter((id) => id !== commentId)
+          : [...prev, commentId],
+      );
+    }
+  };
   const handleCloseReply = () => {
     setReplyToCommentId(null);
   };
@@ -85,8 +110,8 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
     );
   };
 
-  const handleShowActionComment = (commentId: number) => {
-    setShowActionComment((prev) =>
+  const handleOpenActionComments = (commentId: number) => {
+    setOpenActionComments((prev) =>
       prev.includes(commentId)
         ? prev.filter((id) => id !== commentId)
         : [...prev, commentId],
@@ -153,6 +178,10 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
             <p className="mt-4">{comments?.count} commentaire(s)</p>
             <div className="flex w-4/5 justify-center border-b border-global/40"></div>
             <div className="flex w-full flex-col gap-4 px-4">
+              {actionMessage && (
+                <p className="text-green-700">{actionMessage}</p>
+              )}
+
               {mainComments?.map((comment, index) => {
                 const replyCount = comments.comments.filter(
                   (c: any) => c.parent_id === comment.id,
@@ -179,16 +208,16 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
                           <div className="relative">
                             <button
                               onClick={() =>
-                                handleShowActionComment(comment.id)
+                                handleOpenActionComments(comment.id)
                               }
                             >
                               <BsThreeDotsVertical className="size-4" />
                             </button>
-                            {showActionComment.includes(comment.id) && (
+                            {openActionComments.includes(comment.id) && (
                               <div className="absolute right-0 flex flex-col rounded-md bg-surface p-2 text-light">
                                 <button
                                   className="rounded-md p-1 hover:bg-gray-700"
-                                  onClick={() => reportComment(comment.id)}
+                                  onClick={() => handleReport(comment.id)}
                                 >
                                   Signaler
                                 </button>
@@ -257,17 +286,19 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
                                     <div className="relative">
                                       <button
                                         onClick={() =>
-                                          handleShowActionComment(reply.id)
+                                          handleOpenActionComments(reply.id)
                                         }
                                       >
                                         <BsThreeDotsVertical className="size-4" />
                                       </button>
-                                      {showActionComment.includes(reply.id) && (
+                                      {openActionComments.includes(
+                                        reply.id,
+                                      ) && (
                                         <div className="absolute right-0 flex flex-col rounded-md bg-surface p-2 text-light">
                                           <button
                                             className="rounded-md p-1 hover:bg-gray-700"
                                             onClick={() =>
-                                              reportComment(reply.id)
+                                              handleReport(reply.id)
                                             }
                                           >
                                             Signaler

@@ -35,6 +35,7 @@ export const reviewListResponseSchema = z.object({
       image: z.string(),
       likes_count: z.number(),
       comments_count: z.number(),
+      user_id_like: z.number().nullable(),
       platforms: z.array(
         z.object({
           platform: z.object({
@@ -68,6 +69,7 @@ export const reviewDetailSchema = z.object({
     background_image: z.string(),
     username: z.string(),
     image: z.string(),
+    user_id_like: z.number().nullable(),
     strengths: z.array(z.string()).max(5).optional(),
     weaknesses: z.array(z.string()).max(5).optional(),
   }),
@@ -87,6 +89,7 @@ export const reviewListByGameSchema = z.object({
       username: z.string(),
       image: z.string(),
       likes_count: z.number(),
+      user_id_like: z.number().nullable(),
       comments_count: z.number(),
     }),
   ),
@@ -107,6 +110,7 @@ export const reviewListFilteredSchema = z.object({
       introduction: z.string(),
       background_image: z.string(),
       likes_count: z.number(),
+      user_id_like: z.number().nullable(),
       comments_count: z.number(),
       platforms: z.array(
         z.object({

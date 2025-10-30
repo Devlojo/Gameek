@@ -13,6 +13,7 @@ import { useUser } from "@/hooks/useUser";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { apiUrl } from "@/config";
+import { useQueryClient } from "@tanstack/react-query";
 
 type THeaderProps = {
   activeBurgerMenu: boolean;
@@ -28,12 +29,16 @@ export const Header = ({
     setActiveSearchInput((prev) => !prev);
   };
   const { user, setUser } = useUser();
-
-  const logout = () => {
-    axios.post(`${apiUrl}/logout`, {}, { withCredentials: true });
-    setUser(null);
-
-    navigate("/");
+  const queryClient = useQueryClient();
+  const logout = async () => {
+    try {
+      await axios.post(`${apiUrl}/logout`, {}, { withCredentials: true });
+      setUser(null);
+      queryClient.invalidateQueries({ queryKey: ["latestReviews"] });
+      navigate("/");
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion :", error);
+    }
   };
   return (
     <>
@@ -141,6 +146,9 @@ export const Header = ({
                   <Link to="" className="p-1 text-center hover:bg-gray-300">
                     Profil
                   </Link>
+                  <Link to="" className="p-1 text-center hover:bg-gray-300">
+                    Notifications
+                  </Link>
                   {user?.role === "admin" && (
                     <Link
                       to="/back"
@@ -152,6 +160,7 @@ export const Header = ({
                   <Link to="" className="p-1 text-center hover:bg-gray-300">
                     Mes tests
                   </Link>
+
                   <button
                     className="p-1 text-center hover:bg-gray-300"
                     onClick={logout}

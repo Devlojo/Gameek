@@ -10,6 +10,8 @@ import { useState } from "react";
 import { Comments } from "@/components/ui/Comments";
 import { useUser } from "@/hooks/useUser";
 import { apiUrl } from "@/config";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { useToggleLike } from "@/queries/useLikesQuery";
 
 export const Review = () => {
   const { gameSlug, userName } = useParams() as {
@@ -25,6 +27,8 @@ export const Review = () => {
     gameSlug,
     userName,
   );
+
+  const { mutate: toggleLikeMutate } = useToggleLike(gameSlug, userName);
 
   const reviewStatus = [
     { value: "en_attente", label: "En attente" },
@@ -72,6 +76,7 @@ export const Review = () => {
       setErrorMessage(error.response.data?.message);
     }
   };
+
   return (
     <>
       <GameHeader
@@ -183,8 +188,8 @@ export const Review = () => {
                 <ul className="flex flex-col gap-1">
                   {reviewDetail?.review.strengths &&
                     reviewDetail.review.strengths.length > 0 &&
-                    reviewDetail.review.strengths.map((strength) => (
-                      <li className="flex gap-1">
+                    reviewDetail.review.strengths.map((strength, index) => (
+                      <li className="flex gap-1" key={index}>
                         <span className="font-bold text-green-600">+</span>
                         {strength}
                       </li>
@@ -199,8 +204,8 @@ export const Review = () => {
                 <ul className="flex flex-col gap-1 pl-5">
                   {reviewDetail?.review.weaknesses &&
                     reviewDetail.review.weaknesses.length > 0 &&
-                    reviewDetail.review.weaknesses.map((weakness) => (
-                      <li className="flex gap-1">
+                    reviewDetail.review.weaknesses.map((weakness, index) => (
+                      <li className="flex gap-1" key={index}>
                         <span className="font-bold text-red-600">-</span>
                         {weakness}
                       </li>
@@ -208,6 +213,22 @@ export const Review = () => {
                 </ul>
               </div>
             </div>
+
+            <button
+              onClick={() =>
+                toggleLikeMutate({
+                  review_id: reviewDetail?.review.id as number,
+                })
+              }
+              className="flex items-center gap-2 border border-gray-400 p-2 shadow-sm shadow-black md:hover:shadow-indigo-300"
+            >
+              {reviewDetail?.review.user_id_like ? (
+                <BsHeartFill size={20} />
+              ) : (
+                <BsHeart size={20} />
+              )}
+              <span>Like</span>
+            </button>
           </div>
         </div>
         {user?.role === "admin" && (
