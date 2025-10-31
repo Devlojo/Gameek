@@ -1,6 +1,7 @@
 import { CgCloseR } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import { useNotificationsQuery } from "@/queries/useNotificationsQuery";
+import { useUser } from "@/hooks/useUser";
 
 type TNotificationModalProps = {
   setShowNotificationModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -10,7 +11,7 @@ export const NotificationModal = ({
   setShowNotificationModal,
 }: TNotificationModalProps) => {
   const { notifications } = useNotificationsQuery();
-
+  const { user } = useUser();
   return (
     <div className="absolute right-0 top-full z-50 flex h-96 w-[500px] flex-col overflow-y-auto rounded-md bg-customWhite text-black shadow-sm shadow-black">
       <div className="p-2">
@@ -27,9 +28,13 @@ export const NotificationModal = ({
       <div className="w-auto border-t border-gray-600"></div>
       <div className="flex flex-col gap-2 p-2">
         {notifications?.notifications &&
-          notifications.notifications.length > 0 &&
+        notifications.notifications.length > 0 ? (
           notifications.notifications.map((notification, index) => (
-            <Link to={"/"} className="flex justify-between gap-2" key={index}>
+            <Link
+              to={`/test/${notification.slug}/${user?.username}`}
+              className="flex justify-between gap-2"
+              key={index}
+            >
               <img
                 src={notification.avatar}
                 alt="Avatar de l'utilisateur"
@@ -39,7 +44,10 @@ export const NotificationModal = ({
               <p> à liké votre test sur {notification.game_name}</p>
               <p>{notification.created_at}</p>
             </Link>
-          ))}
+          ))
+        ) : (
+          <p>Aucune notification</p>
+        )}
       </div>
     </div>
   );

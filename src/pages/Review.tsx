@@ -28,6 +28,7 @@ export const Review = () => {
     userName,
   );
 
+  // l'objet mutate représente la fonction mutate du hook de tanstack query
   const { mutate: toggleLikeMutate } = useToggleLike(gameSlug, userName);
 
   const reviewStatus = [
@@ -227,7 +228,7 @@ export const Review = () => {
               ) : (
                 <BsHeart size={20} />
               )}
-              <span>Like</span>
+              <span>J'aime</span>
             </button>
           </div>
         </div>

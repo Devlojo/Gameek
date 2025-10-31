@@ -2,12 +2,14 @@ import { IoClose } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { getCurrentDate } from "@/utils/getCurrentDate";
 import { NotificationCount } from "./NotificationCount";
+import { useNotificationsQuery } from "@/queries/useNotificationsQuery";
 
 type TActiveBurgerMenu = {
   handleActiveBurgerMenu: () => void;
 };
 
 export const BurgerMenu = ({ handleActiveBurgerMenu }: TActiveBurgerMenu) => {
+  const { notifications } = useNotificationsQuery();
   return (
     <>
       <div className="fixed z-30 flex h-full w-full bg-global text-light md:hidden">
@@ -44,7 +46,11 @@ export const BurgerMenu = ({ handleActiveBurgerMenu }: TActiveBurgerMenu) => {
             onClick={handleActiveBurgerMenu}
           >
             Notifications
-            <NotificationCount top={0} right={0} count={1} />
+            <NotificationCount
+              top={0}
+              right={0}
+              count={notifications?.notifications.length}
+            />
           </Link>
         </nav>
       </div>

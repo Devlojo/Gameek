@@ -16,6 +16,7 @@ export const notificationItemFullSchema = notificationDbSchema.extend({
   sender_name: z.string(),
   avatar: z.string(),
   game_name: z.string(),
+  slug: z.string(),
 });
 
 // Créer ensuite le tableau d'objet en lui donnant en argument les items complet
@@ -25,3 +26,4 @@ export const notificationFullSchema = z.object({
 
 export type TNotificationDb = z.infer<typeof notificationDbSchema>;
 export type TNotificationFull = z.infer<typeof notificationFullSchema>;
+export type TNotification = z.infer<typeof notificationItemFullSchema>;

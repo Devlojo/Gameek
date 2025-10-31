@@ -1,30 +1,35 @@
 import { IoMdThumbsUp } from "react-icons/io";
-import avatar from "@/assets/react.svg";
+import { TNotification } from "@/types/notification";
+import { Link } from "react-router-dom";
+import { useUser } from "@/hooks/useUser";
 
 type TNotificationAlertProps = {
-  setShowNotificationAlert: React.Dispatch<React.SetStateAction<boolean>>;
+  setNotif: React.Dispatch<React.SetStateAction<TNotification | null>>;
+  notif: TNotification;
 };
 
 export const NotificationAlert = ({
-  setShowNotificationAlert,
+  setNotif,
+  notif,
 }: TNotificationAlertProps) => {
+  const { user } = useUser();
   return (
-    <div className="fixed bottom-2 right-2 z-50 flex h-20 w-96 flex-col bg-customWhite p-5 shadow-sm shadow-black">
-      <div className="flex items-center justify-between">
+    <div className="fixed bottom-2 right-2 z-50 hidden h-32 w-[400px] flex-col bg-customWhite p-5 shadow-sm shadow-black md:flex">
+      <div className="flex h-full items-center justify-between gap-2">
         <img
-          src={avatar}
+          src={notif.avatar}
           alt="avatar de l'utilisateur"
           className="size-8 rounded-full shadow-sm shadow-black"
         />
-        <p>
-          {" "}
-          <span className="font-semibold">Paul</span> à aimé votre test sur
-          Tekken 8
-        </p>
-        <IoMdThumbsUp className="size-4" />
-        <button onClick={() => setShowNotificationAlert((prev) => !prev)}>
-          X
-        </button>
+        <Link to={`/test/${notif.slug}/${user?.username}`}>
+          <p>
+            {" "}
+            <span className="font-semibold">{notif.sender_name}</span> à aimé
+            votre test sur {notif.game_name}
+          </p>
+          <IoMdThumbsUp className="size-4" />
+        </Link>
+        <button onClick={() => setNotif(null)}>X</button>
       </div>
     </div>
   );
