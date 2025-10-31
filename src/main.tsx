@@ -21,7 +21,7 @@ createRoot(document.getElementById("root")!).render(
           <App />
         </CsrfTokenProvider>
       </UserProvider>
-      {<ReactQueryDevtools initialIsOpen={false} />}
+      {/*<ReactQueryDevtools initialIsOpen={false} />*/}
     </QueryClientProvider>
   </StrictMode>,
 );

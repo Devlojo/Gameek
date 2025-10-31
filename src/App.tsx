@@ -5,7 +5,7 @@ import { GameGeneralMenu } from "@/pages/GameGeneralMenu";
 import { GameReviewsMenu } from "@/pages/GameReviewsMenu";
 import { GameImagesMenu } from "@/pages/GameImagesMenu";
 import { GameVideosMenu } from "@/pages/GameVideosMenu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BurgerMenu } from "./components/ui/BurgerMenu";
 import { ScrollToTopButton } from "@/components/ui/ScrollToTopButton";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -26,12 +26,31 @@ import { ReviewListBack } from "@/pages/admin/ReviewListBack";
 import { UserListBack } from "@/pages/admin/UserListBack";
 import { PageNotFound } from "@/components/layout/PageNotFound";
 import { useUser } from "@/hooks/useUser";
+import { io, Socket } from "socket.io-client";
+import { apiUrl } from "./config";
+import { NotificationAlert } from "@/components/ui/NotificationAlert";
+
+const socket: Socket = io(apiUrl);
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
   const [alertModalCreatedReview, setAlertModalCreatedReview] = useState(false);
+  const [received, setReceived] = useState(""); // Message reçu du serveur
+  const [showNotificationAlert, setShowNotificationModal] = useState(true);
 
   const { loading } = useUser();
+
+  useEffect(() => {
+    socket.on("message", (data: string) => {
+      setReceived(data);
+    });
+
+    return () => {
+      socket.off("message");
+    };
+  }, []);
+
+  console.log(received);
 
   const handleActiveBurgerMenu = () => {
     setActiveBurgerMenu((prev) => !prev);
@@ -60,6 +79,11 @@ const App = (): JSX.Element => {
             activeBurgerMenu={activeBurgerMenu}
             handleActiveBurgerMenu={handleActiveBurgerMenu}
           />
+          {showNotificationAlert && (
+            <NotificationAlert
+              setShowNotificationAlert={setShowNotificationModal}
+            />
+          )}
 
           <div className="mx-auto flex max-w-5xl flex-col gap-6">
             <Routes>
