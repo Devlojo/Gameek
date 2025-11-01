@@ -13,7 +13,7 @@ export const NotificationModal = ({
   const { notifications } = useNotificationsQuery();
   const { user } = useUser();
   return (
-    <div className="absolute right-0 top-full z-50 flex h-96 w-[500px] flex-col overflow-y-auto rounded-md bg-customWhite text-black shadow-sm shadow-black">
+    <div className="absolute right-0 top-full z-50 flex h-96 w-[600px] flex-col overflow-y-auto rounded-md bg-customWhite text-black shadow-sm shadow-black">
       <div className="p-2">
         <div className="flex w-full justify-between">
           <h3 className="font-semibold">Notifications</h3>
@@ -21,7 +21,7 @@ export const NotificationModal = ({
             onClick={() => setShowNotificationModal((prev) => !prev)}
             className="hover:opacity-70"
           >
-            <CgCloseR className="size-6" />
+            <CgCloseR className="size-6 text-red-500" />
           </button>
         </div>
       </div>
@@ -30,20 +30,27 @@ export const NotificationModal = ({
         {notifications?.notifications &&
         notifications.notifications.length > 0 ? (
           notifications.notifications.map((notification, index) => (
-            <Link
-              to={`/test/${notification.slug}/${user?.username}`}
-              className="flex justify-between gap-2"
-              key={index}
-            >
-              <img
-                src={notification.avatar}
-                alt="Avatar de l'utilisateur"
-                className="size-8 rounded-full shadow-sm shadow-black"
-              />
-              <p>{notification.sender_name}</p>
-              <p> à liké votre test sur {notification.game_name}</p>
-              <p>{notification.created_at}</p>
-            </Link>
+            <>
+              <Link
+                to={`/test/${notification.slug}/${user?.username}`}
+                className="flex flex-wrap items-center gap-2"
+                key={index}
+              >
+                <img
+                  src={notification.avatar}
+                  alt="Avatar de l'utilisateur"
+                  className="size-8 rounded-full shadow-sm shadow-black"
+                />
+                <p className="font-semibold">{notification.sender_name}</p>
+                <p>à aimé votre test sur</p>
+                <p className="font-semibold">{notification.game_name}</p>
+
+                <p className="text-sm text-gray-700">
+                  {notification.created_at}
+                </p>
+              </Link>
+              <div className="w-auto border-t border-gray-600/40"></div>
+            </>
           ))
         ) : (
           <p>Aucune notification</p>

@@ -1,13 +1,21 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toggleLike } from "@/api/likesApi";
 import { TLike } from "@/types/like";
+import { socket } from "@/socket";
 
 export const useToggleLike = (gameSlug: string, userName: string) => {
   const queryClient = useQueryClient();
-
   const mutation = useMutation({
     // lance la requete et retourne la réponse du serveur
-    mutationFn: (newLike: TLike) => toggleLike(newLike),
+    mutationFn: async (newLike: TLike) => {
+      // 1️⃣ Appel de l'API pour toggle le like
+      const res = await toggleLike(newLike);
+      // ⚡ Notifie le serveur que le like a changé
+      socket.emit("toggleLike", {
+        reviewId: newLike.review_id,
+      });
+      return res;
+    },
 
     // Fonction qui sera toujours exécutée
     onSettled: () => {

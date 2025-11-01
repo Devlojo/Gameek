@@ -6,9 +6,41 @@ import { Link } from "react-router-dom";
 import { Loader } from "../ui/Loader";
 import { BiConversation } from "react-icons/bi";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { useLikesSocket } from "@/hooks/useLikesSocket";
+import { useQueryClient } from "@tanstack/react-query";
+import { TReviewList } from "@/types/review";
 
 export const LatestReviewsSection = () => {
   const { latestReviews, isSuccess, isLoading } = useLatestReviewsQuery();
+  const queryClient = useQueryClient();
+
+  //  Écoute les likes en temps réel
+  useLikesSocket((reviewId, likeChange) => {
+    // 🔹 Mise à jour manuellement du cache React Query pour la query "latestReviews"
+    queryClient.setQueryData(
+      ["latestReviews"],
+      (oldData: TReviewList | undefined) => {
+        // oldData = état actuel du cache
+        //  Si le cache est vide, on ne fait rien
+        if (!oldData) return oldData;
+
+        // Sinon on retourne un nouvel objet pour le cache
+        return {
+          ...oldData,
+          reviews: oldData.reviews.map((review) =>
+            review.id === reviewId
+              ? {
+                  ...review,
+                  likes_count:
+                    review.likes_count +
+                    likeChange /* met à jour le compteur de likes*/,
+                }
+              : review,
+          ),
+        };
+      },
+    );
+  });
 
   return (
     <section className="h-auto rounded-md bg-customWhite px-4 py-3">

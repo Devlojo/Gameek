@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-import { io, Socket } from "socket.io-client";
-import { apiUrl } from "../config";
+import { socket } from "@/socket";
 
 export const useNotificationsSocket = (
   userId: number,
@@ -9,9 +8,9 @@ export const useNotificationsSocket = (
   useEffect(() => {
     if (!userId) return;
 
-    const socket: Socket = io(apiUrl);
     socket.emit("register", userId); // on dit au serveur "voici mon id"
-    //Envois une notification avec l'id de l'user connecté au serveur
+
+    //Le client écoute les notifications du serveur de l'évènement "notification:${userId}" si le user connecté est bien le destinataire de la notif
     socket.on(`notification:${userId}`, (notif) => {
       console.log("🔔 Nouvelle notification :", notif);
       onNewNotif(notif);
