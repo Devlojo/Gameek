@@ -13,6 +13,9 @@ import { Pagination } from "@/components/ui/Pagination";
 import { Loader } from "@/components/ui/Loader";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { BiConversation } from "react-icons/bi";
+import { useLikesSocket } from "@/hooks/useLikesSocket";
+import { useQueryClient } from "@tanstack/react-query";
+import { TReviewListByGame } from "@/types/review";
 
 export const GameReviewsMenu = () => {
   const { id } = useParams() as { id: string };
@@ -34,6 +37,35 @@ export const GameReviewsMenu = () => {
     ? reviewsByGame.reviews[0].slug
     : gameDetail?.slug;
 
+  const queryClient = useQueryClient();
+
+  //  Écoute les likes en temps réel
+  useLikesSocket((reviewId, likeChange) => {
+    // 🔹 Mise à jour manuellement du cache React Query pour la query "latestReviews"
+    queryClient.setQueryData(
+      ["reviewsByGame", gameSlug],
+      (oldData: TReviewListByGame | undefined) => {
+        // oldData = état actuel du cache
+        //  Si le cache est vide, on ne fait rien
+        if (!oldData) return oldData;
+
+        // Sinon on retourne un nouvel objet pour le cache
+        return {
+          ...oldData,
+          reviews: oldData.reviews.map((review) =>
+            review.id === reviewId
+              ? {
+                  ...review,
+                  likes_count:
+                    review.likes_count +
+                    likeChange /* met à jour le compteur de likes*/,
+                }
+              : review,
+          ),
+        };
+      },
+    );
+  });
   return (
     <>
       {isError ? (
