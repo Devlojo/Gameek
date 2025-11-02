@@ -36,7 +36,9 @@ export const Header = ({
   const { user, setUser } = useUser();
   const queryClient = useQueryClient();
 
-  const { notifications } = useNotificationsQuery();
+  const { notifications, isSuccess } = useNotificationsQuery(
+    user?.id as number,
+  );
 
   const logout = async () => {
     try {
@@ -150,11 +152,13 @@ export const Header = ({
                     className="hover:text-yellow-400"
                   >
                     <MdNotificationsNone className="size-8" />
-                    <NotificationCount
-                      top={0}
-                      right={0}
-                      count={notifications?.notifications.length}
-                    />
+                    {isSuccess && (
+                      <NotificationCount
+                        top={0}
+                        right={0}
+                        count={notifications?.notifications.length}
+                      />
+                    )}
                   </button>
                   {showNotificationModal && (
                     <NotificationModal

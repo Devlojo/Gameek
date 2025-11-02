@@ -5,7 +5,8 @@ import {
 } from "@/types/notification";
 import { apiUrl } from "@/config";
 
-export const getNotificationsByUser = async () => {
+export const getNotificationsByUser = async (userId?: number) => {
+  if (!userId) return { notifications: [] }; // Pas de user => tableau vide
   try {
     const { data: csrfRes } = await axios.get(`${apiUrl}/csrf-token`, {
       withCredentials: true,

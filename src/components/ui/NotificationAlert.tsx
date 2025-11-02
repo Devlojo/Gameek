@@ -1,7 +1,10 @@
-import { IoMdThumbsUp } from "react-icons/io";
+import { FcLike } from "react-icons/fc";
 import { TNotification } from "@/types/notification";
 import { Link } from "react-router-dom";
 import { useUser } from "@/hooks/useUser";
+import { CgCloseR } from "react-icons/cg";
+import { RiReplyLine } from "react-icons/ri";
+import { BiCommentDetail } from "react-icons/bi";
 
 type TNotificationAlertProps = {
   setNotif: React.Dispatch<React.SetStateAction<TNotification | null>>;
@@ -24,13 +27,31 @@ export const NotificationAlert = ({
         <Link to={`/test/${notif.slug}/${user?.username}`}>
           <p>
             {" "}
-            <span className="font-semibold">{notif.sender_name}</span> à aimé
-            votre test sur {notif.game_name}
+            <span className="font-semibold">{notif.sender_name}</span>{" "}
+            {notif.type === "like" && "a aimé votre test sur"}
+            {notif.type === "comment" && "a commenté votre test sur"}
+            {notif.type === "reply" && "a répondu à votre commentaire sur"}
+            {notif.type === "status" &&
+              "Un modérateur a mis à jour le statut de votre test sur"}{" "}
+            <span className="font-semibold">{notif.game_name}</span>
           </p>
-          <IoMdThumbsUp className="size-4" />
         </Link>
-        <button onClick={() => setNotif(null)}>X</button>
       </div>
+      <button onClick={() => setNotif(null)} className="absolute right-1 top-1">
+        <CgCloseR className="size-6 text-red-500" />
+      </button>
+      {notif.type === "like" && (
+        <FcLike className="absolute left-1 top-1 size-6" />
+      )}
+      {notif.type === "comment" && (
+        <BiCommentDetail className="absolute left-1 top-1 size-6" />
+      )}
+      {notif.type === "reply" && (
+        <RiReplyLine className="absolute left-1 top-1 size-6" />
+      )}
+      <p className="absolute bottom-2 right-1 text-xs text-gray-700">
+        {notif.created_at}
+      </p>
     </div>
   );
 };

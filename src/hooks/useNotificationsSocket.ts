@@ -8,11 +8,10 @@ export const useNotificationsSocket = (
   useEffect(() => {
     if (!userId) return;
 
-    socket.emit("register", userId); // on dit au serveur "voici mon id"
+    socket.emit("register", userId); // on envois un evenement register au serveur avec l'id de l'utilisateur
 
     //Le client écoute les notifications du serveur de l'évènement "notification:${userId}" si le user connecté est bien le destinataire de la notif
     socket.on(`notification:${userId}`, (notif) => {
-      console.log("🔔 Nouvelle notification :", notif);
       onNewNotif(notif);
     });
 

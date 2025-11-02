@@ -15,6 +15,9 @@ import { useRef, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiArrowDropUpLine } from "react-icons/ri";
 import { IoMdCloseCircle } from "react-icons/io";
+import { useCommentsSocket } from "@/hooks/useCommentsSocket";
+import { useQueryClient } from "@tanstack/react-query";
+import { TCommentDb } from "@/types/comment";
 
 type TCommentProps = {
   gameSlug: string;
@@ -33,6 +36,34 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
   const [showRepliesFor, setShowRepliesFor] = useState<number[]>([]);
   const [openActionComments, setOpenActionComments] = useState<number[]>([]);
   const [actionMessage, setActionMessage] = useState<string | null>(null);
+
+  const queryClient = useQueryClient();
+
+  useCommentsSocket((reviewId, commentChange) => {
+    queryClient.setQueryData(
+      ["comments", gameSlug, userName],
+      (oldData: TCommentDb | undefined) => {
+        // oldData = état actuel du cache
+        //  Si le cache est vide, on ne fait rien
+        if (!oldData) return oldData;
+
+        // Sinon on retourne un nouvel objet pour le cache
+        if (oldData.id === oldData.parent_id) {
+          //Si le comment reçu concerne la review actuellement affichée
+          return {
+            ...oldData, //On garde toutes les autres propriétés de oldData intactes
+            review: {
+              ...oldData.review, // On garde toutes les autres propriétés de la review intactes
+              comments_count:
+                oldData.review.comments_count +
+                commentChange /* met à jour uniquement le compteur de likes*/,
+            },
+          };
+        }
+        return oldData;
+      },
+    );
+  });
 
   const { mutate: addCommentMutate } = useAddComment(gameSlug, userName);
   const { mutate: deleteComment } = useDeleteCommentById(gameSlug, userName);
@@ -175,7 +206,7 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
       <div className="flex flex-col items-center justify-center gap-4">
         {comments?.comments && comments.comments.length > 0 ? (
           <>
-            <p className="mt-4">{comments?.count} commentaire(s)</p>
+            <p className="mt-4">{comments.count} commentaire(s)</p>
             <div className="flex w-4/5 justify-center border-b border-global/40"></div>
             <div className="flex w-full flex-col gap-4 px-4">
               {actionMessage && (

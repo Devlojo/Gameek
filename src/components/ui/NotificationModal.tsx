@@ -10,8 +10,8 @@ type TNotificationModalProps = {
 export const NotificationModal = ({
   setShowNotificationModal,
 }: TNotificationModalProps) => {
-  const { notifications } = useNotificationsQuery();
   const { user } = useUser();
+  const { notifications } = useNotificationsQuery(user?.id as number);
   return (
     <div className="absolute right-0 top-full z-50 flex h-96 w-[600px] flex-col overflow-y-auto rounded-md bg-customWhite text-black shadow-sm shadow-black">
       <div className="p-2">
@@ -30,11 +30,10 @@ export const NotificationModal = ({
         {notifications?.notifications &&
         notifications.notifications.length > 0 ? (
           notifications.notifications.map((notification, index) => (
-            <>
+            <div key={index}>
               <Link
                 to={`/test/${notification.slug}/${user?.username}`}
                 className="flex flex-wrap items-center gap-2"
-                key={index}
               >
                 <img
                   src={notification.avatar}
@@ -50,7 +49,7 @@ export const NotificationModal = ({
                 </p>
               </Link>
               <div className="w-auto border-t border-gray-600/40"></div>
-            </>
+            </div>
           ))
         ) : (
           <p>Aucune notification</p>

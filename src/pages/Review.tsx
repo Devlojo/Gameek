@@ -12,6 +12,9 @@ import { useUser } from "@/hooks/useUser";
 import { apiUrl } from "@/config";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { useToggleLike } from "@/queries/useLikesQuery";
+import { useQueryClient } from "@tanstack/react-query";
+import { useLikesSocket } from "@/hooks/useLikesSocket";
+import { TReviewDetail } from "@/types/review";
 
 export const Review = () => {
   const { gameSlug, userName } = useParams() as {
@@ -20,6 +23,7 @@ export const Review = () => {
   };
   const { user } = useUser();
   const navigate = useNavigate();
+
   const [requestError, setRequestError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
 
@@ -27,6 +31,33 @@ export const Review = () => {
     gameSlug,
     userName,
   );
+  const queryClient = useQueryClient();
+  //  Écoute les likes en temps réel
+  useLikesSocket((reviewId, likeChange) => {
+    queryClient.setQueryData(
+      ["reviewDetail", gameSlug, userName],
+      (oldData: TReviewDetail | undefined) => {
+        // oldData = état actuel du cache
+        //  Si le cache est vide, on ne fait rien
+        if (!oldData) return oldData;
+
+        // Sinon on retourne un nouvel objet pour le cache
+        if (reviewId === oldData.review.id) {
+          //Si le like reçu concerne la review actuellement affichée
+          return {
+            ...oldData, //On garde toutes les autres propriétés de oldData intactes
+            review: {
+              ...oldData.review, // On garde toutes les autres propriétés de la review intactes
+              likes_count:
+                oldData.review.likes_count +
+                likeChange /* met à jour uniquement le compteur de likes*/,
+            },
+          };
+        }
+        return oldData;
+      },
+    );
+  });
 
   // l'objet mutate représente la fonction mutate du hook de tanstack query
   const { mutate: toggleLikeMutate } = useToggleLike(gameSlug, userName);
@@ -228,7 +259,7 @@ export const Review = () => {
               ) : (
                 <BsHeart size={20} />
               )}
-              <span>J'aime</span>
+              <span>J'aime ({reviewDetail?.review.likes_count})</span>
             </button>
           </div>
         </div>

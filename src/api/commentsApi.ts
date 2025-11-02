@@ -1,8 +1,8 @@
 import axios from "axios";
 import {
   TCommentList,
-  commentFormSchema,
   commentListSchema,
+  commentDbSchema,
 } from "@/types/comment";
 import { apiUrl } from "@/config";
 import { TCommentForm } from "@/types/comment";
@@ -47,7 +47,7 @@ export const addComment = async ({
         },
       },
     );
-    const commentParsed = commentFormSchema.parse(comment);
+    const commentParsed = commentDbSchema.parse(comment);
     return commentParsed;
   } catch (error) {
     console.log(error);
