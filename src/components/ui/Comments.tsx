@@ -17,7 +17,7 @@ import { RiArrowDropUpLine } from "react-icons/ri";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useCommentsSocket } from "@/hooks/useCommentsSocket";
 import { useQueryClient } from "@tanstack/react-query";
-import { TCommentDb } from "@/types/comment";
+import { TCommentList } from "@/types/comment";
 
 type TCommentProps = {
   gameSlug: string;
@@ -39,31 +39,42 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
 
   const queryClient = useQueryClient();
 
-  useCommentsSocket((reviewId, commentChange) => {
-    queryClient.setQueryData(
-      ["comments", gameSlug, userName],
-      (oldData: TCommentDb | undefined) => {
-        // oldData = état actuel du cache
-        //  Si le cache est vide, on ne fait rien
-        if (!oldData) return oldData;
+  useCommentsSocket(
+    (reviewId, commentChange) => {
+      queryClient.setQueryData(
+        ["comments", gameSlug, userName],
+        (oldData: TCommentList | undefined) => {
+          if (!oldData) return oldData;
 
-        // Sinon on retourne un nouvel objet pour le cache
-        if (oldData.id === oldData.parent_id) {
-          //Si le comment reçu concerne la review actuellement affichée
           return {
-            ...oldData, //On garde toutes les autres propriétés de oldData intactes
-            review: {
-              ...oldData.review, // On garde toutes les autres propriétés de la review intactes
-              comments_count:
-                oldData.review.comments_count +
-                commentChange /* met à jour uniquement le compteur de likes*/,
-            },
+            ...oldData,
+            comments: oldData.comments.map((comment) =>
+              comment.review_id === reviewId
+                ? {
+                    ...comment /* ici tu peux mettre à jour likes_count ou autre */,
+                  }
+                : comment,
+            ),
+            count: oldData.count && oldData.count + commentChange,
           };
-        }
-        return oldData;
-      },
-    );
-  });
+        },
+      );
+    },
+    (fullComment) => {
+      queryClient.setQueryData(
+        ["comments", gameSlug, userName],
+        (oldData: TCommentList | undefined) => {
+          if (!oldData) return oldData;
+
+          return {
+            ...oldData, //on copie toutes les propriétés de l'objet existant
+            comments: [fullComment, ...oldData.comments], // On ajoute le nouveau commentaire en premier
+            count: oldData.count && oldData.count + 1, // incrémente le compteur
+          };
+        },
+      );
+    },
+  );
 
   const { mutate: addCommentMutate } = useAddComment(gameSlug, userName);
   const { mutate: deleteComment } = useDeleteCommentById(gameSlug, userName);

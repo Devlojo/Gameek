@@ -9,6 +9,7 @@ import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { useLikesSocket } from "@/hooks/useLikesSocket";
 import { useQueryClient } from "@tanstack/react-query";
 import { TReviewList } from "@/types/review";
+import { useCommentsSocket } from "@/hooks/useCommentsSocket";
 
 export const LatestReviewsSection = () => {
   const { latestReviews, isSuccess, isLoading } = useLatestReviewsQuery();
@@ -34,6 +35,27 @@ export const LatestReviewsSection = () => {
                   likes_count:
                     review.likes_count +
                     likeChange /* met à jour le compteur de likes*/,
+                }
+              : review,
+          ),
+        };
+      },
+    );
+  });
+
+  useCommentsSocket((reviewId, commentChange) => {
+    queryClient.setQueryData(
+      ["latestReviews"],
+      (oldData: TReviewList | undefined) => {
+        if (!oldData) return oldData;
+
+        return {
+          ...oldData,
+          reviews: oldData.reviews.map((review) =>
+            review.id === reviewId
+              ? {
+                  ...review,
+                  comments_count: review.comments_count + commentChange,
                 }
               : review,
           ),

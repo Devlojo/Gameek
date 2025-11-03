@@ -2,6 +2,9 @@ import { CgCloseR } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import { useNotificationsQuery } from "@/queries/useNotificationsQuery";
 import { useUser } from "@/hooks/useUser";
+import { FcLike } from "react-icons/fc";
+import { BiCommentDetail } from "react-icons/bi";
+import { RiReplyLine } from "react-icons/ri";
 
 type TNotificationModalProps = {
   setShowNotificationModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,7 +36,7 @@ export const NotificationModal = ({
             <div key={index}>
               <Link
                 to={`/test/${notification.slug}/${user?.username}`}
-                className="flex flex-wrap items-center gap-2"
+                className="relative flex flex-wrap items-center gap-2"
               >
                 <img
                   src={notification.avatar}
@@ -41,12 +44,29 @@ export const NotificationModal = ({
                   className="size-8 rounded-full shadow-sm shadow-black"
                 />
                 <p className="font-semibold">{notification.sender_name}</p>
-                <p>à aimé votre test sur</p>
+                <p>
+                  {notification.type === "like" && "a aimé votre test sur"}
+                  {notification.type === "comment" &&
+                    "a commenté votre test sur"}
+                  {notification.type === "reply" &&
+                    "a répondu à votre commentaire sur"}
+                  {notification.type === "status" &&
+                    "Un modérateur a mis à jour le statut de votre test sur"}{" "}
+                </p>
                 <p className="font-semibold">{notification.game_name}</p>
 
                 <p className="text-sm text-gray-700">
                   {notification.created_at}
                 </p>
+                {notification.type === "like" && (
+                  <FcLike className="absolute right-1 top-1 size-6" />
+                )}
+                {notification.type === "comment" && (
+                  <BiCommentDetail className="absolute right-1 top-1 size-6" />
+                )}
+                {notification.type === "reply" && (
+                  <RiReplyLine className="absolute right-1 top-1 size-6" />
+                )}
               </Link>
               <div className="w-auto border-t border-gray-600/40"></div>
             </div>
