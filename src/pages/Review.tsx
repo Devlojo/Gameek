@@ -22,6 +22,7 @@ export const Review = () => {
     userName: string;
   };
   const { user } = useUser();
+
   const navigate = useNavigate();
 
   const [requestError, setRequestError] = useState(false);
@@ -83,7 +84,7 @@ export const Review = () => {
         <CiSquareInfo className="size-10 text-blue-500" />
         <p className="text-center">
           {" "}
-          Le test est en attente de confirmation de la part de l'admin
+          Le test sera publié dès qu’il aura été validé par un modérateur.
         </p>
       </div>
     );
@@ -93,11 +94,17 @@ export const Review = () => {
     const newStatus = e.target.value;
     try {
       setSelectedStatus(newStatus);
+      const { data: csrfRes } = await axios.get(`${apiUrl}/csrf-token`, {
+        withCredentials: true,
+      });
       const res = await axios.put(
         `${apiUrl}/back/reviews/${reviewDetail?.review.id}`,
         { status: newStatus }, // body à envoyer
         {
           withCredentials: true,
+          headers: {
+            "x-csrf-token": csrfRes.csrfToken,
+          },
         },
       );
       if (res.status === 200) {
@@ -266,7 +273,9 @@ export const Review = () => {
         {user?.role === "admin" && (
           <>
             {requestError && (
-              <p className="font-bold text-red-600">{errorMessage}</p>
+              <p className="pt-2 text-center font-bold text-red-600">
+                {errorMessage}
+              </p>
             )}
             <div className="mt-4 flex flex-wrap items-center justify-center gap-2 px-3">
               <p>Selectionnez un statut de validation pour ce test :</p>

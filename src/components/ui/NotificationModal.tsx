@@ -2,9 +2,6 @@ import { CgCloseR } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import { useNotificationsQuery } from "@/queries/useNotificationsQuery";
 import { useUser } from "@/hooks/useUser";
-import { FcLike } from "react-icons/fc";
-import { BiCommentDetail } from "react-icons/bi";
-import { RiReplyLine } from "react-icons/ri";
 
 type TNotificationModalProps = {
   setShowNotificationModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,6 +12,7 @@ export const NotificationModal = ({
 }: TNotificationModalProps) => {
   const { user } = useUser();
   const { notifications } = useNotificationsQuery(user?.id as number);
+
   return (
     <div className="absolute right-0 top-full z-50 flex h-96 w-[600px] flex-col overflow-y-auto rounded-md bg-customWhite text-black shadow-sm shadow-black">
       <div className="p-2">
@@ -32,45 +30,105 @@ export const NotificationModal = ({
       <div className="flex flex-col gap-2 p-2">
         {notifications?.notifications &&
         notifications.notifications.length > 0 ? (
-          notifications.notifications.map((notification, index) => (
-            <div key={index}>
-              <Link
-                to={`/test/${notification.slug}/${user?.username}`}
-                className="relative flex flex-wrap items-center gap-2"
-              >
-                <img
-                  src={notification.avatar}
-                  alt="Avatar de l'utilisateur"
-                  className="size-8 rounded-full shadow-sm shadow-black"
-                />
-                <p className="font-semibold">{notification.sender_name}</p>
-                <p>
-                  {notification.type === "like" && "a aimé votre test sur"}
-                  {notification.type === "comment" &&
-                    "a commenté votre test sur"}
-                  {notification.type === "reply" &&
-                    "a répondu à votre commentaire sur"}
-                  {notification.type === "status" &&
-                    "Un modérateur a mis à jour le statut de votre test sur"}{" "}
-                </p>
-                <p className="font-semibold">{notification.game_name}</p>
+          notifications.notifications.map((notification, index) => {
+            // variable pour gérer dynamiquement le username dans le lien
+            const linkUsername =
+              notification.type === "publish" ||
+              notification.type === "status_update"
+                ? notification.sender_name
+                : user?.username;
+            return (
+              <div key={index}>
+                <Link
+                  to={`/test/${notification.slug}/${linkUsername}`}
+                  className="relative flex flex-wrap items-center gap-2"
+                >
+                  {notification.type !== "status_update" && (
+                    <>
+                      <img
+                        src={notification.avatar}
+                        alt="Avatar de l'utilisateur"
+                        className="size-8 rounded-full shadow-sm shadow-black"
+                      />
 
-                <p className="text-sm text-gray-700">
-                  {notification.created_at}
-                </p>
-                {notification.type === "like" && (
-                  <FcLike className="absolute right-1 top-1 size-6" />
-                )}
-                {notification.type === "comment" && (
-                  <BiCommentDetail className="absolute right-1 top-1 size-6" />
-                )}
-                {notification.type === "reply" && (
-                  <RiReplyLine className="absolute right-1 top-1 size-6" />
-                )}
-              </Link>
-              <div className="w-auto border-t border-gray-600/40"></div>
-            </div>
-          ))
+                      <p className="font-semibold">
+                        {notification.sender_name}
+                      </p>
+                      {notification.type === "like" && (
+                        <p>
+                          à aimé votre test sur{" "}
+                          <span className="font-semibold">
+                            {notification.game_name}
+                          </span>
+                        </p>
+                      )}
+                      {notification.type === "comment" && (
+                        <p>
+                          à commenté votre test sur{" "}
+                          <span className="font-semibold">
+                            {notification.game_name}
+                          </span>
+                        </p>
+                      )}
+                      {notification.type === "reply" && (
+                        <p>
+                          à répondu à votre commentaire sur{" "}
+                          <span className="font-semibold">
+                            {notification.game_name}
+                          </span>
+                        </p>
+                      )}
+                      {notification.type === "publish" && (
+                        <p>
+                          à rédigé un test sur{" "}
+                          <span className="font-semibold">
+                            {notification.game_name}
+                          </span>
+                        </p>
+                      )}
+                    </>
+                  )}
+                  {notification.type === "status_update" && (
+                    <>
+                      {" "}
+                      {notification.status === "a_modifier" && (
+                        <p>
+                          votre test sur{" "}
+                          <span className="font-semibold">
+                            {notification.game_name}
+                          </span>{" "}
+                          doit être modifier
+                        </p>
+                      )}
+                      {notification.status === "refuse" && (
+                        <p>
+                          votre test sur{" "}
+                          <span className="font-semibold">
+                            {notification.game_name}
+                          </span>{" "}
+                          à été refusé
+                        </p>
+                      )}
+                      {notification.status === "valide" && (
+                        <p>
+                          votre test sur{" "}
+                          <span className="font-semibold">
+                            {notification.game_name}
+                          </span>{" "}
+                          à été validé et sera désormais visible
+                        </p>
+                      )}
+                    </>
+                  )}
+
+                  <p className="text-sm text-gray-700">
+                    {notification.created_at}
+                  </p>
+                </Link>
+                <div className="w-auto border-t border-gray-600/40"></div>
+              </div>
+            );
+          })
         ) : (
           <p>Aucune notification</p>
         )}

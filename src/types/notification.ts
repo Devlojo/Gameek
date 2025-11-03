@@ -1,5 +1,5 @@
 import { z } from "zod";
-
+import { reviewStatusEnum } from "./review";
 export const notificationDbSchema = z.object({
   id: z.number(),
   sender_id: z.number(),
@@ -17,6 +17,7 @@ export const notificationItemFullSchema = notificationDbSchema.extend({
   avatar: z.string(),
   game_name: z.string(),
   slug: z.string(),
+  status: reviewStatusEnum,
 });
 
 // Créer ensuite le tableau d'objet en lui donnant en argument les items complet

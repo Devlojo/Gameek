@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Définition de l'ENUM
-const reviewStatusEnum = z.enum([
+export const reviewStatusEnum = z.enum([
   "en_attente",
   "valide",
   "a_modifier",
