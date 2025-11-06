@@ -20,7 +20,7 @@ export const useCommentsSocket = (
     };
 
     const handleNewComment = (fullComment: TCommentFull) => {
-      // ici tu peux ajouter fullComment au cache ou à la liste
+      // ici  fullComment est ajouté au cache ou à la liste
       if (onAddNewComment) onAddNewComment(fullComment);
     };
 
@@ -33,5 +33,5 @@ export const useCommentsSocket = (
       socket.off("updateCommentsCount", handleUpdateCount);
       socket.off("newComment", handleNewComment);
     };
-  }, [onUpdateComment, onAddNewComment]); // Le useEffect se réexécutera uniquement si la fonction onUpdateComment change
+  }, [onUpdateComment, onAddNewComment]); // Le useEffect se réexécutera uniquement si la fonction onUpdateComment ou onAddNewComment change
 };

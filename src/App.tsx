@@ -29,6 +29,8 @@ import { useUser } from "@/hooks/useUser";
 import { useNotificationsSocket } from "@/hooks/useNotificationsSocket";
 import { NotificationAlert } from "@/components/ui/NotificationAlert";
 import { TNotification } from "./types/notification";
+import { useNotificationCount } from "@/hooks/useNotificationCount";
+import { Notifications } from "@/pages/Notifications";
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
@@ -37,13 +39,27 @@ const App = (): JSX.Element => {
   const { loading, user } = useUser();
   const [notif, setNotif] = useState<TNotification | null>(null);
 
-  useNotificationsSocket(user?.id as number, (newNotif: TNotification) => {
-    setNotif(newNotif);
-  });
+  const { setNotifCount } = useNotificationCount();
+
+  useNotificationsSocket(
+    user?.id as number,
+    (newNotif: TNotification) => {
+      setNotif(newNotif);
+    },
+    (totalUnread: number) => {
+      setNotifCount(totalUnread);
+    },
+  );
+
   const handleActiveBurgerMenu = () => {
     setActiveBurgerMenu((prev) => !prev);
   };
 
+  if (notif) {
+    setTimeout(() => {
+      setNotif(null);
+    }, 5000);
+  }
   // Si le menu burger est activé, alors le scroll est désactivé
   if (activeBurgerMenu) {
     document.body.style.overflow = "hidden";
@@ -110,6 +126,7 @@ const App = (): JSX.Element => {
               />
 
               <Route path="/a-propos" element={<About />} />
+              <Route path="/notifications" element={<Notifications />} />
 
               <Route path="/back" element={<DashboardBack />} />
 

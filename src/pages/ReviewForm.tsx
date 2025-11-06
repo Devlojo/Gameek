@@ -23,6 +23,9 @@ export const ReviewForm = ({
     return <Navigate to="/connexion" replace />;
   }
 
+  if (user?.role !== "user") {
+    return <Navigate to="/" />;
+  }
   const [requestError, setRequestError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
   const navigate = useNavigate();

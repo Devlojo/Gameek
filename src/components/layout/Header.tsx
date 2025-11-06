@@ -17,7 +17,11 @@ import { useQueryClient } from "@tanstack/react-query";
 import { NotificationCount } from "@/components/ui/NotificationCount";
 import { MdNotificationsNone } from "react-icons/md";
 import { NotificationModal } from "@/components/ui/NotificationModal";
-import { useNotificationsQuery } from "@/queries/useNotificationsQuery";
+import {
+  useNotificationsQuery,
+  useMarkNotificationAsReadQuery,
+} from "@/queries/useNotificationsQuery";
+import { useNotificationCount } from "@/hooks/useNotificationCount";
 
 type THeaderProps = {
   activeBurgerMenu: boolean;
@@ -36,10 +40,10 @@ export const Header = ({
   const { user, setUser } = useUser();
   const queryClient = useQueryClient();
 
-  const { notifications, isSuccess } = useNotificationsQuery(
-    user?.id as number,
-  );
+  const { isSuccess } = useNotificationsQuery(user?.id as number);
 
+  const { mutate: readNotification } = useMarkNotificationAsReadQuery();
+  const { notifCount, setNotifCount } = useNotificationCount();
   const logout = async () => {
     try {
       await axios.post(`${apiUrl}/logout`, {}, { withCredentials: true });
@@ -53,6 +57,9 @@ export const Header = ({
 
   const handleModalNotification = () => {
     setShowNotificationModal((prev) => !prev);
+
+    readNotification(user?.id as number);
+    setNotifCount(0);
   };
   return (
     <>
@@ -67,11 +74,7 @@ export const Header = ({
               onClick={handleActiveBurgerMenu}
             >
               <GiHamburgerMenu className="size-8" />
-              <NotificationCount
-                bottom={0}
-                right={0}
-                count={notifications?.notifications.length}
-              />
+              <NotificationCount bottom={0} right={0} count={notifCount} />
             </div>
           )}
 
@@ -153,11 +156,7 @@ export const Header = ({
                   >
                     <MdNotificationsNone className="size-8" />
                     {isSuccess && (
-                      <NotificationCount
-                        top={0}
-                        right={0}
-                        count={notifications?.notifications.length}
-                      />
+                      <NotificationCount top={0} right={0} count={notifCount} />
                     )}
                   </button>
                   {showNotificationModal && (

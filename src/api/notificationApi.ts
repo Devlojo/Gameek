@@ -29,3 +29,26 @@ export const getNotificationsByUser = async (userId?: number) => {
     throw error;
   }
 };
+
+export const markAllNotificationsAsRead = async (userId?: number) => {
+  if (!userId) return { notifications: [] }; // Pas de user => tableau vide
+  try {
+    const { data: csrfRes } = await axios.get(`${apiUrl}/csrf-token`, {
+      withCredentials: true,
+    });
+
+    await axios.patch<TNotificationFull>(
+      `${apiUrl}/notifications/mark-all-read`,
+      {},
+      {
+        withCredentials: true,
+        headers: {
+          "x-csrf-token": csrfRes.csrfToken,
+        },
+      },
+    );
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

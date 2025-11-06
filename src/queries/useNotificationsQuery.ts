@@ -1,5 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { getNotificationsByUser } from "@/api/notificationApi";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import {
+  getNotificationsByUser,
+  markAllNotificationsAsRead,
+} from "@/api/notificationApi";
 
 export const useNotificationsQuery = (userId: number) => {
   const {
@@ -15,4 +18,11 @@ export const useNotificationsQuery = (userId: number) => {
     isLoading,
     isSuccess,
   };
+};
+
+export const useMarkNotificationAsReadQuery = () => {
+  const mutation = useMutation({
+    mutationFn: (userId: number) => markAllNotificationsAsRead(userId),
+  });
+  return mutation;
 };

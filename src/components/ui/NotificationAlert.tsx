@@ -13,6 +13,9 @@ export const NotificationAlert = ({
   notif,
 }: TNotificationAlertProps) => {
   const { user } = useUser();
+
+  const linkUsername =
+    notif.type === "publish" ? notif.sender_name : user?.username;
   return (
     <div className="fixed bottom-2 right-2 z-50 hidden h-32 w-[400px] flex-col bg-customWhite p-5 shadow-sm shadow-black md:flex">
       <div className="flex h-full items-center gap-2">
@@ -25,7 +28,7 @@ export const NotificationAlert = ({
         )}
 
         <Link
-          to={`/test/${notif.slug}/${user?.username}`}
+          to={`/test/${notif.slug}/${linkUsername}`}
           className="transition-transform duration-150 hover:opacity-70"
         >
           {notif.type !== "status_update" && (
@@ -83,10 +86,6 @@ export const NotificationAlert = ({
       <button onClick={() => setNotif(null)} className="absolute right-1 top-1">
         <CgCloseR className="size-6 text-red-500" />
       </button>
-
-      <p className="absolute bottom-2 right-1 text-xs text-gray-700">
-        {notif.created_at}
-      </p>
     </div>
   );
 };

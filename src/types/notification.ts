@@ -23,6 +23,7 @@ export const notificationItemFullSchema = notificationDbSchema.extend({
 // Créer ensuite le tableau d'objet en lui donnant en argument les items complet
 export const notificationFullSchema = z.object({
   notifications: z.array(notificationItemFullSchema),
+  count: z.number().optional(),
 });
 
 export type TNotificationDb = z.infer<typeof notificationDbSchema>;

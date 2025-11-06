@@ -23,7 +23,7 @@ export const AlertModalReview = ({
 
   return (
     <>
-      <button onClick={() => setIsOpen(true)}></button>
+      <button className="hidden" onClick={() => setIsOpen(true)}></button>
       <Dialog
         open={isOpen}
         onClose={() => {
