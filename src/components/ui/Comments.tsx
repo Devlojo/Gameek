@@ -15,6 +15,9 @@ import { useRef, useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiArrowDropUpLine } from "react-icons/ri";
 import { IoMdCloseCircle } from "react-icons/io";
+import { useCommentsSocket } from "@/hooks/useCommentsSocket";
+import { useQueryClient } from "@tanstack/react-query";
+import { TCommentList } from "@/types/comment";
 
 type TCommentProps = {
   gameSlug: string;
@@ -33,6 +36,45 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
   const [showRepliesFor, setShowRepliesFor] = useState<number[]>([]);
   const [openActionComments, setOpenActionComments] = useState<number[]>([]);
   const [actionMessage, setActionMessage] = useState<string | null>(null);
+
+  const queryClient = useQueryClient();
+
+  useCommentsSocket(
+    (reviewId, commentChange) => {
+      queryClient.setQueryData(
+        ["comments", gameSlug, userName],
+        (oldData: TCommentList | undefined) => {
+          if (!oldData) return oldData;
+
+          return {
+            ...oldData,
+            comments: oldData.comments.map((comment) =>
+              comment.review_id === reviewId
+                ? {
+                    ...comment /* ici tu peux mettre à jour likes_count ou autre */,
+                  }
+                : comment,
+            ),
+            count: oldData.count && oldData.count + commentChange,
+          };
+        },
+      );
+    },
+    (fullComment) => {
+      queryClient.setQueryData(
+        ["comments", gameSlug, userName],
+        (oldData: TCommentList | undefined) => {
+          if (!oldData) return oldData;
+
+          return {
+            ...oldData, //on copie toutes les propriétés de l'objet existant
+            comments: [fullComment, ...oldData.comments], // On ajoute le nouveau commentaire en premier
+            count: oldData.count && oldData.count + 1, // incrémente le compteur
+          };
+        },
+      );
+    },
+  );
 
   const { mutate: addCommentMutate } = useAddComment(gameSlug, userName);
   const { mutate: deleteComment } = useDeleteCommentById(gameSlug, userName);
@@ -175,7 +217,7 @@ export const Comments = ({ gameSlug, userName, reviewId }: TCommentProps) => {
       <div className="flex flex-col items-center justify-center gap-4">
         {comments?.comments && comments.comments.length > 0 ? (
           <>
-            <p className="mt-4">{comments?.count} commentaire(s)</p>
+            <p className="mt-4">{comments.count} commentaire(s)</p>
             <div className="flex w-4/5 justify-center border-b border-global/40"></div>
             <div className="flex w-full flex-col gap-4 px-4">
               {actionMessage && (

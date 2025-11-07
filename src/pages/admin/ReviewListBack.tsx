@@ -13,6 +13,7 @@ import { apiUrl } from "@/config";
 export const ReviewListBack = () => {
   const { reviews } = useGetAllReviewsQuery();
   const { user } = useUser();
+
   if (user?.role !== "admin") {
     return <Navigate to={"/"} replace />;
   }
@@ -25,11 +26,18 @@ export const ReviewListBack = () => {
 
   const handleDelete = async (id: number) => {
     try {
+      const { data: csrfRes } = await axios.get(`${apiUrl}/csrf-token`, {
+        withCredentials: true,
+      });
       const res = await axios.delete(`${apiUrl}/back/reviews/${id}`, {
         withCredentials: true,
+        headers: {
+          "x-csrf-token": csrfRes.csrfToken,
+        }, // pour que le cookie HttpOnly (refreshToken) soit envoyé automatiquement
       });
       if (res.status === 200) {
         setMessage(res.data?.message);
+
         setLocalReviews((prev) => prev.filter((review) => review.id !== id));
         window.scrollTo({ top: 0, behavior: "smooth" });
       }

@@ -6,12 +6,15 @@ import { useReviewDetailQuery } from "@/queries/useReviewsQuery";
 import { Loader } from "@/components/ui/Loader";
 import axios from "axios";
 import { CiSquareInfo } from "react-icons/ci";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Comments } from "@/components/ui/Comments";
 import { useUser } from "@/hooks/useUser";
 import { apiUrl } from "@/config";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { useToggleLike } from "@/queries/useLikesQuery";
+import { useQueryClient } from "@tanstack/react-query";
+import { useLikesSocket } from "@/hooks/useLikesSocket";
+import { TReviewDetail } from "@/types/review";
 
 export const Review = () => {
   const { gameSlug, userName } = useParams() as {
@@ -19,7 +22,9 @@ export const Review = () => {
     userName: string;
   };
   const { user } = useUser();
+
   const navigate = useNavigate();
+
   const [requestError, setRequestError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
 
@@ -27,7 +32,35 @@ export const Review = () => {
     gameSlug,
     userName,
   );
+  const queryClient = useQueryClient();
+  //  Écoute les likes en temps réel
+  useLikesSocket((reviewId, likeChange) => {
+    queryClient.setQueryData(
+      ["reviewDetail", gameSlug, userName],
+      (oldData: TReviewDetail | undefined) => {
+        // oldData = état actuel du cache
+        //  Si le cache est vide, on ne fait rien
+        if (!oldData) return oldData;
 
+        // Sinon on retourne un nouvel objet pour le cache
+        if (reviewId === oldData.review.id) {
+          //Si le like reçu concerne la review actuellement affichée
+          return {
+            ...oldData, //On garde toutes les autres propriétés de oldData intactes
+            review: {
+              ...oldData.review, // On garde toutes les autres propriétés de la review intactes
+              likes_count:
+                oldData.review.likes_count +
+                likeChange /* met à jour uniquement le compteur de likes*/,
+            },
+          };
+        }
+        return oldData;
+      },
+    );
+  });
+
+  // l'objet mutate représente la fonction mutate du hook de tanstack query
   const { mutate: toggleLikeMutate } = useToggleLike(gameSlug, userName);
 
   const reviewStatus = [
@@ -37,7 +70,15 @@ export const Review = () => {
     { value: "refuse", label: "Refusé" },
   ];
 
-  const [selectedStatus, setSelectedStatus] = useState(reviewStatus[0].value);
+  const [selectedStatus, setSelectedStatus] = useState<string | undefined>();
+
+  useEffect(() => {
+    if (reviewDetail?.review.status) {
+      setSelectedStatus(reviewDetail.review.status);
+    }
+  }, [reviewDetail]);
+  console.log(selectedStatus);
+
   if (isLoading) {
     return <Loader />; // ton loader custom
   }
@@ -51,7 +92,7 @@ export const Review = () => {
         <CiSquareInfo className="size-10 text-blue-500" />
         <p className="text-center">
           {" "}
-          Le test est en attente de confirmation de la part de l'admin
+          Le test sera publié dès qu’il aura été validé par un modérateur.
         </p>
       </div>
     );
@@ -61,11 +102,17 @@ export const Review = () => {
     const newStatus = e.target.value;
     try {
       setSelectedStatus(newStatus);
+      const { data: csrfRes } = await axios.get(`${apiUrl}/csrf-token`, {
+        withCredentials: true,
+      });
       const res = await axios.put(
         `${apiUrl}/back/reviews/${reviewDetail?.review.id}`,
         { status: newStatus }, // body à envoyer
         {
           withCredentials: true,
+          headers: {
+            "x-csrf-token": csrfRes.csrfToken,
+          },
         },
       );
       if (res.status === 200) {
@@ -213,51 +260,57 @@ export const Review = () => {
                 </ul>
               </div>
             </div>
-
-            <button
-              onClick={() =>
-                toggleLikeMutate({
-                  review_id: reviewDetail?.review.id as number,
-                })
-              }
-              className="flex items-center gap-2 border border-gray-400 p-2 shadow-sm shadow-black md:hover:shadow-indigo-300"
-            >
-              {reviewDetail?.review.user_id_like ? (
-                <BsHeartFill size={20} />
-              ) : (
-                <BsHeart size={20} />
-              )}
-              <span>Like</span>
-            </button>
+            {reviewDetail?.review.status === "valide" && (
+              <button
+                onClick={() =>
+                  toggleLikeMutate({
+                    review_id: reviewDetail?.review.id as number,
+                  })
+                }
+                className="flex items-center gap-2 border border-gray-400 p-2 shadow-sm shadow-black md:hover:shadow-indigo-300"
+              >
+                {reviewDetail?.review.user_id_like ? (
+                  <BsHeartFill size={20} />
+                ) : (
+                  <BsHeart size={20} />
+                )}
+                <span>J'aime ({reviewDetail?.review.likes_count})</span>
+              </button>
+            )}
           </div>
         </div>
         {user?.role === "admin" && (
           <>
             {requestError && (
-              <p className="font-bold text-red-600">{errorMessage}</p>
+              <p className="pt-2 text-center font-bold text-red-600">
+                {errorMessage}
+              </p>
             )}
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-2 px-3">
-              <p>Selectionnez un statut de validation pour ce test :</p>
-              <select
-                value={selectedStatus}
-                onChange={(e) => handleOnChange(e)}
-                className="rounded-md border border-black p-2"
-              >
-                {reviewStatus.map(({ value, label }) => (
-                  <option key={value} value={value}>
-                    {label}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {reviewDetail?.review.status === "en_attente" && (
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-2 px-3">
+                <p>Selectionnez un statut de validation pour ce test :</p>
+                <select
+                  value={selectedStatus}
+                  onChange={(e) => handleOnChange(e)}
+                  className="rounded-md border border-black p-2"
+                >
+                  {reviewStatus.map(({ value, label }) => (
+                    <option key={value} value={value}>
+                      {label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
           </>
         )}
-
-        <Comments
-          gameSlug={gameSlug}
-          userName={userName}
-          reviewId={reviewDetail?.review.id as number}
-        />
+        {reviewDetail?.review.status === "valide" && (
+          <Comments
+            gameSlug={gameSlug}
+            userName={userName}
+            reviewId={reviewDetail?.review.id as number}
+          />
+        )}
       </GameHeader>
     </>
   );

@@ -14,6 +14,14 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { apiUrl } from "@/config";
 import { useQueryClient } from "@tanstack/react-query";
+import { NotificationCount } from "@/components/ui/NotificationCount";
+import { MdNotificationsNone } from "react-icons/md";
+import { NotificationModal } from "@/components/ui/NotificationModal";
+import {
+  useNotificationsQuery,
+  useMarkNotificationAsReadQuery,
+} from "@/queries/useNotificationsQuery";
+import { useNotificationCount } from "@/hooks/useNotificationCount";
 
 type THeaderProps = {
   activeBurgerMenu: boolean;
@@ -24,12 +32,18 @@ export const Header = ({
   handleActiveBurgerMenu,
 }: THeaderProps): JSX.Element => {
   const [activeSearchInput, setActiveSearchInput] = useState(false);
+  const [showNotificationModal, setShowNotificationModal] = useState(false);
   const navigate = useNavigate();
   const handleInputSearch = () => {
     setActiveSearchInput((prev) => !prev);
   };
   const { user, setUser } = useUser();
   const queryClient = useQueryClient();
+
+  const { isSuccess } = useNotificationsQuery(user?.id as number);
+
+  const { mutate: readNotification } = useMarkNotificationAsReadQuery();
+  const { notifCount, setNotifCount } = useNotificationCount();
   const logout = async () => {
     try {
       await axios.post(`${apiUrl}/logout`, {}, { withCredentials: true });
@@ -40,18 +54,28 @@ export const Header = ({
       console.error("Erreur lors de la déconnexion :", error);
     }
   };
+
+  const handleModalNotification = () => {
+    setShowNotificationModal((prev) => !prev);
+
+    readNotification(user?.id as number);
+    setNotifCount(0);
+  };
   return (
     <>
       <header className="sticky top-0 z-20 border-b border-black bg-gray-950/80 py-1 text-light">
         <div className="flex items-center justify-between gap-2 max-lg:px-2 lg:mx-auto lg:max-w-5xl">
           {!activeBurgerMenu && (
-            <GiHamburgerMenu
+            <div
               className={clsx(
-                "size-8 md:hidden",
+                "relative md:hidden",
                 activeSearchInput && "hidden",
               )}
               onClick={handleActiveBurgerMenu}
-            />
+            >
+              <GiHamburgerMenu className="size-8" />
+              <NotificationCount bottom={0} right={0} count={notifCount} />
+            </div>
           )}
 
           <Link to="/">
@@ -124,51 +148,83 @@ export const Header = ({
                 <FaUserCircle className="size-6" />
               </Link>
             ) : (
-              <div
-                className={clsx(
-                  "group relative flex items-center gap-2",
-                  activeSearchInput && "hidden",
-                )}
-              >
-                <img
-                  src={user?.image}
-                  alt="Avatar de l'utilisateur"
-                  className="size-8 rounded-full shadow-sm shadow-black"
-                />
-
-                <p className="hidden md:block">{user?.username}</p>
-
-                <MdArrowDropDown />
-                <div className="absolute right-0 top-full z-10 hidden w-32 gap-1 overflow-y-auto rounded-sm bg-customWhite p-1 text-black shadow-sm shadow-black group-hover:flex group-hover:flex-col md:w-full">
-                  <p className="hidden border-b border-black/40 text-center font-bold max-md:block">
-                    {user?.username}
-                  </p>
-                  <Link to="" className="p-1 text-center hover:bg-gray-300">
-                    Profil
-                  </Link>
-                  <Link to="" className="p-1 text-center hover:bg-gray-300">
-                    Notifications
-                  </Link>
-                  {user?.role === "admin" && (
-                    <Link
-                      to="/back"
-                      className="p-1 text-center hover:bg-gray-300"
+              <>
+                {!activeSearchInput && (
+                  <div className="relative hidden md:flex md:items-center">
+                    <button
+                      onClick={() => handleModalNotification()}
+                      className="hover:text-yellow-400"
                     >
-                      Back-office
-                    </Link>
-                  )}
-                  <Link to="" className="p-1 text-center hover:bg-gray-300">
-                    Mes tests
-                  </Link>
+                      <MdNotificationsNone className="size-8" />
+                      {isSuccess && (
+                        <NotificationCount
+                          top={0}
+                          right={0}
+                          count={notifCount}
+                        />
+                      )}
+                    </button>
+                    {showNotificationModal && (
+                      <>
+                        {/* overlay plein écran */}
+                        <div
+                          className="fixed inset-0 z-40"
+                          onClick={() => setShowNotificationModal(false)}
+                        ></div>
+                        <div className="absolute right-1 top-12 z-50 h-96 w-[600px] overflow-y-auto rounded-md bg-customWhite text-black shadow-md shadow-black">
+                          <NotificationModal
+                            setShowNotificationModal={setShowNotificationModal}
+                          />
+                        </div>
+                      </>
+                    )}
+                  </div>
+                )}
 
-                  <button
-                    className="p-1 text-center hover:bg-gray-300"
-                    onClick={logout}
-                  >
-                    Deconnexion
-                  </button>
+                <div
+                  className={clsx(
+                    "group relative flex items-center gap-2",
+                    activeSearchInput && "hidden",
+                  )}
+                >
+                  <img
+                    src={user?.image}
+                    alt="Avatar de l'utilisateur"
+                    className="size-8 rounded-full shadow-sm shadow-black"
+                  />
+
+                  <p className="hidden md:block">{user?.username}</p>
+
+                  <MdArrowDropDown />
+                  <div className="absolute right-0 top-full z-10 hidden w-32 gap-1 overflow-y-auto rounded-sm bg-customWhite p-1 text-black shadow-sm shadow-black group-hover:flex group-hover:flex-col md:w-full">
+                    <p className="hidden border-b border-black/40 text-center font-bold max-md:block">
+                      {user?.username}
+                    </p>
+                    <Link to="" className="p-1 text-center hover:bg-gray-300">
+                      Profil
+                    </Link>
+
+                    {user?.role === "admin" && (
+                      <Link
+                        to="/back"
+                        className="p-1 text-center hover:bg-gray-300"
+                      >
+                        Back-office
+                      </Link>
+                    )}
+                    <Link to="" className="p-1 text-center hover:bg-gray-300">
+                      Mes tests
+                    </Link>
+
+                    <button
+                      className="p-1 text-center hover:bg-gray-300"
+                      onClick={logout}
+                    >
+                      Deconnexion
+                    </button>
+                  </div>
                 </div>
-              </div>
+              </>
             )}
           </div>
         </div>

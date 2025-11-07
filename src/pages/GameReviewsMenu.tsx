@@ -13,6 +13,12 @@ import { Pagination } from "@/components/ui/Pagination";
 import { Loader } from "@/components/ui/Loader";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { BiConversation } from "react-icons/bi";
+import { useLikesSocket } from "@/hooks/useLikesSocket";
+import { useQueryClient } from "@tanstack/react-query";
+import { TReviewListByGame } from "@/types/review";
+import { useCommentsSocket } from "@/hooks/useCommentsSocket";
+import { useUser } from "@/hooks/useUser";
+import { AlertModalReview } from "@/components/ui/AlertModalReview";
 
 export const GameReviewsMenu = () => {
   const { id } = useParams() as { id: string };
@@ -20,8 +26,9 @@ export const GameReviewsMenu = () => {
   const page = parseInt(searchParams.get("page") || "1");
   const { reviewsByGame, isError, isLoading } = useReviewsByGameQuery(id);
   const [activeMenu, setActiveMenu] = useState<string>("reviews");
+  const [showModal, setShowModal] = useState(false);
   const { gameDetail } = useGameDetailQuery(id);
-
+  const { user } = useUser();
   const hasReviews = reviewsByGame && reviewsByGame.reviews.length > 0;
   const headerBackground = hasReviews
     ? reviewsByGame.reviews[0].background_image
@@ -34,6 +41,60 @@ export const GameReviewsMenu = () => {
     ? reviewsByGame.reviews[0].slug
     : gameDetail?.slug;
 
+  const queryClient = useQueryClient();
+
+  //  Écoute les likes en temps réel
+  useLikesSocket((reviewId, likeChange) => {
+    // 🔹 Mise à jour manuellement du cache React Query pour la query "latestReviews"
+    queryClient.setQueryData(
+      ["reviewsByGame", gameSlug],
+      (oldData: TReviewListByGame | undefined) => {
+        // oldData = état actuel du cache
+        //  Si le cache est vide, on ne fait rien
+        if (!oldData) return oldData;
+
+        // Sinon on retourne un nouvel objet pour le cache
+        return {
+          ...oldData,
+          reviews: oldData.reviews.map((review) =>
+            review.id === reviewId
+              ? {
+                  ...review,
+                  likes_count:
+                    review.likes_count +
+                    likeChange /* met à jour le compteur de likes*/,
+                }
+              : review,
+          ),
+        };
+      },
+    );
+  });
+
+  useCommentsSocket((reviewId, commentChange) => {
+    // 🔹 Mise à jour manuellement du cache React Query pour la query "latestReviews"
+    queryClient.setQueryData(
+      ["reviewsByGame", gameSlug],
+      (oldData: TReviewListByGame | undefined) => {
+        // oldData = état actuel du cache
+        //  Si le cache est vide, on ne fait rien
+        if (!oldData) return oldData;
+
+        // Sinon on retourne un nouvel objet pour le cache
+        return {
+          ...oldData,
+          reviews: oldData.reviews.map((review) =>
+            review.id === reviewId
+              ? {
+                  ...review,
+                  comments_count: review.comments_count + commentChange,
+                }
+              : review,
+          ),
+        };
+      },
+    );
+  });
   return (
     <>
       {isError ? (
@@ -47,6 +108,13 @@ export const GameReviewsMenu = () => {
                 <Loader />
               ) : (
                 <>
+                  {showModal && (
+                    <AlertModalReview
+                      title="Action non autorisée"
+                      description="Seuls les utilisateurs peuvent rédiger un test."
+                      buttonLabel="Ok"
+                    />
+                  )}
                   <div
                     className={clsx(
                       "flex w-full flex-col flex-wrap items-center justify-center gap-2",
@@ -59,13 +127,22 @@ export const GameReviewsMenu = () => {
                       reviewsByGame.reviews.length > 0 && (
                         <p>{reviewsByGame?.count} test(s) trouvé(s)</p>
                       )}
+                    {user?.role === "user" ? (
+                      <Link
+                        to={`/creation/test/${gameSlug}`}
+                        className="flex items-center gap-2 rounded-es-2xl border-2 border-black/40 p-2 hover:bg-global hover:text-customWhite"
+                      >
+                        Rédigez votre test <FaPen />
+                      </Link>
+                    ) : (
+                      <button
+                        className="flex items-center gap-2 rounded-es-2xl border-2 border-black/40 p-2 hover:bg-global hover:text-customWhite"
+                        onClick={() => setShowModal((prev) => !prev)}
+                      >
+                        Rédigez votre test <FaPen />
+                      </button>
+                    )}
 
-                    <Link
-                      to={`/creation/test/${gameSlug}`}
-                      className="flex items-center gap-2 rounded-es-2xl border-2 border-black/40 p-2 hover:bg-global hover:text-customWhite"
-                    >
-                      Rédigez votre test <FaPen />
-                    </Link>
                     {reviewsByGame && reviewsByGame.reviews.length > 0 && (
                       <div className="group relative flex w-44 items-center justify-between border-y border-black/40 p-2 hover:cursor-pointer">
                         <button>Trier par date</button>
@@ -154,7 +231,9 @@ export const GameReviewsMenu = () => {
                       Ce jeu n'a pas encore été évalué
                     </p>
                   )}
-                  <Pagination page={page} totalGames={reviewsByGame?.count} />
+                  {reviewsByGame && reviewsByGame.reviews.length > 0 && (
+                    <Pagination page={page} totalGames={reviewsByGame?.count} />
+                  )}
                 </>
               )}
             </div>

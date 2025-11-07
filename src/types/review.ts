@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Définition de l'ENUM
-const reviewStatusEnum = z.enum([
+export const reviewStatusEnum = z.enum([
   "en_attente",
   "valide",
   "a_modifier",
@@ -70,6 +70,8 @@ export const reviewDetailSchema = z.object({
     username: z.string(),
     image: z.string(),
     user_id_like: z.number().nullable(),
+    likes_count: z.number(),
+    comments_count: z.number(),
     strengths: z.array(z.string()).max(5).optional(),
     weaknesses: z.array(z.string()).max(5).optional(),
   }),
@@ -145,3 +147,6 @@ export const reviewListBackSchema = z.object({
 });
 
 export type TReviewDetail = z.infer<typeof reviewDetailSchema>;
+export type TReviewList = z.infer<typeof reviewListResponseSchema>;
+export type TReviewFilteredList = z.infer<typeof reviewListFilteredSchema>;
+export type TReviewListByGame = z.infer<typeof reviewListByGameSchema>;

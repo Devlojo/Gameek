@@ -23,5 +23,23 @@ export const commentListSchema = z.object({
   count: z.number().optional(),
 });
 
+export const commentDbSchema = z.object({
+  id: z.number(),
+  content: z.string(),
+  user_id: z.number(),
+  created_at: z.string(),
+  review_id: z.number(),
+  is_blocked: z.boolean(),
+  report_count: z.number(),
+  parent_id: z.number().nullable(),
+});
+
+export const commentFullSchema = commentDbSchema.extend({
+  username: z.string(),
+  avatar: z.string(),
+});
+
 export type TCommentForm = z.infer<typeof commentFormSchema>;
 export type TCommentList = z.infer<typeof commentListSchema>;
+export type TCommentDb = z.infer<typeof commentDbSchema>;
+export type TCommentFull = z.infer<typeof commentFullSchema>;

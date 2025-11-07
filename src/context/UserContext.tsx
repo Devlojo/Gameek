@@ -25,8 +25,9 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         const res = await axios.get(`${apiUrl}/profile`, {
           withCredentials: true,
         });
+
         setUser(res.data.user);
-      } catch (error) {
+      } catch (error: any) {
         setUser(null);
       } finally {
         setLoading(false); // toujours, succès ou erreur

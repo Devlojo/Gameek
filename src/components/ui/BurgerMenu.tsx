@@ -1,12 +1,16 @@
 import { IoClose } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { getCurrentDate } from "@/utils/getCurrentDate";
+import { NotificationCount } from "./NotificationCount";
+import { useNotificationCount } from "@/hooks/useNotificationCount";
 
 type TActiveBurgerMenu = {
   handleActiveBurgerMenu: () => void;
 };
 
 export const BurgerMenu = ({ handleActiveBurgerMenu }: TActiveBurgerMenu) => {
+  const { notifCount } = useNotificationCount();
+
   return (
     <>
       <div className="fixed z-30 flex h-full w-full bg-global text-light md:hidden">
@@ -18,24 +22,32 @@ export const BurgerMenu = ({ handleActiveBurgerMenu }: TActiveBurgerMenu) => {
         <nav className="ml-2 mt-20 flex flex-col justify-start gap-2">
           <Link
             to={"/jeux?page=1"}
-            className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
+            className="rounded-sm p-2"
             onClick={handleActiveBurgerMenu}
           >
             Jeux
           </Link>
           <Link
             to={`/jeux/sorties?page=1&annee=${getCurrentDate().year}&mois=${getCurrentDate().month}`}
-            className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
+            className="rounded-sm p-2"
             onClick={handleActiveBurgerMenu}
           >
             Sorties
           </Link>
           <Link
             to={"/tests?page=1"}
-            className="rounded-sm p-2 hover:bg-mainYellow hover:text-black"
+            className="rounded-sm p-2"
             onClick={handleActiveBurgerMenu}
           >
             Tests
+          </Link>
+          <Link
+            to={"/notifications"}
+            className="relative rounded-sm p-2"
+            onClick={handleActiveBurgerMenu}
+          >
+            Notifications
+            <NotificationCount top={0} right={0} count={notifCount} />
           </Link>
         </nav>
       </div>
