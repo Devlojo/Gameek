@@ -77,7 +77,6 @@ export const Review = () => {
       setSelectedStatus(reviewDetail.review.status);
     }
   }, [reviewDetail]);
-  console.log(selectedStatus);
 
   if (isLoading) {
     return <Loader />; // ton loader custom
