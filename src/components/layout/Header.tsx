@@ -149,22 +149,38 @@ export const Header = ({
               </Link>
             ) : (
               <>
-                <div className="relative hidden md:flex md:items-center">
-                  <button
-                    onClick={() => handleModalNotification()}
-                    className="hover:text-yellow-400"
-                  >
-                    <MdNotificationsNone className="size-8" />
-                    {isSuccess && (
-                      <NotificationCount top={0} right={0} count={notifCount} />
+                {!activeSearchInput && (
+                  <div className="relative hidden md:flex md:items-center">
+                    <button
+                      onClick={() => handleModalNotification()}
+                      className="hover:text-yellow-400"
+                    >
+                      <MdNotificationsNone className="size-8" />
+                      {isSuccess && (
+                        <NotificationCount
+                          top={0}
+                          right={0}
+                          count={notifCount}
+                        />
+                      )}
+                    </button>
+                    {showNotificationModal && (
+                      <>
+                        {/* overlay plein écran */}
+                        <div
+                          className="fixed inset-0 z-40"
+                          onClick={() => setShowNotificationModal(false)}
+                        ></div>
+                        <div className="absolute right-1 top-12 z-50 h-96 w-[600px] overflow-y-auto rounded-md bg-customWhite text-black shadow-md shadow-black">
+                          <NotificationModal
+                            setShowNotificationModal={setShowNotificationModal}
+                          />
+                        </div>
+                      </>
                     )}
-                  </button>
-                  {showNotificationModal && (
-                    <NotificationModal
-                      setShowNotificationModal={setShowNotificationModal}
-                    />
-                  )}
-                </div>
+                  </div>
+                )}
+
                 <div
                   className={clsx(
                     "group relative flex items-center gap-2",

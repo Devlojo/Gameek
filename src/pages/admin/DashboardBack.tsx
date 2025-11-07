@@ -29,7 +29,7 @@ export const DashboardBack = () => {
             <span className="text-lg font-bold">{users?.users.length}</span>
           </div>
           <div className="rounded bg-white p-4 shadow">
-            Tests en attente de vérification :{" "}
+            Tests non valides :{" "}
             <span className="text-lg font-bold">
               {pendingReviews?.length}/{reviews?.reviews.length}
             </span>

@@ -6,7 +6,7 @@ import { useReviewDetailQuery } from "@/queries/useReviewsQuery";
 import { Loader } from "@/components/ui/Loader";
 import axios from "axios";
 import { CiSquareInfo } from "react-icons/ci";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Comments } from "@/components/ui/Comments";
 import { useUser } from "@/hooks/useUser";
 import { apiUrl } from "@/config";
@@ -70,7 +70,15 @@ export const Review = () => {
     { value: "refuse", label: "Refusé" },
   ];
 
-  const [selectedStatus, setSelectedStatus] = useState(reviewStatus[0].value);
+  const [selectedStatus, setSelectedStatus] = useState<string | undefined>();
+
+  useEffect(() => {
+    if (reviewDetail?.review.status) {
+      setSelectedStatus(reviewDetail.review.status);
+    }
+  }, [reviewDetail]);
+  console.log(selectedStatus);
+
   if (isLoading) {
     return <Loader />; // ton loader custom
   }
@@ -252,22 +260,23 @@ export const Review = () => {
                 </ul>
               </div>
             </div>
-
-            <button
-              onClick={() =>
-                toggleLikeMutate({
-                  review_id: reviewDetail?.review.id as number,
-                })
-              }
-              className="flex items-center gap-2 border border-gray-400 p-2 shadow-sm shadow-black md:hover:shadow-indigo-300"
-            >
-              {reviewDetail?.review.user_id_like ? (
-                <BsHeartFill size={20} />
-              ) : (
-                <BsHeart size={20} />
-              )}
-              <span>J'aime ({reviewDetail?.review.likes_count})</span>
-            </button>
+            {reviewDetail?.review.status === "valide" && (
+              <button
+                onClick={() =>
+                  toggleLikeMutate({
+                    review_id: reviewDetail?.review.id as number,
+                  })
+                }
+                className="flex items-center gap-2 border border-gray-400 p-2 shadow-sm shadow-black md:hover:shadow-indigo-300"
+              >
+                {reviewDetail?.review.user_id_like ? (
+                  <BsHeartFill size={20} />
+                ) : (
+                  <BsHeart size={20} />
+                )}
+                <span>J'aime ({reviewDetail?.review.likes_count})</span>
+              </button>
+            )}
           </div>
         </div>
         {user?.role === "admin" && (
@@ -277,28 +286,31 @@ export const Review = () => {
                 {errorMessage}
               </p>
             )}
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-2 px-3">
-              <p>Selectionnez un statut de validation pour ce test :</p>
-              <select
-                value={selectedStatus}
-                onChange={(e) => handleOnChange(e)}
-                className="rounded-md border border-black p-2"
-              >
-                {reviewStatus.map(({ value, label }) => (
-                  <option key={value} value={value}>
-                    {label}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {reviewDetail?.review.status === "en_attente" && (
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-2 px-3">
+                <p>Selectionnez un statut de validation pour ce test :</p>
+                <select
+                  value={selectedStatus}
+                  onChange={(e) => handleOnChange(e)}
+                  className="rounded-md border border-black p-2"
+                >
+                  {reviewStatus.map(({ value, label }) => (
+                    <option key={value} value={value}>
+                      {label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
           </>
         )}
-
-        <Comments
-          gameSlug={gameSlug}
-          userName={userName}
-          reviewId={reviewDetail?.review.id as number}
-        />
+        {reviewDetail?.review.status === "valide" && (
+          <Comments
+            gameSlug={gameSlug}
+            userName={userName}
+            reviewId={reviewDetail?.review.id as number}
+          />
+        )}
       </GameHeader>
     </>
   );
