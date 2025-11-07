@@ -136,7 +136,7 @@ export const NotificationModal = ({
             );
           })
         ) : (
-          <p>Aucune notification</p>
+          <p className="text-center">Aucune notification</p>
         )}
       </div>
     </>
