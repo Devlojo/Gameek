@@ -4,6 +4,7 @@ import {
   getReviewDetail,
   getReviewsByGame,
   getAllReviews,
+  getReviewsByUser,
 } from "@/api/reviewsApi";
 
 export const useLatestReviewsQuery = () => {
@@ -55,6 +56,25 @@ export const useReviewsByGameQuery = (gameSlug: string) => {
   });
   return {
     reviewsByGame,
+    isLoading,
+    isSuccess,
+    isError,
+  };
+};
+
+export const useReviewsByUserQuery = () => {
+  const {
+    data: reviewsByUser,
+    isLoading,
+    isSuccess,
+    isError,
+  } = useQuery({
+    queryKey: ["reviewsByUser"],
+    queryFn: () => getReviewsByUser(),
+    retry: false,
+  });
+  return {
+    reviewsByUser,
     isLoading,
     isSuccess,
     isError,

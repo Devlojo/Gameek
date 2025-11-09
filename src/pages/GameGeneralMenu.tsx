@@ -77,12 +77,15 @@ export const GameGeneralMenu = () => {
                 </div>
                 <div className="flex flex-col gap-2">
                   <p className="font-bold">Description :</p>
-
-                  <p>
-                    {cleanGameDescription(
-                      gameDetail?.description_raw as string,
-                    )}
-                  </p>
+                  {gameDetail?.description_raw ? (
+                    <p>
+                      {cleanGameDescription(
+                        gameDetail?.description_raw as string,
+                      )}
+                    </p>
+                  ) : (
+                    <p className="italic">Pas de description</p>
+                  )}
                 </div>
               </div>
             </div>

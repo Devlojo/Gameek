@@ -31,6 +31,7 @@ import { NotificationAlert } from "@/components/ui/NotificationAlert";
 import { TNotification } from "./types/notification";
 import { useNotificationCount } from "@/hooks/useNotificationCount";
 import { Notifications } from "@/pages/Notifications";
+import { UserActivity } from "@/pages/UserActivity";
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
@@ -124,6 +125,8 @@ const App = (): JSX.Element => {
                 path="/conditions-generales-utilisation"
                 element={<GeneralConditionsOfUse />}
               />
+
+              <Route path="/mon-activite" element={<UserActivity />} />
 
               <Route path="/a-propos" element={<About />} />
               <Route path="/notifications" element={<Notifications />} />
