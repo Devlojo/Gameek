@@ -212,8 +212,11 @@ export const Header = ({
                         Back-office
                       </Link>
                     )}
-                    <Link to="" className="p-1 text-center hover:bg-gray-300">
-                      Mes tests
+                    <Link
+                      to="/mon-activite"
+                      className="p-1 text-center hover:bg-gray-300"
+                    >
+                      Mon activité
                     </Link>
 
                     <button

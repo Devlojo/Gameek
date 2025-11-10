@@ -1,5 +1,5 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toggleLike } from "@/api/likesApi";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getLikedReviewsByUser, toggleLike } from "@/api/likesApi";
 import { TLike } from "@/types/like";
 import { socket } from "@/socket";
 
@@ -42,4 +42,23 @@ export const useToggleLike = (gameSlug: string, userName: string) => {
   });
 
   return mutation;
+};
+
+export const useLikedReviewsByUserQuery = () => {
+  const {
+    data: likedReviews,
+    isLoading,
+    isSuccess,
+    isError,
+  } = useQuery({
+    queryKey: ["likedReviews"],
+    queryFn: () => getLikedReviewsByUser(),
+    retry: false,
+  });
+  return {
+    likedReviews,
+    isLoading,
+    isSuccess,
+    isError,
+  };
 };

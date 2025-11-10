@@ -50,6 +50,29 @@ export const getReviewsByGame = async (gameSlug: string) => {
   }
 };
 
+export const getReviewsByUser = async () => {
+  try {
+    const { data: csrfRes } = await axios.get(`${apiUrl}/csrf-token`, {
+      withCredentials: true,
+    });
+    const { data: reviewsByGame } = await axios.get(
+      `${apiUrl}/reviews/my-reviews`,
+      {
+        withCredentials: true,
+        timeout: 5000,
+        headers: {
+          "x-csrf-token": csrfRes.csrfToken,
+        },
+      },
+    );
+    const reviewByGameParsed = reviewListByGameSchema.parse(reviewsByGame);
+    return reviewByGameParsed;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const getAllReviews = async (
   page: number,
   reviewer?: string,
