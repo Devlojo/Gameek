@@ -16,12 +16,12 @@ export const UserLikedReviews = () => {
               <Link
                 to={`/test/${r.slug}/${r.reviewer_name}`}
                 key={index}
-                className="shadow-md shadow-black hover:opacity-80 md:w-[245px]"
+                className="aspect-[1/1] shadow-md shadow-black hover:opacity-80 md:aspect-[3/4] md:w-[245px]"
               >
-                <article className="relative flex flex-wrap md:h-60 md:w-[245px]">
+                <article className="relative flex h-full w-full flex-wrap">
                   <img
                     src={r.background_image}
-                    className="w-full object-cover"
+                    className="h-full w-full object-cover"
                     loading="lazy"
                   />
 
@@ -45,7 +45,9 @@ export const UserLikedReviews = () => {
                   </div>
                 </article>
                 <div className="flex w-full flex-wrap items-center justify-center bg-surface py-3">
-                  <h3 className="font-semibold text-light">{r.game_name}</h3>
+                  <h3 className="truncate font-semibold text-light">
+                    {r.game_name}
+                  </h3>
                 </div>
               </Link>
             ))

@@ -24,16 +24,18 @@ export const UserReviews = () => {
               <Link
                 to={`/test/${r.slug}/${user?.username}`}
                 key={index}
-                className="hover:opacity-80"
+                className="aspect-[3/2] hover:opacity-80 md:h-60 md:w-[245px]"
               >
-                <article className="relative flex flex-wrap shadow-lg shadow-black md:h-60 md:w-[245px]">
+                <article className="relative flex h-full w-full flex-wrap shadow-lg shadow-black">
                   <img
                     src={r.background_image}
-                    className="w-full object-cover"
+                    className="h-full w-full object-cover"
                     loading="lazy"
                   />
-                  <div className="absolute bg-surface p-2">
-                    <h3 className="font-semibold text-light">{r.name}</h3>
+                  <div className="absolute w-full bg-surface p-2">
+                    <h3 className="truncate text-center font-semibold text-light">
+                      {r.name}
+                    </h3>
                   </div>
                   <div
                     className={`absolute bottom-0 right-0 p-2 ${statusColor[r.status]}`}
