@@ -11,12 +11,12 @@ export const UserLikedReviews = () => {
         <Loader />
       ) : (
         <section className="flex w-full flex-wrap gap-2 rounded-md bg-customWhite px-2 py-3">
-          {likedReviews?.reviews &&
+          {likedReviews?.reviews && likedReviews.reviews.length > 0 ? (
             likedReviews.reviews.map((r, index) => (
               <Link
                 to={`/test/${r.slug}/${r.reviewer_name}`}
                 key={index}
-                className="shadow-md shadow-black md:h-72 md:w-[245px]"
+                className="shadow-md shadow-black hover:opacity-80 md:w-[245px]"
               >
                 <article className="relative flex flex-wrap md:h-60 md:w-[245px]">
                   <img
@@ -26,14 +26,14 @@ export const UserLikedReviews = () => {
                   />
 
                   <div
-                    className={`absolute top-0 flex flex-wrap items-center gap-2 bg-surface/60 p-2`}
+                    className={`absolute top-0 flex flex-wrap items-center gap-1 bg-surface/60 p-1`}
                   >
                     <img
                       src={r.avatar}
                       alt="Avatar de l'utilisateur"
                       className="border-1 h-8 w-8 rounded-full shadow-sm shadow-black"
                     />
-                    <p className="font-semibold text-light">
+                    <p className="text-sm font-semibold text-light">
                       {r.reviewer_name}
                     </p>
                   </div>
@@ -48,7 +48,10 @@ export const UserLikedReviews = () => {
                   <h3 className="font-semibold text-light">{r.game_name}</h3>
                 </div>
               </Link>
-            ))}
+            ))
+          ) : (
+            <p>Aucun test aimé pour le moment, explorez et laissez un like !</p>
+          )}
         </section>
       )}
     </>

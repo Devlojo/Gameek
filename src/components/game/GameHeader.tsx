@@ -19,7 +19,6 @@ export const GameHeader = ({
   isReview,
 }: TGame) => {
   const { bestGames } = useBestGamesQuery();
-
   const gameInfo = bestGames?.games.find((game) => game.name === name);
 
   return (

@@ -19,9 +19,13 @@ export const UserReviews = () => {
         <Loader />
       ) : (
         <section className="flex w-full flex-wrap gap-2 rounded-md bg-customWhite px-2 py-3">
-          {reviewsByUser?.reviews &&
+          {reviewsByUser?.reviews && reviewsByUser.reviews.length > 0 ? (
             reviewsByUser.reviews.map((r, index) => (
-              <Link to={`/test/${r.slug}/${user?.username}`} key={index}>
+              <Link
+                to={`/test/${r.slug}/${user?.username}`}
+                key={index}
+                className="hover:opacity-80"
+              >
                 <article className="relative flex flex-wrap shadow-lg shadow-black md:h-60 md:w-[245px]">
                   <img
                     src={r.background_image}
@@ -46,7 +50,10 @@ export const UserReviews = () => {
                   </div>
                 </article>
               </Link>
-            ))}
+            ))
+          ) : (
+            <p>Vous n’avez pas encore rédigé de test.</p>
+          )}
         </section>
       )}
     </>

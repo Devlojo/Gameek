@@ -14,7 +14,7 @@ export const UserActivity = () => {
       <nav className="flex justify-center gap-4">
         <button
           className={clsx(
-            "rounded-b-lg bg-customWhite p-2 shadow-md shadow-black",
+            "rounded-b-lg bg-customWhite p-2 shadow-md shadow-black hover:opacity-80",
             activeTab === "myReviews" && "bg-mainYellow",
           )}
           onClick={() => setActiveTab("myReviews")}
@@ -23,7 +23,7 @@ export const UserActivity = () => {
         </button>
         <button
           className={clsx(
-            "rounded-b-lg bg-customWhite p-2 shadow-md shadow-black",
+            "rounded-b-lg bg-customWhite p-2 shadow-md shadow-black hover:opacity-80",
             activeTab === "myLikedReviews" && "bg-mainYellow",
           )}
           onClick={() => setActiveTab("myLikedReviews")}
@@ -31,7 +31,16 @@ export const UserActivity = () => {
           Les tests que j'ai aimés
         </button>
       </nav>
-      {activeTab === "myReviews" ? <UserReviews /> : <UserLikedReviews />}
+
+      <div className="relative">
+        {/* garde les deux composants montés, mais on affiche qu'un seul à la fois */}
+        <div hidden={activeTab !== "myReviews"}>
+          <UserReviews />
+        </div>
+        <div hidden={activeTab !== "myLikedReviews"}>
+          <UserLikedReviews />
+        </div>
+      </div>
     </>
   );
 };
