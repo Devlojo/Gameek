@@ -61,8 +61,9 @@ export const GameReviewsMenu = () => {
               ? {
                   ...review,
                   likes_count:
+                    review.likes_count &&
                     review.likes_count +
-                    likeChange /* met à jour le compteur de likes*/,
+                      likeChange /* met à jour le compteur de likes*/,
                 }
               : review,
           ),
@@ -87,7 +88,9 @@ export const GameReviewsMenu = () => {
             review.id === reviewId
               ? {
                   ...review,
-                  comments_count: review.comments_count + commentChange,
+                  comments_count:
+                    review.comments_count &&
+                    review.comments_count + commentChange,
                 }
               : review,
           ),
@@ -193,17 +196,19 @@ export const GameReviewsMenu = () => {
                                 ) : (
                                   <BsHeart className="size-4" />
                                 )}
-                                {review.likes_count > 0 && (
-                                  <p className="text-sm">
-                                    {review.likes_count}
-                                  </p>
-                                )}
+                                {review.likes_count &&
+                                  review.likes_count > 0 && (
+                                    <p className="text-sm">
+                                      {review.likes_count}
+                                    </p>
+                                  )}
                                 <BiConversation className="size-4" />
-                                {review.comments_count > 0 && (
-                                  <p className="text-sm">
-                                    {review.comments_count}
-                                  </p>
-                                )}
+                                {review.comments_count &&
+                                  review.comments_count > 0 && (
+                                    <p className="text-sm">
+                                      {review.comments_count}
+                                    </p>
+                                  )}
                               </div>
                             </div>
                             <div className="flex w-full flex-col gap-2 p-2">
