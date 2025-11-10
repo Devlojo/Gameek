@@ -6,6 +6,7 @@ export type TUser = {
   email?: string;
   image: string;
   role: string;
+  created_at: string;
 };
 
 export const userListBackSchema = z.object({
