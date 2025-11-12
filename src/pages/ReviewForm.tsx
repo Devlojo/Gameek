@@ -9,6 +9,7 @@ import { reviewFormSchema } from "@/types/review";
 import { useState } from "react";
 import { useCsrfToken } from "@/hooks/useCsrfToken";
 import { apiUrl } from "@/config";
+import { ImBlocked } from "react-icons/im";
 
 type TForm = z.infer<typeof reviewFormSchema>;
 type TReviewFormProps = {
@@ -90,7 +91,10 @@ export const ReviewForm = ({
             className="flex w-full flex-col gap-6"
           >
             {requestError && (
-              <p className="font-bold text-red-600">{errorMessage}</p>
+              <div className="flex items-center gap-2 text-red-600">
+                <ImBlocked size={14} />
+                <p className="font-bold">{errorMessage}</p>
+              </div>
             )}
             <label htmlFor="introduction">
               Introduction *
