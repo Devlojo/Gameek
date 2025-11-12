@@ -200,7 +200,10 @@ export const Header = ({
                     <p className="hidden border-b border-black/40 text-center font-bold max-md:block">
                       {user?.username}
                     </p>
-                    <Link to="" className="p-1 text-center hover:bg-gray-300">
+                    <Link
+                      to="/mon-profil"
+                      className="p-1 text-center hover:bg-gray-300"
+                    >
                       Profil
                     </Link>
 

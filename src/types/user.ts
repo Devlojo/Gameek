@@ -3,9 +3,10 @@ import { z } from "zod";
 export type TUser = {
   id: number;
   username: string;
-  email?: string;
+  email: string;
   image: string;
   role: string;
+  created_at: string;
 };
 
 export const userListBackSchema = z.object({

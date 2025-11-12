@@ -32,6 +32,8 @@ import { TNotification } from "./types/notification";
 import { useNotificationCount } from "@/hooks/useNotificationCount";
 import { Notifications } from "@/pages/Notifications";
 import { UserActivity } from "@/pages/UserActivity";
+import { Profile } from "@/pages/Profile";
+import { EditProfile } from "@/pages/EditProfile";
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
@@ -127,6 +129,8 @@ const App = (): JSX.Element => {
               />
 
               <Route path="/mon-activite" element={<UserActivity />} />
+              <Route path="/mon-profil" element={<Profile />} />
+              <Route path="/modification-du-compte" element={<EditProfile />} />
 
               <Route path="/a-propos" element={<About />} />
               <Route path="/notifications" element={<Notifications />} />
