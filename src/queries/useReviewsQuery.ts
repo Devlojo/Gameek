@@ -34,6 +34,7 @@ export const useReviewDetailQuery = (gameSlug: string, userName: string) => {
     queryKey: ["reviewDetail", gameSlug, userName],
     queryFn: () => getReviewDetail(gameSlug, userName),
     retry: false,
+    staleTime: Infinity, // reste fresh pour ne pas clignoter
   });
   return {
     reviewDetail,

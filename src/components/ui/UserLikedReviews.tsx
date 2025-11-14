@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Loader } from "./Loader";
 import { useLikedReviewsByUserQuery } from "@/queries/useLikesQuery";
+import { GoHeartFill } from "react-icons/go";
 
 export const UserLikedReviews = () => {
   const { likedReviews, isLoading } = useLikedReviewsByUserQuery();
@@ -42,6 +43,9 @@ export const UserLikedReviews = () => {
                       {r.grade}
                     </p>
                     ∕20
+                  </div>
+                  <div className="absolute right-0 top-0 flex items-center bg-global bg-opacity-70 px-0.5 text-xs text-customWhite shadow-sm shadow-black">
+                    <GoHeartFill size={20} className="text-red-500" />
                   </div>
                 </article>
                 <div className="flex w-full flex-wrap items-center justify-center bg-surface py-3">

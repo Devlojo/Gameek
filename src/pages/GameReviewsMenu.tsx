@@ -192,7 +192,7 @@ export const GameReviewsMenu = () => {
                               </div>
                               <div className="absolute bottom-0 right-0 flex items-center gap-2 bg-global bg-opacity-70 p-1 text-customWhite">
                                 {review.user_id_like ? (
-                                  <BsHeartFill className="size-4" />
+                                  <BsHeartFill className="size-4 text-red-500" />
                                 ) : (
                                   <BsHeart className="size-4" />
                                 )}

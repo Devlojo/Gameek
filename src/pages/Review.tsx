@@ -10,11 +10,14 @@ import { useEffect, useState } from "react";
 import { Comments } from "@/components/ui/Comments";
 import { useUser } from "@/hooks/useUser";
 import { apiUrl } from "@/config";
-import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { BsHeart, BsHeartFill, BsInfoCircle } from "react-icons/bs";
 import { useToggleLike } from "@/queries/useLikesQuery";
 import { useQueryClient } from "@tanstack/react-query";
 import { useLikesSocket } from "@/hooks/useLikesSocket";
 import { TReviewDetail } from "@/types/review";
+import { ReviewModifyForm } from "@/components/form/ReviewModifyForm";
+import { IoIosWarning } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 export const Review = () => {
   const { gameSlug, userName } = useParams() as {
@@ -27,11 +30,15 @@ export const Review = () => {
 
   const [requestError, setRequestError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
+  const [showModifyForm, setShowModifyForm] = useState(false);
 
   const { reviewDetail, isLoading, isError } = useReviewDetailQuery(
     gameSlug,
     userName,
   );
+
+  const isReviewAuthor = user?.username === reviewDetail?.review.username;
+
   const queryClient = useQueryClient();
   //  Écoute les likes en temps réel
   useLikesSocket((reviewId, likeChange) => {
@@ -85,7 +92,11 @@ export const Review = () => {
   if (isError) {
     return <PageNotFound />;
   }
-  if (reviewDetail?.review.status !== "valide" && user?.role !== "admin") {
+  if (
+    reviewDetail?.review.status === "en_attente" &&
+    user?.role !== "admin" &&
+    !isReviewAuthor
+  ) {
     return (
       <div className="mt-4 flex h-32 flex-col items-center justify-center bg-customWhite shadow-md shadow-blue-500">
         <CiSquareInfo className="size-10 text-blue-500" />
@@ -99,12 +110,21 @@ export const Review = () => {
 
   const handleOnChange = async (e: any) => {
     const newStatus = e.target.value;
+    setSelectedStatus(newStatus);
+
+    // Si le statut est "à modifier", on affiche le formulaire au lieu d'envoyer la requête
+    if (newStatus === "a_modifier") {
+      setShowModifyForm(true);
+      return;
+    } else {
+      setShowModifyForm(false);
+    }
+
     try {
-      setSelectedStatus(newStatus);
       const { data: csrfRes } = await axios.get(`${apiUrl}/csrf-token`, {
         withCredentials: true,
       });
-      const res = await axios.put(
+      const res = await axios.patch(
         `${apiUrl}/back/reviews/${reviewDetail?.review.id}`,
         { status: newStatus }, // body à envoyer
         {
@@ -115,7 +135,9 @@ export const Review = () => {
         },
       );
       if (res.status === 200) {
-        navigate("/back");
+        if (newStatus === "valide" || newStatus === "refuse") {
+          navigate("/back");
+        }
       }
     } catch (error: any) {
       setRequestError(true);
@@ -132,6 +154,46 @@ export const Review = () => {
         slug={gameSlug}
       >
         <div className="flex flex-col items-center">
+          {isReviewAuthor && (
+            <>
+              {reviewDetail?.review.status === "a_modifier" &&
+                user?.role == "user" && (
+                  <div className="m-2 flex flex-col items-center gap-2 rounded-xl border border-yellow-300 bg-yellow-50 p-3 text-yellow-900">
+                    <div className="flex items-center gap-2">
+                      <IoIosWarning size={20} className="text-yellow-500" />
+                      <h3 className="font-semibold text-yellow-800">
+                        Feedback du modérateur
+                      </h3>
+                    </div>
+                    <p className="text-sm italic">
+                      “{reviewDetail.review.review_feedback}”
+                    </p>
+                    <Link
+                      to={`/modification-du-test/${reviewDetail.review.slug}/${user.username}`}
+                      className="rounded bg-mainYellow px-4 py-2 shadow-sm shadow-black hover:opacity-80"
+                    >
+                      Modifier
+                    </Link>
+                  </div>
+                )}
+              {reviewDetail?.review.status === "en_attente" &&
+                user?.role == "user" && (
+                  <div className="m-2 flex flex-col items-center gap-2 rounded-xl border border-blue-300 bg-blue-50 p-3 text-blue-900">
+                    <div className="flex items-center gap-2">
+                      <BsInfoCircle size={20} className="text-blue-500" />
+                      <h3 className="font-semibold text-blue-800">
+                        Patientez un instant
+                      </h3>
+                    </div>
+                    <p className="text-sm italic">
+                      Votre test a été enregistré et attend la validation d’un
+                      modérateur. Vous serez notifié dès qu’il sera publié.
+                    </p>
+                  </div>
+                )}
+            </>
+          )}
+
           <h2 className="mt-2 text-xl font-bold sm:text-2xl">
             Test réalisé par
           </h2>
@@ -269,7 +331,7 @@ export const Review = () => {
                 className="flex items-center gap-2 border border-gray-400 p-2 shadow-sm shadow-black md:hover:shadow-indigo-300"
               >
                 {reviewDetail?.review.user_id_like ? (
-                  <BsHeartFill size={20} />
+                  <BsHeartFill size={20} className="text-red-500" />
                 ) : (
                   <BsHeart size={20} />
                 )}
@@ -300,6 +362,12 @@ export const Review = () => {
                   ))}
                 </select>
               </div>
+            )}
+            {showModifyForm && (
+              <ReviewModifyForm
+                status={selectedStatus}
+                reviewId={reviewDetail?.review.id}
+              />
             )}
           </>
         )}

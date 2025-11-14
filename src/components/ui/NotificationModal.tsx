@@ -13,6 +13,8 @@ export const NotificationModal = ({
   const { user } = useUser();
   const { notifications } = useNotificationsQuery(user?.id as number);
 
+  console.log(notifications);
+
   return (
     <>
       <div className="p-2">

@@ -34,6 +34,7 @@ import { Notifications } from "@/pages/Notifications";
 import { UserActivity } from "@/pages/UserActivity";
 import { Profile } from "@/pages/Profile";
 import { EditProfile } from "@/pages/EditProfile";
+import { EditReview } from "@/pages/EditReview";
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
@@ -109,6 +110,10 @@ const App = (): JSX.Element => {
                     setAlertModalCreatedReview={setAlertModalCreatedReview}
                   />
                 }
+              />
+              <Route
+                path="/modification-du-test/:gameSlug/:userName"
+                element={<EditReview />}
               />
               <Route path="/jeu/:id" element={<GameGeneralMenu />} />
               <Route path="/jeu/tests/:id" element={<GameReviewsMenu />} />

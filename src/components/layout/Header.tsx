@@ -22,6 +22,7 @@ import {
   useMarkNotificationAsReadQuery,
 } from "@/queries/useNotificationsQuery";
 import { useNotificationCount } from "@/hooks/useNotificationCount";
+import { socket } from "@/socket";
 
 type THeaderProps = {
   activeBurgerMenu: boolean;
@@ -47,6 +48,12 @@ export const Header = ({
   const logout = async () => {
     try {
       await axios.post(`${apiUrl}/logout`, {}, { withCredentials: true });
+
+      // Déconnexion du socket
+      if (socket && socket.connected) {
+        socket.emit("unregister");
+        socket.disconnect();
+      }
       setUser(null);
       queryClient.invalidateQueries({ queryKey: ["latestReviews"] });
       navigate("/");
