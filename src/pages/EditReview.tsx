@@ -84,7 +84,7 @@ export const EditReview = (): JSX.Element => {
             queryKey: ["reviewDetail", gameSlug, userName],
           });
           navigate("/");
-        }, 3000);
+        }, 1000);
       }
     } catch (error: any) {
       setErrorMessage(error.response.data?.message);

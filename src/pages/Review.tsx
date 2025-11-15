@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { GameHeader } from "@/components/game/GameHeader";
 import { PageNotFound } from "@/components/layout/PageNotFound";
-import { MdArrowDropDown } from "react-icons/md";
+import { MdArrowDropDown, MdBlock } from "react-icons/md";
 import { useReviewDetailQuery } from "@/queries/useReviewsQuery";
 import { Loader } from "@/components/ui/Loader";
 import axios from "axios";
@@ -108,6 +108,22 @@ export const Review = () => {
     );
   }
 
+  if (
+    reviewDetail?.review.status === "refuse" &&
+    user?.role !== "admin" &&
+    !isReviewAuthor
+  ) {
+    return (
+      <div className="mt-4 flex h-32 flex-col items-center justify-center bg-customWhite shadow-md shadow-red-500">
+        <MdBlock className="size-10 text-red-500" />
+        <p className="text-center">
+          {" "}
+          Ce test a été refusé par un modérateur et n’est pas accessible. 
+        </p>
+      </div>
+    );
+  }
+
   const handleOnChange = async (e: any) => {
     const newStatus = e.target.value;
     setSelectedStatus(newStatus);
@@ -186,8 +202,24 @@ export const Review = () => {
                       </h3>
                     </div>
                     <p className="text-sm italic">
-                      Votre test a été enregistré et attend la validation d’un
-                      modérateur. Vous serez notifié dès qu’il sera publié.
+                       Votre test a bien été enregistré et est en attente de
+                      validation par un modérateur. Seul vous, en tant qu’auteur
+                      du test, pouvez le consulter dans son intégralité. Vous
+                      serez notifié dès sa publication.
+                    </p>
+                  </div>
+                )}
+              {reviewDetail?.review.status === "refuse" &&
+                user?.role == "user" && (
+                  <div className="m-2 flex flex-col items-center gap-2 rounded-xl border border-red-300 bg-red-50 p-3 text-red-900">
+                    <div className="flex items-center gap-2">
+                      <MdBlock size={20} className="text-red-500" />
+                      <h3 className="font-semibold text-red-800">
+                        Votre test a été refusé
+                      </h3>
+                    </div>
+                    <p className="text-sm italic">
+                       Aïe ! Votre test n’a pas été validé par un modérateur.
                     </p>
                   </div>
                 )}

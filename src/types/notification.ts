@@ -17,6 +17,7 @@ export const notificationItemFullSchema = notificationDbSchema.extend({
   avatar: z.string(),
   game_name: z.string(),
   slug: z.string(),
+  review_author: z.string(),
   status: reviewStatusEnum,
 });
 

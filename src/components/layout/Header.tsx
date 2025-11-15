@@ -17,10 +17,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { NotificationCount } from "@/components/ui/NotificationCount";
 import { MdNotificationsNone } from "react-icons/md";
 import { NotificationModal } from "@/components/ui/NotificationModal";
-import {
-  useNotificationsQuery,
-  useMarkNotificationAsReadQuery,
-} from "@/queries/useNotificationsQuery";
+import { useMarkNotificationAsReadQuery } from "@/queries/useNotificationsQuery";
 import { useNotificationCount } from "@/hooks/useNotificationCount";
 import { socket } from "@/socket";
 
@@ -41,10 +38,9 @@ export const Header = ({
   const { user, setUser } = useUser();
   const queryClient = useQueryClient();
 
-  const { isSuccess } = useNotificationsQuery(user?.id as number);
-
   const { mutate: readNotification } = useMarkNotificationAsReadQuery();
   const { notifCount, setNotifCount } = useNotificationCount();
+
   const logout = async () => {
     try {
       await axios.post(`${apiUrl}/logout`, {}, { withCredentials: true });
@@ -55,6 +51,7 @@ export const Header = ({
         socket.disconnect();
       }
       setUser(null);
+      setNotifCount(0);
       queryClient.invalidateQueries({ queryKey: ["latestReviews"] });
       navigate("/");
     } catch (error) {
@@ -163,13 +160,8 @@ export const Header = ({
                       className="hover:text-yellow-400"
                     >
                       <MdNotificationsNone className="size-8" />
-                      {isSuccess && (
-                        <NotificationCount
-                          top={0}
-                          right={0}
-                          count={notifCount}
-                        />
-                      )}
+
+                      <NotificationCount top={0} right={0} count={notifCount} />
                     </button>
                     {showNotificationModal && (
                       <>
