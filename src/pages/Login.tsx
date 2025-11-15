@@ -37,7 +37,8 @@ export const Login = (): JSX.Element => {
       if (res.status === 200) {
         setUser(res.data.user);
         setCsrfToken(res.data.csrfToken);
-        navigate("/");
+
+        navigate("/", { replace: true });
       }
     } catch (error) {
       setRequestError(true);

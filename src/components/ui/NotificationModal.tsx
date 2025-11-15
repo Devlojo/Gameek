@@ -21,15 +21,22 @@ export const NotificationModal = ({
         </div>
       </div>
       <div className="w-auto border-t border-gray-600"></div>
-      <div className="flex flex-col">
+      <div className="flex h-[340px] w-full flex-col">
         {notifications?.notifications &&
         notifications.notifications.length > 0 ? (
           notifications.notifications.map((notification, index) => {
-            // variable pour gérer dynamiquement le username dans le lien
-            const linkUsername =
-              notification.type === "publish"
-                ? notification.sender_name
-                : user?.username;
+            let linkUsername = user?.username;
+            if (
+              notification.type === "publish" ||
+              notification.type === "republish"
+            ) {
+              linkUsername = notification.sender_name;
+            }
+
+            if (notification.type === "reply") {
+              linkUsername = notification.review_author;
+            }
+
             return (
               <div key={index}>
                 <Link
@@ -40,94 +47,97 @@ export const NotificationModal = ({
                   )}
                   onClick={() => setShowNotificationModal(false)}
                 >
-                  {notification.type !== "status_update" && (
-                    <>
-                      <img
-                        src={notification.avatar}
-                        alt="Avatar de l'utilisateur"
-                        className="size-8 rounded-full shadow-sm shadow-black"
-                      />
+                  {notification.type !== "statut_a_modifier" &&
+                    notification.type !== "statut_valide" &&
+                    notification.type !== "statut_refuse" && (
+                      <>
+                        <img
+                          src={notification.avatar}
+                          alt="Avatar de l'utilisateur"
+                          className="size-8 rounded-full shadow-sm shadow-black"
+                        />
 
-                      <p className="font-semibold">
-                        {notification.sender_name}
-                      </p>
-                      {notification.type === "like" && (
-                        <p>
-                          à aimé votre test sur{" "}
-                          <span className="font-semibold">
-                            {notification.game_name}
-                          </span>
+                        <p className="font-semibold">
+                          {notification.sender_name}
                         </p>
-                      )}
-                      {notification.type === "comment" && (
-                        <p>
-                          à commenté votre test sur{" "}
-                          <span className="font-semibold">
-                            {notification.game_name}
-                          </span>
-                        </p>
-                      )}
-                      {notification.type === "reply" && (
-                        <p>
-                          à répondu à votre commentaire sur{" "}
-                          <span className="font-semibold">
-                            {notification.game_name}
-                          </span>
-                        </p>
-                      )}
-                      {notification.type === "publish" && (
-                        <p>
-                          à rédigé un test sur{" "}
-                          <span className="font-semibold">
-                            {notification.game_name}
-                          </span>
-                        </p>
-                      )}
-                    </>
+                        {notification.type === "like" && (
+                          <p>
+                            à aimé votre test sur{" "}
+                            <span className="font-semibold">
+                              {notification.game_name}
+                            </span>
+                          </p>
+                        )}
+                        {notification.type === "comment" && (
+                          <p>
+                            à commenté votre test sur{" "}
+                            <span className="font-semibold">
+                              {notification.game_name}
+                            </span>
+                          </p>
+                        )}
+                        {notification.type === "reply" && (
+                          <p>
+                            à répondu à votre commentaire sur le test{" "}
+                            <span className="font-semibold">
+                              {notification.game_name}
+                            </span>{" "}
+                            de {notification.sender_name}
+                          </p>
+                        )}
+                        {notification.type === "publish" && (
+                          <p>
+                            à rédigé un test sur{" "}
+                            <span className="font-semibold">
+                              {notification.game_name}
+                            </span>
+                          </p>
+                        )}
+                        {notification.type === "republish" && (
+                          <p>
+                            à modifié son test sur{" "}
+                            <span className="font-semibold">
+                              {notification.game_name}
+                            </span>
+                          </p>
+                        )}
+                      </>
+                    )}{" "}
+                  {notification.type === "statut_a_modifier" && (
+                    <p>
+                      Votre test sur{" "}
+                      <span className="font-semibold">
+                        {notification.game_name}
+                      </span>{" "}
+                      doit être{" "}
+                      <span className="font-semibold text-yellow-600">
+                        modifier
+                      </span>
+                    </p>
                   )}
-                  {notification.type === "status_update" && (
-                    <>
-                      {" "}
-                      {notification.status === "a_modifier" && (
-                        <p>
-                          Votre test sur{" "}
-                          <span className="font-semibold">
-                            {notification.game_name}
-                          </span>{" "}
-                          doit être{" "}
-                          <span className="font-semibold text-yellow-600">
-                            modifier
-                          </span>
-                        </p>
-                      )}
-                      {notification.status === "refuse" && (
-                        <p>
-                          Votre test sur{" "}
-                          <span className="font-semibold">
-                            {notification.game_name}
-                          </span>{" "}
-                          à été{" "}
-                          <span className="font-semibold text-red-600">
-                            refusé
-                          </span>
-                        </p>
-                      )}
-                      {notification.status === "valide" && (
-                        <p>
-                          Votre test sur{" "}
-                          <span className="font-semibold">
-                            {notification.game_name}
-                          </span>{" "}
-                          à été{" "}
-                          <span className="font-semibold text-green-600">
-                            validé
-                          </span>{" "}
-                          et sera désormais visible
-                        </p>
-                      )}
-                    </>
+                  {notification.type === "statut_refuse" && (
+                    <p>
+                      Votre test sur{" "}
+                      <span className="font-semibold">
+                        {notification.game_name}
+                      </span>{" "}
+                      à été{" "}
+                      <span className="font-semibold text-red-600">refusé</span>
+                    </p>
                   )}
-
+                  {notification.type === "statut_valide" && (
+                    <p>
+                      Votre test sur{" "}
+                      <span className="font-semibold">
+                        {notification.game_name}
+                      </span>{" "}
+                      à été{" "}
+                      <span className="font-semibold text-green-600">
+                        validé
+                      </span>{" "}
+                      et sera désormais visible
+                    </p>
+                  )}
                   <p className="text-sm text-gray-700">
                     {notification.created_at}
                   </p>
@@ -136,7 +146,9 @@ export const NotificationModal = ({
             );
           })
         ) : (
-          <p className="text-center">Aucune notification</p>
+          <div className="flex h-full items-center justify-center">
+            <p>Aucune notification</p>
+          </div>
         )}
       </div>
     </>

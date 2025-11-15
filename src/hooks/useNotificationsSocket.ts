@@ -1,30 +1,31 @@
 import { useEffect } from "react";
 import { socket } from "@/socket";
+import { useNotificationCount } from "./useNotificationCount";
 
 export const useNotificationsSocket = (
   userId: number,
   onNewNotif: (notif: any) => void,
-  onUpdateNotifCount: (count: number) => void,
 ) => {
+  const { setNotifCount } = useNotificationCount();
   useEffect(() => {
     if (!userId) return;
 
-    socket.emit("register", userId); // on envois un evenement register au serveur avec l'id de l'utilisateur
-    // Fonction qui sera appelée quand l'événement 'updateNotificationCount' est reçu
-    const handleUpdateCount = ({ totalUnread }: { totalUnread: number }) => {
-      // On appelle le callback fourni par le composant pour mettre à jour le state local ou la query
-      onUpdateNotifCount(totalUnread);
-    };
+    // Écoute du compteur initial
+    socket.on("initialUnreadCount", (totalUnread: number) => {
+      setNotifCount(totalUnread); // valeur initiale au login
+    });
+
     //Le client écoute les notifications du serveur de sa room "notification:${userId}"
     socket.on(`notification:${userId}`, (notif) => {
       onNewNotif(notif);
+      setNotifCount((prev) => prev + 1); // incrémente live
     });
 
-    socket.on(`updateNotificationCount`, handleUpdateCount);
+    socket.emit("register", userId);
 
     return () => {
+      socket.off("initialUnreadCount");
       socket.off(`notification:${userId}`);
-      socket.off(`updateNotificationCount`, handleUpdateCount);
     };
-  }, [userId, onNewNotif, onUpdateNotifCount]);
+  }, [userId, onNewNotif, setNotifCount]);
 };

@@ -5,7 +5,7 @@ import { GameGeneralMenu } from "@/pages/GameGeneralMenu";
 import { GameReviewsMenu } from "@/pages/GameReviewsMenu";
 import { GameImagesMenu } from "@/pages/GameImagesMenu";
 import { GameVideosMenu } from "@/pages/GameVideosMenu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BurgerMenu } from "./components/ui/BurgerMenu";
 import { ScrollToTopButton } from "@/components/ui/ScrollToTopButton";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -34,6 +34,8 @@ import { Notifications } from "@/pages/Notifications";
 import { UserActivity } from "@/pages/UserActivity";
 import { Profile } from "@/pages/Profile";
 import { EditProfile } from "@/pages/EditProfile";
+import { EditReview } from "@/pages/EditReview";
+import { socket } from "./socket";
 
 const App = (): JSX.Element => {
   const [activeBurgerMenu, setActiveBurgerMenu] = useState(false);
@@ -41,28 +43,28 @@ const App = (): JSX.Element => {
 
   const { loading, user } = useUser();
   const [notif, setNotif] = useState<TNotification | null>(null);
-
   const { setNotifCount } = useNotificationCount();
 
-  useNotificationsSocket(
-    user?.id as number,
-    (newNotif: TNotification) => {
-      setNotif(newNotif);
-    },
-    (totalUnread: number) => {
-      setNotifCount(totalUnread);
-    },
-  );
+  useEffect(() => {
+    if (!user?.id) return;
+    setNotifCount(0); // reset quand user change
+    socket.emit("register", user.id);
+  }, [user?.id]);
+
+  useNotificationsSocket(user?.id as number, (newNotif: TNotification) => {
+    setNotif(newNotif);
+  });
 
   const handleActiveBurgerMenu = () => {
     setActiveBurgerMenu((prev) => !prev);
   };
 
-  if (notif) {
-    setTimeout(() => {
-      setNotif(null);
-    }, 5000);
-  }
+  useEffect(() => {
+    if (!notif) return;
+    const timer = setTimeout(() => setNotif(null), 5000);
+    return () => clearTimeout(timer);
+  }, [notif]);
+
   // Si le menu burger est activé, alors le scroll est désactivé
   if (activeBurgerMenu) {
     document.body.style.overflow = "hidden";
@@ -109,6 +111,10 @@ const App = (): JSX.Element => {
                     setAlertModalCreatedReview={setAlertModalCreatedReview}
                   />
                 }
+              />
+              <Route
+                path="/modification-du-test/:gameSlug/:userName"
+                element={<EditReview />}
               />
               <Route path="/jeu/:id" element={<GameGeneralMenu />} />
               <Route path="/jeu/tests/:id" element={<GameReviewsMenu />} />

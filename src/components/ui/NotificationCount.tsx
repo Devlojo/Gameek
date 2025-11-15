@@ -11,7 +11,7 @@ export const NotificationCount = ({
   left,
   right,
   top,
-  count = 1,
+  count,
 }: NotificationCountProps) => {
   // Gestion des classes tailwind dynamique
   const positionClasses = `${top !== undefined ? `top-${top}` : ""} ${
@@ -20,7 +20,7 @@ export const NotificationCount = ({
     right !== undefined ? `right-${right}` : ""
   }`;
 
-  if (count > 0)
+  if (count && count > 0)
     return (
       <div
         className={`absolute ${positionClasses} rounded-full bg-red-600 px-1.5 py-0.5`}

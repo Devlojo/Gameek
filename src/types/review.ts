@@ -18,6 +18,9 @@ export const reviewFormSchema = z.object({
   strengths: z.array(z.string()).max(5).optional(),
   weaknesses: z.array(z.string()).max(5).optional(),
 });
+export const reviewEditSchema = reviewFormSchema
+  .partial()
+  .extend({ id: z.number() });
 
 export const reviewListResponseSchema = z.object({
   reviews: z.array(
@@ -62,6 +65,7 @@ export const reviewDetailSchema = z.object({
     conclusion: z.string(),
     grade: z.number(),
     status: reviewStatusEnum,
+    review_feedback: z.string().nullable(),
     created_at: z.string(),
     gamename: z.string(),
     slug: z.string(),
