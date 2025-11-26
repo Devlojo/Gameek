@@ -18,7 +18,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* Vitest types pour vite.config.ts */
+    "types": ["vitest"]
   },
   "include": ["vite.config.ts"]
 }

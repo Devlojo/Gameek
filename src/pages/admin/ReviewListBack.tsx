@@ -14,15 +14,15 @@ export const ReviewListBack = () => {
   const { reviews } = useGetAllReviewsQuery();
   const { user } = useUser();
 
-  if (user?.role !== "admin") {
-    return <Navigate to={"/"} replace />;
-  }
-
   const [requestError, setRequestError] = useState(false);
   const [message, setMessage] = useState<string>();
   const [localReviews, setLocalReviews] = useState(reviews?.reviews || []);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
+
+  if (user?.role !== "admin") {
+    return <Navigate to={"/"} replace />;
+  }
 
   const handleDelete = async (id: number) => {
     try {

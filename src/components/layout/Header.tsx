@@ -159,7 +159,10 @@ export const Header = ({
                       onClick={() => handleModalNotification()}
                       className="hover:text-yellow-400"
                     >
-                      <MdNotificationsNone className="size-8" />
+                      <MdNotificationsNone
+                        className="size-8"
+                        title="notification-icon"
+                      />
 
                       <NotificationCount top={0} right={0} count={notifCount} />
                     </button>
@@ -194,7 +197,7 @@ export const Header = ({
 
                   <p className="hidden md:block">{user?.username}</p>
 
-                  <MdArrowDropDown />
+                  <MdArrowDropDown title="dropdown-icon" />
                   <div className="absolute right-0 top-full z-10 hidden w-32 gap-1 overflow-y-auto rounded-sm bg-customWhite p-1 text-black shadow-sm shadow-black group-hover:flex group-hover:flex-col md:w-full">
                     <p className="hidden border-b border-black/40 text-center font-bold max-md:block">
                       {user?.username}
@@ -224,6 +227,7 @@ export const Header = ({
                     <button
                       className="p-1 text-center hover:bg-gray-300"
                       onClick={logout}
+                      aria-label="se déconnecter"
                     >
                       Deconnexion
                     </button>

@@ -12,15 +12,16 @@ import { apiUrl } from "@/config";
 export const UserListBack = () => {
   const { users } = useGetAllUsersQuery();
   const { user } = useUser();
-  if (user?.role !== "admin") {
-    return <Navigate to={"/"} replace />;
-  }
 
   const [requestError, setRequestError] = useState(false);
   const [message, setMessage] = useState<string>();
   const [localUsers, setLocalUsers] = useState(users?.users || []);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
+
+  if (user?.role !== "admin") {
+    return <Navigate to={"/"} replace />;
+  }
 
   const handleDelete = async (id: number) => {
     try {
