@@ -20,13 +20,7 @@ export const ReviewForm = ({
 }: TReviewFormProps): JSX.Element => {
   const { user } = useUser();
   const { csrfToken } = useCsrfToken();
-  if (!user && !csrfToken) {
-    return <Navigate to="/connexion" replace />;
-  }
 
-  if (user?.role !== "user") {
-    return <Navigate to="/" />;
-  }
   const [requestError, setRequestError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
   const navigate = useNavigate();
@@ -42,6 +36,13 @@ export const ReviewForm = ({
       slug: getGameFromUrl,
     },
   });
+  if (!user && !csrfToken) {
+    return <Navigate to="/connexion" replace />;
+  }
+
+  if (user?.role !== "user") {
+    return <Navigate to="/" />;
+  }
 
   const onSubmit = async (data: TForm) => {
     const parsedData = {

@@ -45,9 +45,9 @@ export const FilterDropdown = ({ option, id, label, slug }: TOption) => {
   }
 
   if (label === "Mois") {
-    let index = monthList.indexOf(option) + 1;
+    const index = monthList.indexOf(option) + 1;
 
-    let numberMonth = index.toString().padStart(2, "0");
+    const numberMonth = index.toString().padStart(2, "0");
 
     newParams.set("mois", numberMonth);
   }

@@ -7,7 +7,7 @@ export const getCurrentDate = () => {
   // On récupère l'année et le mois
   const year = today.getFullYear();
 
-  let month = String(today.getMonth() + 1).padStart(2, "0");
+  const month = String(today.getMonth() + 1).padStart(2, "0");
 
   const fromDate = `${year}-${month}-01`;
   // Le dernier jour du mois

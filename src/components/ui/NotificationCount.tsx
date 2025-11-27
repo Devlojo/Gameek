@@ -25,7 +25,9 @@ export const NotificationCount = ({
       <div
         className={`absolute ${positionClasses} rounded-full bg-red-600 px-1.5 py-0.5`}
       >
-        <p className="text-xs text-customWhite">{count}</p>
+        <p className="text-xs text-customWhite" aria-label="notification-count">
+          {count}
+        </p>
       </div>
     );
 };
