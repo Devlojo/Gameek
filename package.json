@@ -11,9 +11,6 @@
     "test": "vitest",
     "test:ui": "vitest --ui"
   },
-  "engines": {
-    "node": "20.x"
-  },
   "dependencies": {
     "@babel/core": "^7.26.0",
     "@headlessui/react": "^2.2.7",
