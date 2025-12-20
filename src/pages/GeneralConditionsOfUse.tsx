@@ -7,7 +7,7 @@ export const GeneralConditionsOfUse = () => {
         Conditions Générales d’Utilisation (CGU)
       </h1>
       <section className="flex w-full flex-col gap-2 rounded-md bg-customWhite px-3 pb-5">
-        <h2 className="text-2xl font-bold">1. Objet</h2>
+        <h2 className="pt-2 text-2xl font-bold">1. Objet</h2>
         <p>
           Les présentes conditions générales d’utilisation définissent les
           règles d’accès et d’utilisation du site, un projet de fin d’études
@@ -44,6 +44,10 @@ export const GeneralConditionsOfUse = () => {
         <h2 className="text-2xl font-bold">4. Contenu publié</h2>
         <ul className="ml-6 list-disc">
           <li>Les utilisateurs peuvent publier des tests de jeux vidéo.</li>
+          <li>
+            Les utilisateurs peuvent publier des commentaires sur les tests.
+          </li>
+          <li>Les utilisateurs peuvent émettre un "like" sur un test</li>
           <li>
             Les utilisateurs s’engagent à ne publier aucun contenu illégal,
             offensant ou portant atteinte aux droits d’autrui.

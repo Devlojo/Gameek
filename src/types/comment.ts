@@ -39,7 +39,19 @@ export const commentFullSchema = commentDbSchema.extend({
   avatar: z.string(),
 });
 
+export const commentReportedSchema = z.object({
+  reportedComments: z.array(
+    z.object({
+      id: z.number(),
+      content: z.string(),
+      username: z.string(),
+      report_count: z.number(),
+    }),
+  ),
+});
+
 export type TCommentForm = z.infer<typeof commentFormSchema>;
 export type TCommentList = z.infer<typeof commentListSchema>;
 export type TCommentDb = z.infer<typeof commentDbSchema>;
 export type TCommentFull = z.infer<typeof commentFullSchema>;
+export type TCommentReported = z.infer<typeof commentReportedSchema>;

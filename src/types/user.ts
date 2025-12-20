@@ -20,6 +20,15 @@ export const userListBackSchema = z.object({
   ),
 });
 
+export const userBackSchema = z.object({
+  id: z.number(),
+  username: z.string(),
+  email: z.string(),
+  role: z.string(),
+  created_at: z.string(),
+  image: z.string(),
+});
+
 export const userListSchema = z.object({
   users: z.array(
     z.object({

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { userListBackSchema } from "@/types/user";
+import { userBackSchema, userListBackSchema } from "@/types/user";
 import { apiUrl } from "@/config";
 
 export const getAllUsers = async () => {
@@ -16,16 +16,16 @@ export const getAllUsers = async () => {
   }
 };
 
-/*export const getUser = async () => {
+export const getUserByName = async (username: string) => {
   try {
-    const { data: user } = await axios.get(`${apiUrl}/back/users/`, {
+    const { data: user } = await axios.get(`${apiUrl}/back/users/${username}`, {
       timeout: 5000,
       withCredentials: true,
     });
-    const usersParsed = userListSchema.parse(user);
-    return usersParsed;
+    const userParsed = userBackSchema.parse(user);
+    return userParsed;
   } catch (error) {
     console.log(error);
     throw error;
   }
-};*/
+};

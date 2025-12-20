@@ -95,6 +95,7 @@ export const Review = () => {
   if (
     reviewDetail?.review.status === "en_attente" &&
     user?.role !== "admin" &&
+    user?.role !== "moderator" &&
     !isReviewAuthor
   ) {
     return (
@@ -111,6 +112,7 @@ export const Review = () => {
   if (
     reviewDetail?.review.status === "refuse" &&
     user?.role !== "admin" &&
+    user?.role !== "moderator" &&
     !isReviewAuthor
   ) {
     return (
@@ -372,7 +374,7 @@ export const Review = () => {
             )}
           </div>
         </div>
-        {user?.role === "admin" && (
+        {(user?.role === "admin" || user?.role === "moderator") && (
           <>
             {requestError && (
               <p className="pt-2 text-center font-bold text-red-600">

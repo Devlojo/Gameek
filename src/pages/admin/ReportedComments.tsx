@@ -1,21 +1,19 @@
 import { Navbar } from "@/components/admin/Navbar";
-import { useGetAllReviewsQuery } from "@/queries/admin/useReviewsQuery";
+import { ConfirmModal } from "@/components/ui/admin/ConfirmModal";
+import { useGetAllReportedComments } from "@/queries/admin/useCommentsQuery";
 import { useUser } from "@/hooks/useUser";
-import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
-import { ConfirmModal } from "@/components/ui/admin/ConfirmModal";
-import clsx from "clsx";
+import { Navigate } from "react-router-dom";
 import { apiUrl } from "@/config";
 
-export const ReviewListBack = () => {
-  const { reviews } = useGetAllReviewsQuery();
+export const ReportedComments = () => {
+  const { reportedComments } = useGetAllReportedComments();
   const { user } = useUser();
-  const navigate = useNavigate();
 
   const [requestError, setRequestError] = useState(false);
   const [message, setMessage] = useState<string>();
-  const [localReviews, setLocalReviews] = useState(reviews?.reviews || []);
+
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
@@ -25,19 +23,11 @@ export const ReviewListBack = () => {
 
   const handleDelete = async (id: number) => {
     try {
-      const { data: csrfRes } = await axios.get(`${apiUrl}/csrf-token`, {
+      const res = await axios.delete(`${apiUrl}/back/comments/${id}`, {
         withCredentials: true,
-      });
-      const res = await axios.delete(`${apiUrl}/back/reviews/${id}`, {
-        withCredentials: true,
-        headers: {
-          "x-csrf-token": csrfRes.csrfToken,
-        }, // pour que le cookie HttpOnly (refreshToken) soit envoyé automatiquement
       });
       if (res.status === 200) {
         setMessage(res.data?.message);
-
-        setLocalReviews((prev) => prev.filter((review) => review.id !== id));
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
     } catch (error: any) {
@@ -47,13 +37,11 @@ export const ReviewListBack = () => {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
-
   return (
     <div>
       <h2 className="my-4 text-center text-3xl font-bold text-customWhite">
-        Liste des tests
+        Liste des commentaires signalés
       </h2>
-
       <Navbar />
       {showDeleteModal && (
         <ConfirmModal
@@ -63,7 +51,6 @@ export const ReviewListBack = () => {
           setShowDeleteModal={setShowDeleteModal}
         />
       )}
-
       <div className="overflow-x-auto rounded bg-customWhite shadow">
         {requestError && (
           <p className="text-center font-bold text-red-600">{message}</p>
@@ -81,16 +68,13 @@ export const ReviewListBack = () => {
                 ID
               </th>
               <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
-                Testeur
+                Pseudo
               </th>
               <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
-                Titre du jeu
+                Contenu
               </th>
               <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
-                Statut
-              </th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
-                Date de création
+                Nombre de signalement
               </th>
               <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
                 Actions
@@ -98,43 +82,26 @@ export const ReviewListBack = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {localReviews?.map((review, index) => {
+            {reportedComments?.reportedComments?.map((comment, index) => {
               const handleAction = (
                 e: React.ChangeEvent<HTMLSelectElement>,
               ) => {
                 const action = e.target.value;
 
-                if (action === "view") {
-                  navigate(`/test/${review.slug}/${review.username}`);
-                }
-
                 if (action === "delete") {
-                  setSelectedId(review.id);
+                  setSelectedId(comment.id);
                   setShowDeleteModal(true);
                 }
 
                 e.target.value = ""; // reset du select
               };
-
               return (
-                <tr key={review.id}>
+                <tr key={comment.id}>
                   <td className="px-4 py-2">{index + 1}</td>
-                  <td className="px-4 py-2">{review.id}</td>
-                  <td className="px-4 py-2">{review.username}</td>
-                  <td className="px-4 py-2">{review.name}</td>
-                  <td
-                    className={clsx(
-                      "px-4 py-2",
-                      review.status === "en_attente" && "text-orange-600",
-                      review.status === "valide" && "text-green-600",
-                      review.status === "refuse" && "text-red-600",
-                      review.status === "a_modifier" && "text-yellow-600",
-                    )}
-                  >
-                    {review.status}
-                  </td>
-                  <td className="px-4 py-2">{review.created_at}</td>
-
+                  <td className="px-4 py-2">{comment.id}</td>
+                  <td className="px-4 py-2">{comment.username}</td>
+                  <td className="px-4 py-2">{comment.content}</td>
+                  <td className="px-4 py-2">{comment.report_count}</td>
                   <td className="flex gap-3 px-4 py-2">
                     {/* --- SELECT des actions --- */}
                     <select
@@ -145,8 +112,8 @@ export const ReviewListBack = () => {
                       <option value="" disabled>
                         Selectionnez une action
                       </option>
-                      <option value="view">Voir le test</option>
-                      <option value="delete">Supprimer le test</option>
+
+                      <option value="delete">Supprimer le commentaire</option>
                     </select>
                   </td>
                 </tr>
