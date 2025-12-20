@@ -4,14 +4,13 @@ import { useGetAllUsersQuery } from "@/queries/admin/useUsersQuery";
 import { useUser } from "@/hooks/useUser";
 import axios from "axios";
 import { useState } from "react";
-import { FaRegTrashAlt } from "react-icons/fa";
-import { FaEdit } from "react-icons/fa";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { apiUrl } from "@/config";
 
 export const UserListBack = () => {
   const { users } = useGetAllUsersQuery();
   const { user } = useUser();
+  const navigate = useNavigate();
 
   const [requestError, setRequestError] = useState(false);
   const [message, setMessage] = useState<string>();
@@ -71,7 +70,7 @@ export const UserListBack = () => {
                 ID
               </th>
               <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
-                Username
+                Pseudo
               </th>
               <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
                 Email
@@ -85,27 +84,47 @@ export const UserListBack = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {localUsers?.map((user, index) => (
-              <tr key={user.id}>
-                <td className="px-4 py-2">{index + 1}</td>
-                <td className="px-4 py-2">{user.id}</td>
-                <td className="px-4 py-2">{user.username}</td>
-                <td className="px-4 py-2">{user.email}</td>
-                <td className="px-4 py-2">{user.role}</td>
-                <td className="flex gap-3 px-4 py-2">
-                  <FaEdit className="" />
-                  <button
-                    aria-label="Delete"
-                    onClick={() => {
-                      setSelectedId(user.id);
-                      setShowDeleteModal(true);
-                    }}
-                  >
-                    <FaRegTrashAlt className="text-red-600" />
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {localUsers?.map((user, index) => {
+              const handleAction = (
+                e: React.ChangeEvent<HTMLSelectElement>,
+              ) => {
+                const action = e.target.value;
+
+                if (action === "view") {
+                  navigate(`/back/profil/${user.username}`);
+                }
+
+                if (action === "delete") {
+                  setSelectedId(user.id);
+                  setShowDeleteModal(true);
+                }
+
+                e.target.value = ""; // reset du select
+              };
+              return (
+                <tr key={user.id}>
+                  <td className="px-4 py-2">{index + 1}</td>
+                  <td className="px-4 py-2">{user.id}</td>
+                  <td className="px-4 py-2">{user.username}</td>
+                  <td className="px-4 py-2">{user.email}</td>
+                  <td className="px-4 py-2">{user.role}</td>
+                  <td className="flex gap-3 px-4 py-2">
+                    {/* --- SELECT des actions --- */}
+                    <select
+                      defaultValue=""
+                      onChange={handleAction}
+                      className="border border-global p-0.5"
+                    >
+                      <option value="" disabled>
+                        Selectionnez une action
+                      </option>
+                      <option value="view">Voir le profil</option>
+                      <option value="delete">Supprimer l'utilisateur</option>
+                    </select>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

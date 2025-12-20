@@ -5,7 +5,7 @@ export const LegalMention = () => {
         Mention Légales
       </h1>
       <section className="flex w-full flex-col gap-2 rounded-md bg-customWhite px-3 pb-5">
-        <h2 className="text-2xl font-bold">Editeur du site</h2>
+        <h2 className="pt-2 text-2xl font-bold">Editeur du site</h2>
         <p>
           Projet de fin d'etudes dans le cadre du titre professionel Concepteur
           Développeur d'Applications

@@ -209,7 +209,7 @@ export const Header = ({
                       Profil
                     </Link>
 
-                    {user?.role === "admin" && (
+                    {(user?.role === "admin" || user?.role === "moderator") && (
                       <Link
                         to="/back"
                         className="p-1 text-center hover:bg-gray-300"

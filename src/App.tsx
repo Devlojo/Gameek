@@ -23,6 +23,7 @@ import { GeneralConditionsOfUse } from "@/pages/GeneralConditionsOfUse";
 import { About } from "@/pages/About";
 import { DashboardBack } from "@/pages/admin/DashboardBack";
 import { ReviewListBack } from "@/pages/admin/ReviewListBack";
+import { ProfileBack } from "@/pages/admin/ProfileBack";
 import { UserListBack } from "@/pages/admin/UserListBack";
 import { PageNotFound } from "@/components/layout/PageNotFound";
 import { useUser } from "@/hooks/useUser";
@@ -35,6 +36,7 @@ import { UserActivity } from "@/pages/UserActivity";
 import { Profile } from "@/pages/Profile";
 import { EditProfile } from "@/pages/EditProfile";
 import { EditReview } from "@/pages/EditReview";
+import { ReportedComments } from "@/pages/admin/ReportedComments";
 import { socket } from "./socket";
 
 const App = (): JSX.Element => {
@@ -145,6 +147,8 @@ const App = (): JSX.Element => {
 
               <Route path="/back/utilisateurs" element={<UserListBack />} />
               <Route path="/back/tests" element={<ReviewListBack />} />
+              <Route path="/back/profil/:username" element={<ProfileBack />} />
+              <Route path="/back/commentaires" element={<ReportedComments />} />
               {/* 404 fallback */}
               <Route path="*" element={<PageNotFound />} />
             </Routes>

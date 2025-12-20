@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 export const PrivacyPolicy = () => {
   return (
     <>
@@ -7,7 +5,7 @@ export const PrivacyPolicy = () => {
         Politique de confidentialité
       </h1>
       <section className="flex w-full flex-col gap-2 rounded-md bg-customWhite px-3 pb-5">
-        <h2 className="text-2xl font-bold">1. Introduction</h2>
+        <h2 className="pt-2 text-2xl font-bold">1. Introduction</h2>
         <p>
           Cette politique de confidentialité explique comment le site collecte,
           utilise et protège les informations personnelles des utilisateurs. Ce
@@ -34,7 +32,10 @@ export const PrivacyPolicy = () => {
           <li>
             Permettre l’inscription et l’authentification des utilisateurs
           </li>
-          <li>Publier et gérer les tests de jeux vidéo</li>
+          <li>
+            Publier et gérer les tests de jeux vidéo, commentaires et
+            intéractions comme ajouter un "like" sur un test
+          </li>
           <li>Assurer le bon fonctionnement de l’application</li>
         </ul>
         <div className="border-b border-black/20"></div>
@@ -50,16 +51,6 @@ export const PrivacyPolicy = () => {
         <p>
           Les données sont stockées de manière sécurisée et accessibles
           uniquement par l’éditeur du site.
-        </p>
-        <div className="border-b border-black/20"></div>
-        <h2 className="text-2xl font-bold">6. Contact</h2>
-        <p>
-          Pour toute question concernant la confidentialité ou la suppression de
-          vos données, vous pouvez contacter l’éditeur via la page
-          <Link to="/contact" className="font-bold">
-            {" "}
-            Contact
-          </Link>
         </p>
       </section>
     </>
