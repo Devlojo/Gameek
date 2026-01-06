@@ -121,11 +121,11 @@ export const Reviews = () => {
           </div>
           {(reviewsFiltered?.count as number) > 0 ? (
             <>
-              <div className="flex justify-between">
+              <div className="my-2 flex items-center justify-between">
                 <p className="text-center">
                   {reviewsFiltered?.count} test(s) trouvé(s)
                 </p>
-                <div className="group relative flex w-44 items-center justify-between border-y border-black/40 p-2 hover:cursor-pointer">
+                <div className="group relative flex w-40 items-center justify-between border-y border-black/40 p-2 hover:cursor-pointer">
                   <button>Trier par date</button>
                   <MdArrowDropDown />
                   <div className="absolute left-0 top-full z-10 hidden w-full overflow-y-auto rounded-sm bg-customWhite shadow-sm shadow-black group-hover:flex">
@@ -144,7 +144,7 @@ export const Reviews = () => {
               <div className="flex w-full flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
                 {reviewsFiltered?.reviews.map((review, index) => (
                   <article
-                    className="group relative w-full rounded-md bg-customWhite shadow-sm shadow-global"
+                    className="group relative w-full bg-customWhite shadow-sm shadow-global"
                     key={index}
                   >
                     <Link
@@ -155,7 +155,7 @@ export const Reviews = () => {
                         <img
                           src={review?.background_image as string}
                           alt={review?.gamename}
-                          className="h-40 w-full object-cover max-sm:rounded-t-md sm:h-[200px] sm:rounded-l-md"
+                          className="h-40 w-full object-cover sm:h-[200px]"
                           loading="lazy"
                         />
                         <div className="absolute bottom-0 flex items-center bg-global bg-opacity-70 px-0.5 text-xs text-gray-200 shadow-sm shadow-black">
@@ -184,7 +184,7 @@ export const Reviews = () => {
                           {review.gamename}
                         </h3>
                         <p className="italic">{review.introduction}</p>
-                        <div className="flex items-center justify-end gap-2">
+                        <div className="flex items-center justify-end gap-1">
                           <img
                             src={review.avatar}
                             className="border-1 h-8 w-8 rounded-full shadow-sm shadow-black"
@@ -194,7 +194,7 @@ export const Reviews = () => {
                             <span className="font-semibold">
                               {review.username}
                             </span>
-                            , {review.created_at}
+                            , {review.created_at.slice(0, 21)}
                           </p>
                         </div>
                       </div>

@@ -20,13 +20,13 @@ export const BestGamesSection = () => {
           <BsFire className="size-5 text-orange-600" />
         </div>
       </div>
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap justify-between gap-2">
         {isLoading && <Loader />}
         {isSuccess && checkedGames && checkedGames.length > 0 ? (
           checkedGames.map((game, index) => {
             return (
               <article
-                className="group relative flex w-full flex-col sm:w-[48.5%]"
+                className="group relative flex w-full flex-col sm:w-[49%]"
                 key={index}
               >
                 <Link to={`/jeu/tests/${game.slug}`}>
@@ -35,11 +35,11 @@ export const BestGamesSection = () => {
                       <img
                         src={game.background_image}
                         alt={game.name}
-                        className="h-56 w-full rounded-md object-cover shadow-md shadow-black"
+                        className="h-64 w-full object-cover shadow-md shadow-black"
                         loading="lazy"
                       />
                     ) : (
-                      <div className="flex h-56 w-full items-center justify-center rounded-md bg-global object-cover shadow-md shadow-black">
+                      <div className="flex h-56 w-full items-center justify-center bg-global object-cover shadow-md shadow-black">
                         <img
                           src={gameekLogo}
                           alt="logo du site"
@@ -53,7 +53,7 @@ export const BestGamesSection = () => {
                       info="Voir les tests du jeu"
                     />
 
-                    <div className="absolute bottom-0 flex w-full items-center rounded-b-md bg-global bg-opacity-70 text-xs text-customWhite shadow-sm shadow-black">
+                    <div className="absolute bottom-0 flex w-full items-center bg-global bg-opacity-70 text-xs text-customWhite shadow-sm shadow-black md:py-1">
                       <p className="mx-1 text-[16px] font-medium">
                         Note moyenne :{" "}
                       </p>
