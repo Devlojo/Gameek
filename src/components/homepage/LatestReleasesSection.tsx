@@ -9,9 +9,11 @@ import { PiArrowFatLineRightFill } from "react-icons/pi";
 import { PiArrowFatLineLeftFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { getCurrentDate } from "@/utils/getCurrentDate";
+import { useEffect, useState } from "react";
 
 export const LatestReleasesSection = () => {
   const { latestGames, isSuccess } = useLatestGamesQuery();
+  const [width, setWidth] = useState(window.innerWidth);
 
   const responsive = {
     desktop: {
@@ -27,6 +29,18 @@ export const LatestReleasesSection = () => {
       items: 1,
     },
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const CustomDot = ({ onClick, ...rest }: any) => {
     const { active } = rest;
@@ -86,9 +100,9 @@ export const LatestReleasesSection = () => {
           containerClass={clsx(!isSuccess && "justify-center flex ")}
           customRightArrow={<CustomRightArrow />}
           customLeftArrow={<CustomLeftArrow />}
-          infinite={true}
-          autoPlay={true}
-          autoPlaySpeed={10000}
+          infinite={latestGames?.games && latestGames?.games.length > 1 && true}
+          autoPlay={width > 1024 ? true : false}
+          autoPlaySpeed={2000}
         >
           {isSuccess && latestGames && latestGames.games.length > 0 ? (
             latestGames.games.map((game, index) => (
