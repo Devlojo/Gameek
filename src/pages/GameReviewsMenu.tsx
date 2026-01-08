@@ -133,13 +133,13 @@ export const GameReviewsMenu = () => {
                     {user?.role === "user" ? (
                       <Link
                         to={`/creation/test/${gameSlug}`}
-                        className="flex items-center gap-2 rounded-es-2xl border-2 border-black/40 p-2 hover:bg-global hover:text-customWhite"
+                        className="flex items-center gap-2 rounded-sm border-2 border-black/40 p-2 hover:bg-global hover:text-customWhite"
                       >
                         Rédigez votre test <FaPen />
                       </Link>
                     ) : (
                       <button
-                        className="flex items-center gap-2 rounded-es-2xl border-2 border-black/40 p-2 hover:bg-global hover:text-customWhite"
+                        className="flex items-center gap-2 rounded-sm border-2 border-black/40 p-2 hover:bg-global hover:text-customWhite"
                         onClick={() => setShowModal((prev) => !prev)}
                       >
                         Rédigez votre test <FaPen />
@@ -211,7 +211,7 @@ export const GameReviewsMenu = () => {
                             </div>
                             <div className="flex w-full flex-col gap-2 p-2">
                               <p className="italic">{review.introduction}</p>
-                              <div className="flex items-center justify-end gap-2">
+                              <div className="flex items-center justify-end gap-1">
                                 <img
                                   src={review.image}
                                   className="border-1 h-8 w-8 rounded-full shadow-sm shadow-black"
@@ -221,7 +221,7 @@ export const GameReviewsMenu = () => {
                                   <span className="font-semibold">
                                     {review.username}
                                   </span>
-                                  , {review.created_at}
+                                  , {review.created_at.slice(0, 21)}
                                 </p>
                               </div>
                             </div>

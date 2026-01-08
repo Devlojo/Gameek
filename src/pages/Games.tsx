@@ -37,7 +37,7 @@ export const Games = () => {
           <div className="flex w-full flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
             {games?.games.map((game, index) => (
               <article
-                className="group relative flex w-full flex-col rounded-md shadow-sm shadow-global sm:w-[48.5%]"
+                className="group relative flex w-full flex-col shadow-sm shadow-global sm:w-[48.5%]"
                 key={index}
               >
                 <Link to={`/jeu/${game.slug}`}>
@@ -45,7 +45,7 @@ export const Games = () => {
                     src={game.background_image as string}
                     alt={`Image de ${game.name}`}
                     loading="lazy"
-                    className="h-[250px] w-full rounded-t-md object-cover sm:h-[200px]"
+                    className="h-[250px] w-full object-cover sm:h-[200px]"
                   />
 
                   <h3 className="text-center text-lg font-semibold">

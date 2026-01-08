@@ -9,26 +9,38 @@ import { PiArrowFatLineRightFill } from "react-icons/pi";
 import { PiArrowFatLineLeftFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { getCurrentDate } from "@/utils/getCurrentDate";
+import { useEffect, useState } from "react";
 
 export const LatestReleasesSection = () => {
   const { latestGames, isSuccess } = useLatestGamesQuery();
+  const [width, setWidth] = useState(window.innerWidth);
 
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-      slidesToSlide: 3,
+      items: 1,
     },
     tablet: {
       breakpoint: { max: 1024, min: 640 },
-      items: 2,
-      slidesToSlide: 2,
+      items: 1,
     },
     mobile: {
       breakpoint: { max: 640, min: 0 },
       items: 1,
     },
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const CustomDot = ({ onClick, ...rest }: any) => {
     const { active } = rest;
@@ -85,53 +97,57 @@ export const LatestReleasesSection = () => {
           removeArrowOnDeviceType={["tablet", "mobile"]}
           showDots
           customDot={<CustomDot />}
-          containerClass={clsx(!isSuccess && "justify-center flex")}
+          containerClass={clsx(!isSuccess && "justify-center flex ")}
           customRightArrow={<CustomRightArrow />}
           customLeftArrow={<CustomLeftArrow />}
+          infinite={latestGames?.games && latestGames?.games.length > 1 && true}
+          autoPlay={width > 1024 ? true : false}
+          autoPlaySpeed={2000}
         >
           {isSuccess && latestGames && latestGames.games.length > 0 ? (
             latestGames.games.map((game, index) => (
-              <article className="group relative mb-5" key={index}>
+              <article
+                className="group relative mb-5 flex flex-col"
+                key={index}
+              >
                 <Link to={`/jeu/${game.slug}`}>
-                  <div className="aspect-[16/9] w-full">
-                    {game.background_image ? (
-                      <img
-                        src={game.background_image}
-                        alt={game.name}
-                        className="h-64 w-full rounded-t-md object-cover shadow-lg shadow-black"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className="flex h-64 w-full items-center justify-center bg-global">
-                        <img
-                          src={gameekLogo}
-                          alt="logo du site"
-                          className="h-32 object-cover"
-                        />
-                      </div>
-                    )}
-                    <GameHoverCard
-                      platforms={game.platforms}
-                      genres={game.genres}
-                      info="Voir les détails du jeu"
+                  {game.background_image ? (
+                    <img
+                      src={game.background_image}
+                      alt={game.name}
+                      className="h-96 w-full object-cover shadow-lg shadow-black"
+                      loading="lazy"
                     />
-
-                    <div className="flex w-full flex-col items-center p-1 text-light">
-                      <h3 className="text-center text-lg font-semibold">
-                        {game.name}
-                      </h3>
-
-                      <p className="text-center text-sm">
-                        Date de sortie :{" "}
-                        {game.released_date
-                          ? game.released_date
-                              ?.slice(0, 10)
-                              .split("-")
-                              .reverse()
-                              .join("/")
-                          : "inconnue"}
-                      </p>
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-global">
+                      <img
+                        src={gameekLogo}
+                        alt="logo du site"
+                        className="h-32 object-cover"
+                      />
                     </div>
+                  )}
+                  <GameHoverCard
+                    platforms={game.platforms}
+                    genres={game.genres}
+                    info="Voir les détails du jeu"
+                  />
+
+                  <div className="flex w-full flex-col items-center p-1 text-light">
+                    <h3 className="text-center text-lg font-semibold">
+                      {game.name}
+                    </h3>
+
+                    <p className="text-center text-sm">
+                      Date de sortie :{" "}
+                      {game.released_date
+                        ? game.released_date
+                            ?.slice(0, 10)
+                            .split("-")
+                            .reverse()
+                            .join("/")
+                        : "inconnue"}
+                    </p>
                   </div>
                 </Link>
               </article>

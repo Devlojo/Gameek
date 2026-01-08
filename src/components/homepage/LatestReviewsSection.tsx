@@ -73,13 +73,13 @@ export const LatestReviewsSection = () => {
           <IoIosTimer className="size-5 text-global" />
         </div>
       </div>
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap justify-between gap-2">
         {isLoading && <Loader />}
         {isSuccess && latestReviews && latestReviews.reviews.length > 0 ? (
           latestReviews.reviews.map((review, index) => {
             return (
               <article
-                className="group relative w-full rounded-md p-2 shadow-md shadow-black sm:w-[48.5%]"
+                className="group relative w-full p-2 shadow-md shadow-black sm:w-[49%]"
                 key={index}
               >
                 <Link to={`/test/${review.slug}/${review.username}`}>
@@ -126,7 +126,7 @@ export const LatestReviewsSection = () => {
                   <div className="mt-2 flex flex-col gap-3 sm:h-[250px] sm:justify-between sm:gap-0 md:h-[220px] lg:h-[180px]">
                     <h3 className="text-lg font-semibold">{review.gamename}</h3>
                     <p className="italic">{review.introduction}</p>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1">
                       <img
                         src={review.image}
                         className="border-1 h-8 w-8 rounded-full shadow-sm shadow-black"
@@ -134,7 +134,7 @@ export const LatestReviewsSection = () => {
                       />
                       <p className="text-sm">
                         <span className="font-semibold">{review.username}</span>
-                        , {review.created_at}
+                        , {review.created_at.slice(0, 21)}
                       </p>
                     </div>
                   </div>
