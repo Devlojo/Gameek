@@ -102,7 +102,7 @@ export const LatestReleasesSection = () => {
           customLeftArrow={<CustomLeftArrow />}
           infinite={latestGames?.games && latestGames?.games.length > 1 && true}
           autoPlay={width > 1024 ? true : false}
-          autoPlaySpeed={2000}
+          autoPlaySpeed={10000}
         >
           {isSuccess && latestGames && latestGames.games.length > 0 ? (
             latestGames.games.map((game, index) => (
